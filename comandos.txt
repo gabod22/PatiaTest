@@ -1,0 +1,1 @@
+pyinstaller --icon=E:\Proyectos\PatiaTest_v3\assets\logo_min.ico --uac-admin --add-data="programs/*;programs" --add-data="config_files/*;config_files" --add-data="assets/*;assets" patiatest_form.py

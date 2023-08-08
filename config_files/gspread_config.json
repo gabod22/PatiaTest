@@ -1,0 +1,15 @@
+{
+  "type": "service_account",
+  "project_id": "patiatech-computer-test",
+  "private_key_id": "c91607fd7cc5046e72b68d95090f6169057ebeea",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCoDayEy48SYMAO\nFiSKwd5QDip83GoAjGDvOyyrvJ5Mt42VyEzHtub4HSWzTiQmjYW4QXQEZ0tGl+op\n01L2TmgsxCrvjPzYdthArsqs1dxiZuR/2/SmHiVM/jkNSGWzGttC1H8HdihDDiKb\nS2PIfIfliqF9JROLrcvWWQ/X+OM0kolEbc12gG3wMjN2X+TfRe25cB34oaGuNkxp\ntBCDmcNhWGNpv2xokm4nK9SB2PtMZlvls27UdXpZ6dmsDjroby9fw6Ul/l+Rbfdv\nz2F9Dymi4SQvLcqNzU2zFzdM+vnVdU2LSScsLV+Eg0QPW9xLFfyyICEccwI+WwlJ\nvYMkK06JAgMBAAECggEAA8iCBZ/NBd+Ed1S3iCGm6vO0sGioYMCIRp51Ch02DZlU\nwEZY9yaGkteaI4wa63zEYcJkdZxrMQjGumAR5i5b8UUNx+SLRSbAxc0BjkxGuLbj\nBj9aBbrYQWBYQbSraHGudbXRscXu0FqjPA6BjbADAa+CJO52nw5/sCDDZuvpFoP8\nGaQKh6CuNWCDTWsmstuzPPwz6+uKiGz94d2wGKUtYVPQtLobfKgPg0gb8QPkM8W1\nw2t94lbymlrcUayLkjnznTuAjmz5CZg17uNZN2yEqOONrpcmNfsGq/hrSlYDMVX6\n5iN3FjX92tKZX1jbzhB5YBvIuGGVmfnHpPychrXdcQKBgQDoYnfj/PPiQplKiGb5\n2bsm67SRzAb65Ub2iYtpm15b41nJKVfvTI0S63IMyIDfml3SlJFCxwQcjVYnaLYS\nIo2Th9l0MElo6HIWNSyrL21w7yyYz2C1gwe3p2BQkVvqJA/BspMv8TDuYH7FKzlp\nHSIWtxhYPMW4qAGBgIw3zEPamQKBgQC5IZ28l4JLE7zW+47WJ6I6T5jncY+pwxif\nO2/zm6+iI7YGJiYqn0xyUQZ09RWHAgRz3YGjsuWnOvXrTNigXVWcEl6GxoyQA5/N\nsQLHLHimIVoAJY0L0sAYDXorSs47E436WuoGS7HtbnatnpR3Zo6Y/ZVyN7RnksUW\nx/+lIAH5cQKBgAjdWL11tMf4ymgxc9wsFhuR+j1ljw6bGG3nKU5KAvt2XMJztUsH\nnIoQOTWLoH7nIJUb3b6yYNHGAndWYzul3ci28fCgtuwtkcyPErklAgPA2+6oWoQS\nD4VN+TqZkOwJnCBDc6HsjXVKcQuMbpA38Ej1ixQynUhCAGy0PqUSQbRhAoGAENYF\nykjdCIba/ZITA1bHYhYrCaFCN2YOryxwme7mohAtVZHSlr217g+ATtKbCpQcY40Z\nZRG34OVzx9pNOQhD6NWi0w7raY1q0wHuBr78md8emDTSBuk7nvRaz+UVrDmzB7mM\n3tWzcKxDDrcFOXaSMUeed6ypM2IdmlzF2vZ2N4ECgYBejE+8DE/anNoX7wN9u+Vb\ngN22bkWZ+pKpNxzlGBJD1c0PJ5ZimGon5QjuShDlWD04OCOqwQHQapdWrFWCn13t\nQsnzzD8JjE1HckjGwWKQUhg3Kx6bO1uaLYXifLXLACUOfE/bjewU4pQl2incfv0N\nEeKlV4vNibKlOYjy1CjdUw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "patiatech-account@patiatech-computer-test.iam.gserviceaccount.com",
+  "client_id": "116630408865928657803",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/patiatech-account%40patiatech-computer-test.iam.gserviceaccount.com"
+}
+
+
+

@@ -1,0 +1,1769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>562</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>523</width>
+          <height>1557</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_22">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_25">
+           <item>
+            <widget class="QLabel" name="label_19">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>SISTEMA DE ENERGÍA</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QFormLayout" name="formLayout_8">
+             <item row="0" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <item>
+                <widget class="QLabel" name="label_55">
+                 <property name="text">
+                  <string>C</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_56">
+                 <property name="text">
+                  <string>R</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_57">
+                 <property name="text">
+                  <string>N/A</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_58">
+                 <property name="text">
+                  <string>Nota</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="checkBox_86">
+               <property name="text">
+                <string>Cables de corriente</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_107">
+               <item>
+                <widget class="QRadioButton" name="radioButton_316">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_317">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_318">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_94"/>
+               </item>
+              </layout>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="checkBox_87">
+               <property name="text">
+                <string>Contector de energía</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_108">
+               <item>
+                <widget class="QRadioButton" name="radioButton_319">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_320">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_321">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_95"/>
+               </item>
+              </layout>
+             </item>
+             <item row="5" column="0">
+              <widget class="QCheckBox" name="checkBox_88">
+               <property name="text">
+                <string>Ventilador fuente</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_109">
+               <item>
+                <widget class="QRadioButton" name="radioButton_322">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_323">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_324">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_96"/>
+               </item>
+              </layout>
+             </item>
+             <item row="6" column="0">
+              <widget class="QCheckBox" name="checkBox_89">
+               <property name="text">
+                <string>Fuente de poder</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_110">
+               <item>
+                <widget class="QRadioButton" name="radioButton_325">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_326">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_327">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_97"/>
+               </item>
+              </layout>
+             </item>
+             <item row="7" column="0">
+              <widget class="QCheckBox" name="checkBox_90">
+               <property name="text">
+                <string>Cargador</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_111">
+               <item>
+                <widget class="QRadioButton" name="radioButton_328">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_329">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_330">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_98"/>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_29">
+               <property name="minimumSize">
+                <size>
+                 <width>140</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="checkBox_91">
+               <property name="text">
+                <string>Batería</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_112">
+               <item>
+                <widget class="QRadioButton" name="radioButton_331">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_332">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_333">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_99"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_24">
+           <item>
+            <widget class="QLabel" name="label_18">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>SISTEMA DE REFRIGERACIÓN</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QFormLayout" name="formLayout_7">
+             <item row="0" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <item>
+                <widget class="QLabel" name="label_51">
+                 <property name="text">
+                  <string>C</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_52">
+                 <property name="text">
+                  <string>R</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_53">
+                 <property name="text">
+                  <string>N/A</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_54">
+                 <property name="text">
+                  <string>Nota</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="checkBox_72">
+               <property name="text">
+                <string>Ventiladores</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_93">
+               <item>
+                <widget class="QRadioButton" name="radioButton_274">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_275">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_276">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_80"/>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="checkBox_73">
+               <property name="text">
+                <string>Radiadores</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_94">
+               <item>
+                <widget class="QRadioButton" name="radioButton_277">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_278">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_279">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_81"/>
+               </item>
+              </layout>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="checkBox_74">
+               <property name="text">
+                <string>Pasta térmica</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_95">
+               <item>
+                <widget class="QRadioButton" name="radioButton_280">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_281">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_282">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_82"/>
+               </item>
+              </layout>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="checkBox_76">
+               <property name="text">
+                <string>Filtros de aire</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_97">
+               <item>
+                <widget class="QRadioButton" name="radioButton_286">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_287">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_288">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_84"/>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_30">
+               <property name="minimumSize">
+                <size>
+                 <width>140</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_21">
+           <item>
+            <widget class="QLabel" name="label_16">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>CONECTORES / PLUGS</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QFormLayout" name="formLayout_5">
+             <item row="0" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <item>
+                <widget class="QLabel" name="label_43">
+                 <property name="text">
+                  <string>C</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_44">
+                 <property name="text">
+                  <string>R</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_45">
+                 <property name="text">
+                  <string>N/A</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_46">
+                 <property name="text">
+                  <string>Nota</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="checkBox_41">
+               <property name="text">
+                <string>USB</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_62">
+               <item>
+                <widget class="QRadioButton" name="radioButton_181">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_182">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_183">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_49"/>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="checkBox_42">
+               <property name="text">
+                <string>Ethernet</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_63">
+               <item>
+                <widget class="QRadioButton" name="radioButton_184">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_185">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_186">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_50"/>
+               </item>
+              </layout>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="checkBox_43">
+               <property name="text">
+                <string>HDMI</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_64">
+               <item>
+                <widget class="QRadioButton" name="radioButton_187">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_188">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_189">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_51"/>
+               </item>
+              </layout>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="checkBox_44">
+               <property name="text">
+                <string>DISPLAY PORT</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_65">
+               <item>
+                <widget class="QRadioButton" name="radioButton_190">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_191">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_192">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_52"/>
+               </item>
+              </layout>
+             </item>
+             <item row="5" column="0">
+              <widget class="QCheckBox" name="checkBox_45">
+               <property name="text">
+                <string>VGA</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_66">
+               <item>
+                <widget class="QRadioButton" name="radioButton_193">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_194">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_195">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_53"/>
+               </item>
+              </layout>
+             </item>
+             <item row="6" column="0">
+              <widget class="QCheckBox" name="checkBox_46">
+               <property name="text">
+                <string>JACK AUDIO</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_67">
+               <item>
+                <widget class="QRadioButton" name="radioButton_196">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_197">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_198">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_54"/>
+               </item>
+              </layout>
+             </item>
+             <item row="7" column="0">
+              <widget class="QCheckBox" name="checkBox_47">
+               <property name="text">
+                <string>DVI</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_68">
+               <item>
+                <widget class="QRadioButton" name="radioButton_199">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_200">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_201">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_55"/>
+               </item>
+              </layout>
+             </item>
+             <item row="8" column="0">
+              <widget class="QCheckBox" name="checkBox_48">
+               <property name="text">
+                <string>Lector de tajetas</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_69">
+               <item>
+                <widget class="QRadioButton" name="radioButton_202">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_203">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_204">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_56"/>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_31">
+               <property name="minimumSize">
+                <size>
+                 <width>140</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_26">
+           <item>
+            <widget class="QLabel" name="label_21">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>COMPONENTES EXTERNOS</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QFormLayout" name="formLayout_9">
+             <item row="0" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <item>
+                <widget class="QLabel" name="label_59">
+                 <property name="text">
+                  <string>C</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_60">
+                 <property name="text">
+                  <string>R</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_61">
+                 <property name="text">
+                  <string>N/A</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_62">
+                 <property name="text">
+                  <string>Nota</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_6">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="checkBox_38">
+               <property name="text">
+                <string>Cámara</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_58">
+               <item>
+                <widget class="QRadioButton" name="radioButton_169"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_170"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_171"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_45"/>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="checkBox_39">
+               <property name="text">
+                <string>Pantalla</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_59">
+               <item>
+                <widget class="QRadioButton" name="radioButton_172"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_173"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_174"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_46"/>
+               </item>
+              </layout>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="checkBox_40">
+               <property name="text">
+                <string>Teclado</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_60">
+               <item>
+                <widget class="QRadioButton" name="radioButton_175"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_176"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_177"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_47"/>
+               </item>
+              </layout>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="checkBox_63">
+               <property name="text">
+                <string>Touchpad</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_61">
+               <item>
+                <widget class="QRadioButton" name="radioButton_178"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_179"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_180"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_48"/>
+               </item>
+              </layout>
+             </item>
+             <item row="5" column="0">
+              <widget class="QCheckBox" name="checkBox_64">
+               <property name="text">
+                <string>Touchscreen</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_84">
+               <item>
+                <widget class="QRadioButton" name="radioButton_247"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_248"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_249"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_71"/>
+               </item>
+              </layout>
+             </item>
+             <item row="6" column="0">
+              <widget class="QCheckBox" name="checkBox_65">
+               <property name="text">
+                <string>Lectora de discos</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_85">
+               <item>
+                <widget class="QRadioButton" name="radioButton_250"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_251"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_252"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_72"/>
+               </item>
+              </layout>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>Slot de expación</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QCheckBox" name="checkBox_11">
+               <property name="text">
+                <string>CheckBox</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_87">
+               <item>
+                <widget class="QRadioButton" name="radioButton_256"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_257"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_258"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_74"/>
+               </item>
+              </layout>
+             </item>
+             <item row="9" column="0">
+              <widget class="QCheckBox" name="checkBox_67">
+               <property name="text">
+                <string>CheckBox</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_88">
+               <item>
+                <widget class="QRadioButton" name="radioButton_259"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_260"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_261"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_75"/>
+               </item>
+              </layout>
+             </item>
+             <item row="10" column="0">
+              <widget class="QCheckBox" name="checkBox_68">
+               <property name="text">
+                <string>CheckBox</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_89">
+               <item>
+                <widget class="QRadioButton" name="radioButton_262"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_263"/>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_264"/>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_76"/>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_32">
+               <property name="minimumSize">
+                <size>
+                 <width>140</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_20">
+           <item>
+            <widget class="QLabel" name="label_15">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>COMPONENTES INTERNOS</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QFormLayout" name="formLayout">
+             <item row="0" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout">
+               <item>
+                <widget class="QLabel" name="label_35">
+                 <property name="text">
+                  <string>C</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_37">
+                 <property name="text">
+                  <string>R</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_38">
+                 <property name="text">
+                  <string>N/A</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_39">
+                 <property name="text">
+                  <string>Nota</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="checkBox_3">
+               <property name="text">
+                <string>Bocinas</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_22">
+               <item>
+                <widget class="QRadioButton" name="radioButton_61">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_62">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_63">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_5"/>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="checkBox_12">
+               <property name="text">
+                <string>RAM</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_24">
+               <item>
+                <widget class="QRadioButton" name="radioButton_67">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_68">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_69">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_7"/>
+               </item>
+              </layout>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="checkBox_13">
+               <property name="text">
+                <string>DISCO DURO</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_25">
+               <item>
+                <widget class="QRadioButton" name="radioButton_70">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_71">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_72">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_8"/>
+               </item>
+              </layout>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="checkBox_14">
+               <property name="text">
+                <string>SSD</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_30">
+               <item>
+                <widget class="QRadioButton" name="radioButton_85">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_86">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_87">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_17"/>
+               </item>
+              </layout>
+             </item>
+             <item row="5" column="0">
+              <widget class="QCheckBox" name="checkBox_15">
+               <property name="text">
+                <string>Procesador</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_31">
+               <item>
+                <widget class="QRadioButton" name="radioButton_88">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_89">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_90">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_18"/>
+               </item>
+              </layout>
+             </item>
+             <item row="6" column="0">
+              <widget class="QCheckBox" name="checkBox_16">
+               <property name="text">
+                <string>Batería de reloj</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_32">
+               <item>
+                <widget class="QRadioButton" name="radioButton_91">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_92">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_93">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_19"/>
+               </item>
+              </layout>
+             </item>
+             <item row="7" column="0">
+              <widget class="QCheckBox" name="checkBox_17">
+               <property name="text">
+                <string>Placa madre</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_33">
+               <item>
+                <widget class="QRadioButton" name="radioButton_94">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_95">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_96">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_20"/>
+               </item>
+              </layout>
+             </item>
+             <item row="8" column="0">
+              <widget class="QCheckBox" name="checkBox_18">
+               <property name="text">
+                <string>Tarjeta de red</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_34">
+               <item>
+                <widget class="QRadioButton" name="radioButton_97">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_98">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_99">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_21"/>
+               </item>
+              </layout>
+             </item>
+             <item row="9" column="0">
+              <widget class="QCheckBox" name="checkBox_19">
+               <property name="text">
+                <string>Tarjeta de vídeo</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_37">
+               <item>
+                <widget class="QRadioButton" name="radioButton_106">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_107">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_108">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_24"/>
+               </item>
+              </layout>
+             </item>
+             <item row="10" column="0">
+              <widget class="QCheckBox" name="checkBox_34">
+               <property name="text">
+                <string>Bluetooth</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_39">
+               <item>
+                <widget class="QRadioButton" name="radioButton_112">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_113">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_114">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_26"/>
+               </item>
+              </layout>
+             </item>
+             <item row="11" column="0">
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>Slot de expación</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="0">
+              <widget class="QCheckBox" name="checkBox_10">
+               <property name="text">
+                <string>CheckBox</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_40">
+               <item>
+                <widget class="QRadioButton" name="radioButton_115">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_116">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_117">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_27"/>
+               </item>
+              </layout>
+             </item>
+             <item row="13" column="0">
+              <widget class="QCheckBox" name="checkBox_35">
+               <property name="text">
+                <string>CheckBox</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_42">
+               <item>
+                <widget class="QRadioButton" name="radioButton_121">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_122">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_123">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_29"/>
+               </item>
+              </layout>
+             </item>
+             <item row="14" column="0">
+              <widget class="QCheckBox" name="checkBox_4">
+               <property name="text">
+                <string>CheckBox</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_41">
+               <item>
+                <widget class="QRadioButton" name="radioButton_118">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_119">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_120">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_28"/>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_33">
+               <property name="minimumSize">
+                <size>
+                 <width>140</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

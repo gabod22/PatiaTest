@@ -1,0 +1,46 @@
+AESTHETICS:
+- A+
+- A
+- B
+- C
+APP:
+  NAME: PatiaTest
+DEFAULT_EMPLOYEE: 1
+DEFAULT_VALUES:
+  CAMERA: -1
+  ETHERNET: 0
+  HINGES: -1
+  KEYBOARD: 2
+  MICROPHONE: -1
+  SCREEN: 0
+  SPICKERS: -1
+  SUPPLY_PLUG: 0
+  TOUCHPAD: -1
+  TOUCHSCREEN: 5
+  USB: 0
+EMPLOYEES:
+- Hector
+- Gabriel
+- Itzel
+- Fatima
+- Xime
+- Pedro
+- Oswaldo
+SELECTED_PROGRAMS:
+- battery_info.exe
+- keyboard_test.exe
+SPREAD_CONFIG:
+  DOCUMENT_NAME: Base universal
+  WORKSHEET_NAME: Procesados
+STATUS_OPTIONS:
+- OK
+- Cambiar
+- Retirado
+- No revisado
+- Detalles
+- N/A
+WIFI:
+  PASS: Pixel12345
+  PASS5G: Pixel12345
+  SSID: Pixel Lap
+  SSID5G: Pixel Lap 5G
