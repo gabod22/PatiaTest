@@ -2,3 +2,4 @@ programs/
 build/PatiaTest/
 build/
 dist/
+battery.csv
