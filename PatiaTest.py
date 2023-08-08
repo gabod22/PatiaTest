@@ -125,6 +125,8 @@ class MainWindow(QMainWindow):
 
     def save_local(self):
         info = {}
+        info['PIXELID'] = self.ui.TextPixelId.text()
+        info['AESTHETIC'] = self.ui.CboxAesthetics.currentIndex()
         info['ETHERNET'] = self.ui.CboxEthernet.currentIndex()
         info['SUPPLY_PLUG'] = self.ui.CboxPlug.currentIndex()
         info['USB'] = self.ui.CboxUSB.currentIndex()
@@ -136,6 +138,20 @@ class MainWindow(QMainWindow):
         info['TOUCHPAD'] = self.ui.CboxTouchpad.currentIndex()
         info['TOUCHSCREEN'] = self.ui.CboxTouchscreen.currentIndex()
         info['HINGES'] = self.ui.CboxHinges.currentIndex()
+        
+        info['BATTERY_NOTE'] = self.ui.TextBatteryNote.text()
+        info['ETHERNET_NOTE'] = self.ui.TextEthernetNote.text()
+        info['SUPPLY_PLUG_NOTE'] = self.ui.TextPlugNote.text()
+        info['USB_NOTE'] = self.ui.TextUSBNote.text()
+        info['SCREEN_NOTE'] = self.ui.TextScreenNote.text()
+        info['SPICKERS_NOTE'] = self.ui.TextSpikersNote.text()
+        info['KEYBOARD_NOTE'] = self.ui.TextKeyboardNote.text()
+        info['CAMERA_NOTE'] = self.ui.TextCameraNote.text()
+        info['MICROPHONE_NOTE'] = self.ui.TextMicroNote.text()
+        info['TOUCHPAD_NOTE'] = self.ui.TextTouchpadNote.text()
+        info['TOUCHSCREEN_NOTE'] = self.ui.TextTouchscreenNote.text()
+        info['HINGES_NOTE'] = self.ui.TextHingesNote.text()
+        info['DETAILS'] = self.ui.PlainTextDetails.toPlainText()
         # print(info)
         write_yaml("c:/patiatest_info.yaml", info)
 
@@ -143,6 +159,8 @@ class MainWindow(QMainWindow):
         try:
             dataSaved = read_yaml("c:/patiatest_info.yaml")
             print(dataSaved)
+            self.ui.TextPixelId.setText(dataSaved['PIXELID'])
+            self.ui.CboxAesthetics.setCurrentIndex(dataSaved['AESTHETIC'])
             self.ui.CboxEthernet.setCurrentIndex(dataSaved['ETHERNET'])
             self.ui.CboxPlug.setCurrentIndex(dataSaved['SUPPLY_PLUG'])
             self.ui.CboxUSB.setCurrentIndex(dataSaved['USB'])
@@ -154,6 +172,20 @@ class MainWindow(QMainWindow):
             self.ui.CboxTouchpad.setCurrentIndex(dataSaved['TOUCHPAD'])
             self.ui.CboxTouchscreen.setCurrentIndex(dataSaved['TOUCHSCREEN'])
             self.ui.CboxHinges.setCurrentIndex(dataSaved['HINGES'])
+            
+            self.ui.TextBatteryNote.setText(dataSaved['BATTERY_NOTE'])
+            self.ui.TextEthernetNote.setText(dataSaved['ETHERNET_NOTE'])
+            self.ui.TextPlugNote.setText(dataSaved['SUPPLY_PLUG_NOTE'])
+            self.ui.TextUSBNote.setText(dataSaved['USB_NOTE'])
+            self.ui.TextScreenNote.setText(dataSaved['SCREEN_NOTE'])
+            self.ui.TextSpikersNote.setText(dataSaved['SPICKERS_NOTE'])
+            self.ui.TextKeyboardNote.setText(dataSaved['KEYBOARD_NOTE'])
+            self.ui.TextCameraNote.setText(dataSaved['CAMERA_NOTE'])
+            self.ui.TextMicroNote.setText(dataSaved['MICROPHONE_NOTE'])
+            self.ui.TextTouchpadNote.setText(dataSaved['TOUCHPAD_NOTE'])
+            self.ui.TextTouchscreenNote.setText(dataSaved['TOUCHSCREEN_NOTE'])
+            self.ui.TextHingesNote.setText(dataSaved['HINGES_NOTE'])
+            self.ui.PlainTextDetails.setPlainText(dataSaved['DETAILS'])
 
         except Exception as e:
             print(e)
@@ -303,8 +335,13 @@ class MainWindow(QMainWindow):
             self.data = [[]]
             self.data[0].append(self.ui.CboxCheckedBy.currentText())
             self.data[0].append(self.ui.CboxAesthetics.currentText())
-            self.data[0].append(p2f(self.ui.TextBatteryHealth.text()))
-            self.data[0].append(self.ui.TextBatteryNote.text())
+            if self.ui.TextBatteryHealth.text() == "Sin bateria":
+                self.data[0].append(p2f(self.ui.TextBatteryHealth_2.text()))
+                self.data[0].append(self.ui.TextBatteryNote.text())
+            else:
+                self.data[0].append(0)
+                self.data[0].append("0:00:00")
+            
             write_range(self.data, self.notes, wks, next_row, "G")
             self.data = [[]]
             self.data[0].append(self.ui.CboxPlug.currentText())
@@ -340,7 +377,7 @@ class MainWindow(QMainWindow):
             progress_callback.emit('Guardado correctamente')
         except Exception as e:
             # self.showFailDialog('La información no fue guardada.')
-            progress_callback.emit('Error al guardar el Google')
+            progress_callback.emit('Error al guardar en Google')
             print('La info no fue guardada :C %s' % e)
         finally:
             self.data = [[]]
@@ -357,7 +394,6 @@ class MainWindow(QMainWindow):
 #!SECTION
 
 # SECTION - Battery Test Thread
-
     def __get_thread_battery_test(self):
         thread = QThread()
         worker = BatteryTest()
