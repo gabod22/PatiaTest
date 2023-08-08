@@ -1,3 +1,4 @@
-/programs
-/build
-/dist
+programs/
+build/PatiaTest/
+build/
+dist/
