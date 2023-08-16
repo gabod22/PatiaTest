@@ -8,7 +8,7 @@ import sys
 import pythoncom
 
 
-def get_system_info(progress_callback):
+def get_system_info(progress_callback, on_error):
     pythoncom.CoInitialize()
     info = dict()
     w = wmi.WMI()

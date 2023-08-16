@@ -1,6 +1,6 @@
 import json
 import os.path
-import gspread
+import gspread, google.auth.exceptions, requests
 from gspread import Worksheet
 from .files_managment import *
 from .helpers import next_available_row
@@ -86,9 +86,13 @@ def get_spreadsheet(json_file, doc_id, tab_id):
         return worksheet
 
     except gspread.exceptions.SpreadsheetNotFound as e:
-        raise Exception("Trying to open non-existent or inaccessible spreadsheet document.")
+        raise Exception("Intento de abrir un documento de hoja de cálculo inexistente o inaccesible.")
     except gspread.exceptions.WorksheetNotFound as e:
-        raise Exception("Trying to open non-existent sheet. Verify that the sheet name exists (%s)." % tab_id)
+        raise Exception("Intentando abrir una hoja inexistente. Compruebe que el nombre de la hoja existe (%s)." % tab_id)
+    except google.auth.exceptions.RefreshError as e:
+        raise Exception("La hora del servidor y del equipo no es la misma, ajuste la hora")
+    except requests.exceptions.ConnectionError as e:
+        raise Exception("La conección se cerró sin respuesta, vuelva a intentarlo")
     except gspread.exceptions.APIError as e:
         if hasattr(e, 'response'):
             error_json = e.response.json()
@@ -97,7 +101,7 @@ def get_spreadsheet(json_file, doc_id, tab_id):
             email = credentials.get("client_email", "(email missing)")
             if error_status == 'PERMISSION_DENIED':
                 error_message = error_json.get("error", {}).get("message", "")
-                raise Exception("Access was denied with the following error: %s. Have you enabled the Sheets API? Have you shared the spreadsheet with %s?" % (error_message, email))
+                raise Exception("El acceso ha sido denegado con el siguiente error: %s. ¿Has activado la API de Sheets? ¿Ha compartido la hoja de cálculo con %s?" % (error_message, email))
             if error_status == 'NOT_FOUND':
-                raise Exception("Trying to open non-existent spreadsheet document. Verify the document id exists (%s)." % doc_id)
-        raise Exception("The Google API returned an error: %s" % e)
+                raise Exception("Intentando abrir un documento de hoja de cálculo inexistente. Compruebe que el identificador del documento existe (%s)." % doc_id)
+        raise Exception("La API de Google devuelve un error: %s" % e)

@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(959, 685)
         icon = QIcon()
-        icon.addFile(u"../assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"C:/Users/brian/.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -401,144 +401,174 @@ class Ui_MainWindow(object):
         self.label_13 = QLabel(self.groupBox_6)
         self.label_13.setObjectName(u"label_13")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_13)
-
-        self.CboxEthernet = QComboBox(self.groupBox_6)
-        self.CboxEthernet.setObjectName(u"CboxEthernet")
-        self.CboxEthernet.setMinimumSize(QSize(150, 0))
-        self.CboxEthernet.setMaximumSize(QSize(300, 16777215))
-
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.CboxEthernet)
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_13)
 
         self.label_14 = QLabel(self.groupBox_6)
         self.label_14.setObjectName(u"label_14")
 
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_14)
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_14)
 
         self.CboxPlug = QComboBox(self.groupBox_6)
         self.CboxPlug.setObjectName(u"CboxPlug")
         self.CboxPlug.setMinimumSize(QSize(150, 0))
         self.CboxPlug.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.CboxPlug)
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.CboxPlug)
 
         self.label_15 = QLabel(self.groupBox_6)
         self.label_15.setObjectName(u"label_15")
 
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_15)
+        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_15)
 
         self.CboxUSB = QComboBox(self.groupBox_6)
         self.CboxUSB.setObjectName(u"CboxUSB")
         self.CboxUSB.setMinimumSize(QSize(150, 0))
         self.CboxUSB.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.CboxUSB)
+        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.CboxUSB)
 
         self.label_16 = QLabel(self.groupBox_6)
         self.label_16.setObjectName(u"label_16")
 
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_16)
+        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_16)
 
         self.CboxScreen = QComboBox(self.groupBox_6)
         self.CboxScreen.setObjectName(u"CboxScreen")
         self.CboxScreen.setMinimumSize(QSize(150, 0))
         self.CboxScreen.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.CboxScreen)
+        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.CboxScreen)
 
         self.label_17 = QLabel(self.groupBox_6)
         self.label_17.setObjectName(u"label_17")
 
-        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_17)
+        self.formLayout.setWidget(6, QFormLayout.LabelRole, self.label_17)
 
         self.CboxSpikers = QComboBox(self.groupBox_6)
         self.CboxSpikers.setObjectName(u"CboxSpikers")
         self.CboxSpikers.setMinimumSize(QSize(150, 0))
         self.CboxSpikers.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.CboxSpikers)
+        self.formLayout.setWidget(6, QFormLayout.FieldRole, self.CboxSpikers)
 
         self.label_18 = QLabel(self.groupBox_6)
         self.label_18.setObjectName(u"label_18")
 
-        self.formLayout.setWidget(6, QFormLayout.LabelRole, self.label_18)
+        self.formLayout.setWidget(7, QFormLayout.LabelRole, self.label_18)
 
         self.CboxKeyboard = QComboBox(self.groupBox_6)
         self.CboxKeyboard.setObjectName(u"CboxKeyboard")
         self.CboxKeyboard.setMinimumSize(QSize(150, 0))
         self.CboxKeyboard.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(6, QFormLayout.FieldRole, self.CboxKeyboard)
+        self.formLayout.setWidget(7, QFormLayout.FieldRole, self.CboxKeyboard)
 
         self.label_19 = QLabel(self.groupBox_6)
         self.label_19.setObjectName(u"label_19")
 
-        self.formLayout.setWidget(7, QFormLayout.LabelRole, self.label_19)
+        self.formLayout.setWidget(8, QFormLayout.LabelRole, self.label_19)
 
         self.CboxCamera = QComboBox(self.groupBox_6)
         self.CboxCamera.setObjectName(u"CboxCamera")
         self.CboxCamera.setMinimumSize(QSize(150, 0))
         self.CboxCamera.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(7, QFormLayout.FieldRole, self.CboxCamera)
+        self.formLayout.setWidget(8, QFormLayout.FieldRole, self.CboxCamera)
 
         self.label_20 = QLabel(self.groupBox_6)
         self.label_20.setObjectName(u"label_20")
 
-        self.formLayout.setWidget(8, QFormLayout.LabelRole, self.label_20)
+        self.formLayout.setWidget(9, QFormLayout.LabelRole, self.label_20)
 
         self.CboxMicro = QComboBox(self.groupBox_6)
         self.CboxMicro.setObjectName(u"CboxMicro")
         self.CboxMicro.setMinimumSize(QSize(150, 0))
         self.CboxMicro.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(8, QFormLayout.FieldRole, self.CboxMicro)
+        self.formLayout.setWidget(9, QFormLayout.FieldRole, self.CboxMicro)
 
         self.label_21 = QLabel(self.groupBox_6)
         self.label_21.setObjectName(u"label_21")
 
-        self.formLayout.setWidget(9, QFormLayout.LabelRole, self.label_21)
+        self.formLayout.setWidget(11, QFormLayout.LabelRole, self.label_21)
 
         self.CboxTouchpad = QComboBox(self.groupBox_6)
         self.CboxTouchpad.setObjectName(u"CboxTouchpad")
         self.CboxTouchpad.setMinimumSize(QSize(150, 0))
         self.CboxTouchpad.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(9, QFormLayout.FieldRole, self.CboxTouchpad)
+        self.formLayout.setWidget(11, QFormLayout.FieldRole, self.CboxTouchpad)
 
         self.label_25 = QLabel(self.groupBox_6)
         self.label_25.setObjectName(u"label_25")
 
-        self.formLayout.setWidget(10, QFormLayout.LabelRole, self.label_25)
+        self.formLayout.setWidget(12, QFormLayout.LabelRole, self.label_25)
 
         self.CboxTouchscreen = QComboBox(self.groupBox_6)
         self.CboxTouchscreen.setObjectName(u"CboxTouchscreen")
         self.CboxTouchscreen.setMinimumSize(QSize(150, 0))
         self.CboxTouchscreen.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(10, QFormLayout.FieldRole, self.CboxTouchscreen)
+        self.formLayout.setWidget(12, QFormLayout.FieldRole, self.CboxTouchscreen)
 
         self.label_26 = QLabel(self.groupBox_6)
         self.label_26.setObjectName(u"label_26")
 
-        self.formLayout.setWidget(11, QFormLayout.LabelRole, self.label_26)
+        self.formLayout.setWidget(13, QFormLayout.LabelRole, self.label_26)
 
         self.CboxHinges = QComboBox(self.groupBox_6)
         self.CboxHinges.setObjectName(u"CboxHinges")
         self.CboxHinges.setMinimumSize(QSize(150, 0))
         self.CboxHinges.setMaximumSize(QSize(300, 16777215))
 
-        self.formLayout.setWidget(11, QFormLayout.FieldRole, self.CboxHinges)
+        self.formLayout.setWidget(13, QFormLayout.FieldRole, self.CboxHinges)
+
+        self.CboxEthernet = QComboBox(self.groupBox_6)
+        self.CboxEthernet.setObjectName(u"CboxEthernet")
+        self.CboxEthernet.setMinimumSize(QSize(150, 0))
+        self.CboxEthernet.setMaximumSize(QSize(300, 16777215))
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.CboxEthernet)
+
+        self.CboxBattery = QComboBox(self.groupBox_6)
+        self.CboxBattery.setObjectName(u"CboxBattery")
+        self.CboxBattery.setMinimumSize(QSize(150, 0))
+        self.CboxBattery.setMaximumSize(QSize(300, 16777215))
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.CboxBattery)
+
+        self.label_30 = QLabel(self.groupBox_6)
+        self.label_30.setObjectName(u"label_30")
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_30)
+
+        self.CboxConnectivity = QComboBox(self.groupBox_6)
+        self.CboxConnectivity.setObjectName(u"CboxConnectivity")
+        self.CboxConnectivity.setMinimumSize(QSize(150, 0))
+        self.CboxConnectivity.setMaximumSize(QSize(300, 16777215))
+
+        self.formLayout.setWidget(10, QFormLayout.FieldRole, self.CboxConnectivity)
+
+        self.label_32 = QLabel(self.groupBox_6)
+        self.label_32.setObjectName(u"label_32")
+
+        self.formLayout.setWidget(10, QFormLayout.LabelRole, self.label_32)
 
 
         self.horizontalLayout_3.addLayout(self.formLayout)
 
         self.verticalLayout_14 = QVBoxLayout()
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.TextBatteryDuration = QLineEdit(self.groupBox_6)
+        self.TextBatteryDuration.setObjectName(u"TextBatteryDuration")
+        self.TextBatteryDuration.setMinimumSize(QSize(0, 0))
+        self.TextBatteryDuration.setClearButtonEnabled(False)
+
+        self.verticalLayout_14.addWidget(self.TextBatteryDuration)
+
         self.TextBatteryNote = QLineEdit(self.groupBox_6)
         self.TextBatteryNote.setObjectName(u"TextBatteryNote")
         self.TextBatteryNote.setMinimumSize(QSize(0, 0))
-        self.TextBatteryNote.setClearButtonEnabled(False)
 
         self.verticalLayout_14.addWidget(self.TextBatteryNote)
 
@@ -590,6 +620,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_14.addWidget(self.TextMicroNote)
 
+        self.TextConnectivityNote = QLineEdit(self.groupBox_6)
+        self.TextConnectivityNote.setObjectName(u"TextConnectivityNote")
+        self.TextConnectivityNote.setMinimumSize(QSize(0, 0))
+
+        self.verticalLayout_14.addWidget(self.TextConnectivityNote)
+
         self.TextTouchpadNote = QLineEdit(self.groupBox_6)
         self.TextTouchpadNote.setObjectName(u"TextTouchpadNote")
         self.TextTouchpadNote.setMinimumSize(QSize(0, 0))
@@ -638,7 +674,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon1 = QIcon.fromTheme(iconThemeName)
         else:
-            icon1.addFile(u"../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
+            icon1.addFile(u"C:/Users/brian/PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
 
         self.BtnSaveToGoogleSheets.setIcon(icon1)
 
@@ -745,8 +781,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_13.addWidget(self.label_42)
 
         self.TableBatteryInfo = QTableWidget(self.tab_2)
-        if (self.TableBatteryInfo.columnCount() < 1):
-            self.TableBatteryInfo.setColumnCount(1)
+        if (self.TableBatteryInfo.columnCount() < 5):
+            self.TableBatteryInfo.setColumnCount(5)
         __qtablewidgetitem6 = QTableWidgetItem()
         self.TableBatteryInfo.setHorizontalHeaderItem(0, __qtablewidgetitem6)
         if (self.TableBatteryInfo.rowCount() < 8):
@@ -769,6 +805,7 @@ class Ui_MainWindow(object):
         self.TableBatteryInfo.setVerticalHeaderItem(7, __qtablewidgetitem14)
         self.TableBatteryInfo.setObjectName(u"TableBatteryInfo")
         self.TableBatteryInfo.setAutoScrollMargin(16)
+        self.TableBatteryInfo.setColumnCount(5)
 
         self.verticalLayout_13.addWidget(self.TableBatteryInfo)
 
@@ -861,8 +898,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
-        self.CboxEthernet.setCurrentIndex(-1)
+        self.tabWidget.setCurrentIndex(1)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -873,6 +909,9 @@ class Ui_MainWindow(object):
         self.CboxTouchpad.setCurrentIndex(-1)
         self.CboxTouchscreen.setCurrentIndex(-1)
         self.CboxHinges.setCurrentIndex(-1)
+        self.CboxEthernet.setCurrentIndex(-1)
+        self.CboxBattery.setCurrentIndex(-1)
+        self.CboxConnectivity.setCurrentIndex(-1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -920,8 +959,6 @@ class Ui_MainWindow(object):
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Reporte", None))
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"Salud de bater\u00eda", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"Ethernet", None))
-        self.CboxEthernet.setCurrentText("")
-        self.CboxEthernet.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona", None))
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"Puerto de carga", None))
         self.CboxPlug.setCurrentText("")
         self.CboxPlug.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona", None))
@@ -952,7 +989,16 @@ class Ui_MainWindow(object):
         self.label_26.setText(QCoreApplication.translate("MainWindow", u"Bisagras", None))
         self.CboxHinges.setCurrentText("")
         self.CboxHinges.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona", None))
-        self.TextBatteryNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Duraci\u00f3n de la bater\u00eda...", None))
+        self.CboxEthernet.setCurrentText("")
+        self.CboxEthernet.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona", None))
+        self.CboxBattery.setCurrentText("")
+        self.CboxBattery.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona", None))
+        self.label_30.setText(QCoreApplication.translate("MainWindow", u"Bater\u00eda", None))
+        self.CboxConnectivity.setCurrentText("")
+        self.CboxConnectivity.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona", None))
+        self.label_32.setText(QCoreApplication.translate("MainWindow", u"Conectividad", None))
+        self.TextBatteryDuration.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Duraci\u00f3n de la bater\u00eda...", None))
+        self.TextBatteryNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextEthernetNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextPlugNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextUSBNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
@@ -961,6 +1007,7 @@ class Ui_MainWindow(object):
         self.TextKeyboardNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextCameraNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextMicroNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
+        self.TextConnectivityNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextTouchpadNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextTouchscreenNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextHingesNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
@@ -980,7 +1027,7 @@ class Ui_MainWindow(object):
         self.BtnStartBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
         self.label_42.setText(QCoreApplication.translate("MainWindow", u"Baterias", None))
         ___qtablewidgetitem6 = self.TableBatteryInfo.horizontalHeaderItem(0)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"Valores", None));
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"1", None));
         ___qtablewidgetitem7 = self.TableBatteryInfo.verticalHeaderItem(0)
         ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"Battery name", None));
         ___qtablewidgetitem8 = self.TableBatteryInfo.verticalHeaderItem(1)

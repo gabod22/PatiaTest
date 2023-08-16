@@ -3,22 +3,17 @@ from modules.wifi import connect, createNewConnection
 from modules.constants import config
 from time import sleep
 from modules.helpers import is_admin
-from function import sync_date_time, get_disks_info
-
-from modules.battery import get_battery_info
+from function import sync_date_time
 
 class Jobs(QObject):
     finished = Signal()
     progress = Signal(int)
-    batteryInfo = Signal(dict)
-    gpus = Signal(dict)
+    batteryInfo = Signal(list)
     online = False
 
     def run(self):
         """Long-running task."""
         self.online = self.check_online()
-        self.batteryInfo.emit(get_battery_info())
-        self.gpus.emit(get_disks_info())
         
         if self.online == False:
             createNewConnection(

@@ -1,5 +1,4 @@
 from PySide6.QtCore import Signal, QObject
-from modules.battery import get_battery_info
 from modules.helpers import secs2hours
 import psutil
 
@@ -8,44 +7,39 @@ class Monitor(QObject):
     cpuPercent = Signal(int)
     ramPercent = Signal(int)
     gpuPercent = Signal(int)
-    batPercent = Signal(int)
-    batStatus = Signal(str)
-    batPlugged = Signal(str)
-    batRemainTime = Signal(str)
-    batHealth = Signal(str)
+    batteryPercent = Signal(int)
+    batteryStatus = Signal(str)
+    batteryPlugged = Signal(str)
+    batteryRemainTime = Signal(str)
     finished = Signal()
 
     def run(self):
         print('Monitor iniciado')
         self._stopped = False
-        batt_info = get_battery_info()
-        if(batt_info[0]["Voltage"] != ""):
-            self.batHealth.emit(batt_info[0]["Battery Health"])
-        else:
-            self.batHealth.emit("Sin bateria")
+        
         while not self._stopped:
             cpu = int(psutil.cpu_percent(interval=0.5))
             ram = int(psutil.virtual_memory().percent)
-            batt = psutil.sensors_battery()
-            if batt == None:
-                bat_percent = "Desconocido"
-                bat_status = "Batería no instalada"
-                bat_plugged = "Conectada"
-                bat_remaining_time = "Indeterminado"
+            battery = psutil.sensors_battery()
+            if battery == None:
+                battery_percent = "Desconocido"
+                battery_status = "Batería no instalada"
+                battery_plugged = "Conectada"
+                battery_remaining_time = "Indeterminado"
             else:
-                bat_percent = round(batt.percent, 2)
-                bat_status = ("Cargando" if batt.percent <
+                battery_percent = round(battery.percent, 2)
+                battery_status = ("Cargando" if battery.percent <
                               100 else "Cargada al máximo")
-                bat_plugged = (
-                    "Conectada" if batt.power_plugged else "Desconectada")
-                bat_remaining_time = secs2hours(batt.secsleft)
+                battery_plugged = (
+                    "Conectada" if battery.power_plugged else "Desconectada")
+                battery_remaining_time = secs2hours(battery.secsleft)
 
             self.cpuPercent.emit(cpu)
             self.ramPercent.emit(ram)
-            self.batPercent.emit(bat_percent)
-            self.batStatus.emit(bat_status)
-            self.batPlugged.emit(bat_plugged)
-            self.batRemainTime.emit(bat_remaining_time)
+            self.batteryPercent.emit(battery_percent)
+            self.batteryStatus.emit(battery_status)
+            self.batteryPlugged.emit(battery_plugged)
+            self.batteryRemainTime.emit(battery_remaining_time)
         self.finished.emit()
 
     def stop(self):

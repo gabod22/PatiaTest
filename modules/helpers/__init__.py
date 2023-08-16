@@ -1,9 +1,8 @@
 # -*- coding: latin-1 -*-
-
-import csv
 import math
 import os
 import subprocess
+import signal
 from ..constants import dirname
 import ctypes
 from PySide6.QtWidgets import QTableWidgetItem
@@ -14,23 +13,16 @@ def add_data_to_table(array, table):
         for column in range(len(array[row])):
             table.setItem(row, column, QTableWidgetItem(
                 str(array[row][column])))
-def p2f(x):
+def p2f(x: str):
     return float(x.strip('%'))/100
 
 def wmiToDict(wmi_object):
     return dict((attr, getattr(wmi_object, attr)) for attr in wmi_object.__dict__['_properties'])
 
 
-def csv_to_dict(filename):
-    with open(filename, mode='r') as file:
-        reader = csv.reader(file)
-        header = next(reader)
-        result_dict = {}
-        for row in reader:
-            key = row[0]
-            values = row[1:2][0]
-            result_dict[key] = values
-        return result_dict
+
+
+
 
 
 def open_program(program):

@@ -1,20 +1,34 @@
 # -*- coding: latin-1 -*-
 import psutil
-
+import csv
 import subprocess
 from os import path
-from time import sleep
-from ..helpers import csv_to_dict
 from ..constants import dirname
 
 def get_battery_info():
     program = path.join(dirname, 'programs/battery_info.exe')
     subprocess.run([program, '/scomma', 'battery.csv'], shell=True)
-
-    filename = "./battery.csv"
-    result_dict = csv_to_dict(filename)
+    result_list = []
+    data = []
     
-    return [result_dict]
+    filename = "./battery.csv"
+    with open(filename, mode='r') as file:
+        reader = csv.reader(file)
+        header = next(reader)
+        for row in reader:
+            data.append(row)
+        
+    
+    for battery in range(1,len(header)):
+        battery_dict = {}
+        for row in data:
+            key = row[0]
+            values = row[battery]
+            battery_dict[key] = values
+        result_list.append(battery_dict)
+        print('Termine el ', battery)
+    return result_list
+    
 
 
 # todo get health info
@@ -23,4 +37,4 @@ def is_battery_installed():
     return psutil.sensors_battery() != None
 
 
-__all__ = ['battery']
+# __all__ = ['battery']
