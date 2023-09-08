@@ -29,4 +29,4 @@ class Jobs(QObject):
         self.finished.emit()
 
     def check_online(self):
-        return (lambda a: True if 0 == a.system('ping google.com -w 4 > clear') else False)(__import__('os'))
+        return (lambda a: 'Success' if 0 == a.system('ping finxter.com -w 4') else 'Failure')(__import__('os'))

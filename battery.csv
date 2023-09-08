@@ -3,13 +3,13 @@ Battery Name,Primary
 Manufacture Name,HP
 Serial Number, 
 Manufacture Date,
-Power State,AC Power
-Current Capacity (in %),100.0%
-Current Capacity Value,"47,181 mWh"
+Power State,Discharging
+Current Capacity (in %),77.3%
+Current Capacity Value,"36,480 mWh"
 Full Charged Capacity,"47,181 mWh"
 Designed Capacity,"47,181 mWh"
 Battery Health,100.0%
-Voltage,"16,591 millivolts "
+Voltage,"15,158 millivolts "
 Charge/Discharge Rate ,
 Chemistry ,Lithium Ion
 Low Battery Capacity (1),"3,435 mWh"

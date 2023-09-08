@@ -25,7 +25,9 @@ def write_cell(data, note, wks: Worksheet, row, col):
 def write_range(data, notes, wks: Worksheet, row, col:str):
     wks.update("{}{}".format(col,row), data)
     insert_notes(notes, row, wks)
-    
+
+def write_in_last_row(data, wks):
+    wks
 
 def insert_notes(notes, row, wks):
     for i,note in enumerate(notes):
@@ -99,6 +101,9 @@ def get_spreadsheet(json_file, doc_id, tab_id):
             print(error_json)
             error_status = error_json.get("error", {}).get("status")
             email = credentials.get("client_email", "(email missing)")
+            if error_status == 'INVALID_ARGUMENT':
+                error_message = error_json.get("error", {}).get("message", "")
+                raise Exception("Hubo un problema al agregar la información debido al error: %s" % error_message)
             if error_status == 'PERMISSION_DENIED':
                 error_message = error_json.get("error", {}).get("message", "")
                 raise Exception("El acceso ha sido denegado con el siguiente error: %s. ¿Has activado la API de Sheets? ¿Ha compartido la hoja de cálculo con %s?" % (error_message, email))

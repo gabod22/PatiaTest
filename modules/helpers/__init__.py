@@ -21,10 +21,6 @@ def wmiToDict(wmi_object):
 
 
 
-
-
-
-
 def open_program(program):
     try:
         print('Opening ' + program[0][15:])
@@ -71,10 +67,13 @@ def secs2hours(secs):
     hh, mm = divmod(mm, 60)
     return "%d:%02d:%02d" % (hh, mm, ss)
 
+# def add_new_row(worksheet):
+#     return worksheet.row_count
 
-def next_available_row(worksheet):
-    str_list = list(filter(None, worksheet.col_values(1)))
-    return str(len(str_list)+1)
+# def next_available_row(worksheet):
+#     worksheet.row_count
+#     str_list = list(filter(None, worksheet.col_values(1)))
+#     return str(len(str_list)+1)
 
 
 def is_admin():

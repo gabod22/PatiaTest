@@ -14,6 +14,7 @@ from Jobs.Battery import BatteryTest
 from Jobs.worker import Worker
 from Jobs.Monitor import Monitor
 from Jobs.Jobs import Jobs
+from Jobs.stress2 import StressCPU
 
 from config_dialog import ConfigDialog
 
@@ -40,6 +41,7 @@ class MainWindow(QMainWindow):
         self.__thread_monitor = QThread()
         self.__thread_battery = QThread()
         self.__thread_jobs = QThread()
+        self.__thread_stress = QThread()
 
         self.data = [[]]
         self.notes = []
@@ -117,6 +119,7 @@ class MainWindow(QMainWindow):
         self.start_jobs_thread()
         self.start_get_system_info_thread()
         self.start_monitor_thread()
+        self.start_stress_thread()
 
         self.ui.BtnStartBatteryTest.clicked.connect(
             lambda: self.open_battery_test_mode())
@@ -318,6 +321,24 @@ class MainWindow(QMainWindow):
 
         # Execute
         self.threadpool.start(worker)
+
+# #SECTION - Stresss
+#     def __get_thread_stress_CPU(self):
+#         thread = QThread()
+#         stress_cpu = StressCPU()
+#         stress_cpu.moveToThread(thread)
+#         thread.started.connect(stress_cpu.start_stress)
+#         return thread
+
+#     def start_stress_thread(self):
+#         if not self.__thread_stress.isRunning():
+#             self.__thread_stress = self.__get_thread_stress_CPU()
+#             self.__thread_stress.start()
+            
+#     def stop_stress_thread(self):
+#         if self.__thread_stress.isRunning():
+#             self.__thread_stress.worker.stop_stress()
+#             self.__thread_stress.quit()
 
 #!SECTION
 # SECTION - Google sheet Thread
