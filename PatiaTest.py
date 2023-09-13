@@ -14,7 +14,6 @@ from Jobs.Battery import BatteryTest
 from Jobs.worker import Worker
 from Jobs.Monitor import Monitor
 from Jobs.Jobs import Jobs
-from Jobs.stress2 import StressCPU
 
 from config_dialog import ConfigDialog
 
@@ -341,8 +340,9 @@ class MainWindow(QMainWindow):
 #             self.__thread_stress.quit()
 
 #!SECTION
-# SECTION - Google sheet Thread
-    def start_thread_save_to_google_sheets(self):
+# SECTION - Save inspectión
+    
+    def start_thread_save_inspection(self):
         # Any other args, kwargs are passed to the run function
         worker = Worker(self.save_to_google_sheets)
         worker.signals.onError.connect(self.handleError)
@@ -353,7 +353,7 @@ class MainWindow(QMainWindow):
         self.threadpool.start(worker)
     def handleError(self,error):
         self.showFailDialog(error)
-    def save_to_google_sheets(self, progress_callback, on_error):
+    def save_inspection(self, progress_callback, on_error):
         self.ui.BtnSaveToGoogleSheets.setEnabled(False)
         try:
             progress_callback.emit('Obteniendo worksheet')
@@ -368,8 +368,6 @@ class MainWindow(QMainWindow):
 
         next_row = get_already_tested_row(
             self.ui.TextServiceNumber.text(), 5, wks)
-        if next_row < 0:
-            next_row = next_available_row(wks)
 
         try:
             progress_callback.emit('Guardando...')

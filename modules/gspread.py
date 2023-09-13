@@ -3,7 +3,6 @@ import os.path
 import gspread, google.auth.exceptions, requests
 from gspread import Worksheet
 from .files_managment import *
-from .helpers import next_available_row
 
 from .constants import gspread_file, config_file
 
