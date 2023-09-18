@@ -1,4 +1,5 @@
 import sys
+import asyncio
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PySide6.QtCore import QThreadPool, QThread
 from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
@@ -30,6 +31,8 @@ from modules.constants import config
 from modules.systeminfo import get_system_info
 from modules.programs import get_all_programs
 
+from modules.backend_connection import get_computer, save_computer
+
 
 class MainWindow(QMainWindow):
 
@@ -47,12 +50,13 @@ class MainWindow(QMainWindow):
         self.config_dialog = None
         self.wks = None
         self.config = read_yaml(config_file)
+        self.configData = {}
 
         self.systeminfo = None
-        array_disks = get_disks_info()
-        array_gpus = getGPUs()
+        self.array_disks = get_disks_info()
+        self.array_gpus = getGPUs()
         battery_health = ""
-        
+
         print("Bateria instalada" if is_battery_installed() else "Sin bateria")
         if is_battery_installed():
             self.ui.BtnStartBatteryTest.setEnabled(True)
@@ -73,8 +77,8 @@ class MainWindow(QMainWindow):
         self.setAllInitialValues()
 
         # Add all Disks to table
-        self.ui.TableStorage.setRowCount(len(array_disks))
-        add_data_to_table(array_disks, self.ui.TableStorage)
+        self.ui.TableStorage.setRowCount(len(self.array_disks))
+        add_data_to_table(self.array_disks, self.ui.TableStorage)
 
         batteries = get_battery_info()
         for idx, battery in enumerate(batteries):
@@ -94,22 +98,23 @@ class MainWindow(QMainWindow):
                 str(battery["Battery Health"])))
             self.ui.TableBatteryInfo.setItem(7, idx, QTableWidgetItem(
                 str(battery["Number of charge/discharge cycles"])))
-            
-            if(batteries[idx]["Voltage"] != ""):
+
+            if (batteries[idx]["Voltage"] != ""):
                 if idx != len(batteries) - 1:
-                    battery_health = battery_health + batteries[idx]["Battery Health"] + ", "
+                    battery_health = battery_health + \
+                        batteries[idx]["Battery Health"] + ", "
                 else:
-                    battery_health = battery_health + batteries[idx]["Battery Health"]
+                    battery_health = battery_health + \
+                        batteries[idx]["Battery Health"]
             else:
                 battery_health = "Sin bateria"
-            
+
         self.ui.TextBatteryHealth.setText(battery_health)
         self.ui.TextBatteryHealth_2.setText(battery_health)
-        
 
         # Add all gpus to table
-        self.ui.TableGPUs.setRowCount(len(array_gpus))
-        add_data_to_table(array_gpus, self.ui.TableGPUs)
+        self.ui.TableGPUs.setRowCount(len(self.array_gpus))
+        add_data_to_table(self.array_gpus, self.ui.TableGPUs)
 
         self.threadpool = QThreadPool()
         print("Multithreading with maximum %d threads" %
@@ -118,21 +123,20 @@ class MainWindow(QMainWindow):
         self.start_jobs_thread()
         self.start_get_system_info_thread()
         self.start_monitor_thread()
-        self.start_stress_thread()
 
         self.ui.BtnStartBatteryTest.clicked.connect(
             lambda: self.open_battery_test_mode())
         self.ui.BtnStopBatteryTest.clicked.connect(
             lambda: self.stop_battery_test_mode())
         self.ui.BtnSaveToGoogleSheets.clicked.connect(
-            lambda: self.start_thread_save_to_google_sheets())
+            lambda: self.start_thread_save_inspection())
 
     def asingMenuButtonsFunctions(self):
         # Config Menu
         self.ui.actionConfig.triggered.connect(
             lambda: self.open_config_dialog())
         self.ui.actionSave.triggered.connect(
-            lambda: self.start_thread_save_to_google_sheets())
+            lambda: self.start_thread_save_inspection())
         self.ui.actionSaveLocal.triggered.connect(lambda: self.save_local())
 
     def save_local(self):
@@ -152,7 +156,7 @@ class MainWindow(QMainWindow):
         info['TOUCHPAD'] = self.ui.CboxTouchpad.currentIndex()
         info['TOUCHSCREEN'] = self.ui.CboxTouchscreen.currentIndex()
         info['HINGES'] = self.ui.CboxHinges.currentIndex()
-        
+
         info['BATTERY_DURATION'] = self.ui.TextBatteryDuration.text()
         info['BATTERY_NOTE'] = self.ui.TextBatteryNote.text()
         info['ETHERNET_NOTE'] = self.ui.TextEthernetNote.text()
@@ -170,7 +174,6 @@ class MainWindow(QMainWindow):
         info['DETAILS'] = self.ui.PlainTextDetails.toPlainText()
         # print(info)
         write_yaml("c:/patiatest_info.yaml", info)
-        
 
     def setAllInitialValues(self):
         try:
@@ -190,7 +193,7 @@ class MainWindow(QMainWindow):
             self.ui.CboxTouchpad.setCurrentIndex(dataSaved['TOUCHPAD'])
             self.ui.CboxTouchscreen.setCurrentIndex(dataSaved['TOUCHSCREEN'])
             self.ui.CboxHinges.setCurrentIndex(dataSaved['HINGES'])
-            
+
             self.ui.TextBatteryNote.setText(dataSaved['BATTERY_NOTE'])
             self.ui.TextBatteryDuration.setText(dataSaved['BATTERY_DURATION'])
             self.ui.TextEthernetNote.setText(dataSaved['ETHERNET_NOTE'])
@@ -215,7 +218,8 @@ class MainWindow(QMainWindow):
                 self.config['DEFAULT_VALUES']['ETHERNET'])
             self.ui.CboxPlug.setCurrentIndex(
                 self.config['DEFAULT_VALUES']['SUPPLY_PLUG'])
-            self.ui.CboxUSB.setCurrentIndex(self.config['DEFAULT_VALUES']['USB'])
+            self.ui.CboxUSB.setCurrentIndex(
+                self.config['DEFAULT_VALUES']['USB'])
             self.ui.CboxScreen.setCurrentIndex(
                 self.config['DEFAULT_VALUES']['SCREEN'])
             self.ui.CboxSpikers.setCurrentIndex(
@@ -266,7 +270,7 @@ class MainWindow(QMainWindow):
         self.ui.CboxHinges.addItems(config["STATUS_OPTIONS"])
         self.ui.CboxMicro.addItems(config["STATUS_OPTIONS"])
 
-#SECTION - Tests
+# SECTION - Tests
     def asingAllButtonsFunctions(self):
         self.ui.BtnOpenPrograms.clicked.connect(lambda: self.open_all_tests())
         self.ui.BtnTestSpeakers.clicked.connect(lambda: self.playSound())
@@ -308,7 +312,7 @@ class MainWindow(QMainWindow):
 
     def get_system_info_done(self):
         self.statusBar().showMessage('Información obtenida')
-        
+
     def start_get_system_info_thread(self):
         # Pass the function to execute
         # Any other args, kwargs are passed to the run function
@@ -333,7 +337,7 @@ class MainWindow(QMainWindow):
 #         if not self.__thread_stress.isRunning():
 #             self.__thread_stress = self.__get_thread_stress_CPU()
 #             self.__thread_stress.start()
-            
+
 #     def stop_stress_thread(self):
 #         if self.__thread_stress.isRunning():
 #             self.__thread_stress.worker.stop_stress()
@@ -341,106 +345,42 @@ class MainWindow(QMainWindow):
 
 #!SECTION
 # SECTION - Save inspectión
-    
+
     def start_thread_save_inspection(self):
-        # Any other args, kwargs are passed to the run function
-        worker = Worker(self.save_to_google_sheets)
-        worker.signals.onError.connect(self.handleError)
-        worker.signals.finished.connect(self.thread_complete)
-        worker.signals.progress.connect(self.statusBar().showMessage)
-
-        # Execute
-        self.threadpool.start(worker)
-    def handleError(self,error):
-        self.showFailDialog(error)
-    def save_inspection(self, progress_callback, on_error):
-        self.ui.BtnSaveToGoogleSheets.setEnabled(False)
-        try:
-            progress_callback.emit('Obteniendo worksheet')
-            wks = get_worksheet()
-        except Exception as e:
-            print(e)
-            on_error.emit(e)
-            progress_callback.emit(str(e))
-            self.data = [[]]
-            self.notes = []
-            return
-
-        next_row = get_already_tested_row(
-            self.ui.TextServiceNumber.text(), 5, wks)
-
-        try:
-            progress_callback.emit('Guardando...')
-            write_cell(self.ui.TextPixelId.text(), "", wks, next_row, 1)
-            write_cell(self.ui.TextModel.text(), "", wks, next_row, 4)
-            write_cell(self.ui.TextServiceNumber.text(), "", wks, next_row, 5)
-            self.data = [[]]
-            self.data[0].append(self.ui.CboxCheckedBy.currentText())
-            self.data[0].append(self.ui.CboxAesthetics.currentText())
-            
-            if is_battery_installed():
-                self.data[0].append(p2f(self.ui.TextBatteryHealth_2.text()))
-                self.data[0].append(self.ui.TextBatteryDuration.text())
+        r = asyncio.run(get_computer(
+            serial_number=self.systeminfo['bios']['SerialNumber']))
+        gpu_model = ""
+        gpu_ram = ""
+        if (r.status == 404):
+            print(r.status)
+            if self.array_gpus != []:
+                gpu_model = self.array_gpus[0][0]
+                gpu_ram = self.array_gpus[0][1]
             else:
-                self.data[0].append(0)
-                self.data[0].append("0:00:00")
-            
-            write_range(self.data, self.notes, wks, next_row, "G")
-            self.data = [[]]
-            self.data[0].append(self.ui.CboxBattery.currentText())
-            self.data[0].append(self.ui.CboxPlug.currentText())
-            self.data[0].append(self.ui.CboxEthernet.currentText())
-            self.data[0].append(self.ui.CboxUSB.currentText())
-            self.data[0].append(self.ui.CboxHinges.currentText())
-            self.data[0].append(self.ui.CboxScreen.currentText())
-            self.data[0].append(self.ui.CboxTouchscreen.currentText())
-            self.data[0].append(self.ui.CboxKeyboard.currentText())
-            self.data[0].append(self.ui.CboxTouchpad.currentText())
-            self.data[0].append(self.ui.CboxSpikers.currentText())
-            self.data[0].append(self.ui.CboxCamera.currentText())
-            self.data[0].append(self.ui.CboxMicro.currentText())
-            self.data[0].append(self.ui.CboxConnectivity.currentText())
-            self.data[0].append(self.ui.PlainTextDetails.toPlainText())
+                gpu_model = "Sin grafica"
+                gpu_ram = ""
 
-            self.notes.append(self.ui.TextPlugNote.text())
-            self.notes.append(self.ui.TextEthernetNote.text())
-            self.notes.append(self.ui.TextUSBNote.text())
-            self.notes.append(self.ui.TextHingesNote.text())
-            self.notes.append(self.ui.TextScreenNote.text())
-            self.notes.append(self.ui.TextTouchscreenNote.text())
-            self.notes.append(self.ui.TextKeyboardNote.text())
-            self.notes.append(self.ui.TextTouchpadNote.text())
-            self.notes.append(self.ui.TextSpikersNote.text())
-            self.notes.append(self.ui.TextCameraNote.text())
-            self.notes.append(self.ui.TextMicroNote.text())
-            
-            write_range(self.data, self.notes, wks, next_row, "N")
-            sleep(0.1)
-            write_cell(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),"",wks,next_row,28)
-            print('La info fue guardada correctamente')
-            progress_callback.emit('Guardado correctamente')
-        except Exception as e:
-            if e.error_decription:
-                self.showFailDialog('La información no fue guardada. %s' % e.error_description)
-            else:
-                self.showFailDialog('La información no fue guardada. %s' % e)
-            progress_callback.emit('Error al guardar en Google')
-            print('La info no fue guardada :C %s' % e)
-        finally:
-            self.data = [[]]
-            self.notes = []
-            wks.client.session.close()
+            computer = {
+                "service_tag": self.systeminfo['bios']['SerialNumber'],
+                "internal_id": self.ui.TextPixelId.text(),
+                "product_id": 1,
+                "processor": self.systeminfo["cpu"]["brand_raw"],
+                "ram_size": str(convert_size(self.systeminfo["virtual_memory"]["total"])),
+                "ram_type": self.systeminfo["memories"][0]["Tipo"],
+                "storage_size": self.array_disks[0][2],
+                "storage_type": self.array_disks[0][1],
+                "graphics_card_model": gpu_model,
+                "graphics_ram_size": gpu_ram,
+                "computer_status_id": 1,
+                "aesthetic_id": 1,
+            }
+            asyncio.run(save_computer(computer))
 
-    def thread_complete(self):
-        self.ui.BtnSaveToGoogleSheets.setEnabled(True)
-        print("THREAD COMPLETE!")
 
-    def print_output(self, output):
-        print(output)
-        # self.generateQrCode(output['computer_system']['Model'])
 #!SECTION
 
 # SECTION - Battery Test Thread
+
     def __get_thread_battery_test(self):
         thread = QThread()
         worker = BatteryTest()
@@ -485,10 +425,11 @@ class MainWindow(QMainWindow):
         self.ui.TextBatteryDuration.setText(time)
 #!SECTION
 
-#SECTION - Initial Jobs
-    
+# SECTION - Initial Jobs
+
 
 # SECTION Monitor Thread
+
     def __get_thread_monitor(self):
         thread = QThread()
         worker = Monitor()
@@ -508,7 +449,6 @@ class MainWindow(QMainWindow):
         worker.batteryStatus.connect(self.ui.LbBatteryStatus.setText)
         worker.batteryPlugged.connect(self.ui.LbPluggedIn.setText)
         worker.batteryRemainTime.connect(self.ui.LbBatteryRemain.setText)
-        
 
         return thread
 
@@ -534,15 +474,20 @@ class MainWindow(QMainWindow):
         thread.worker = worker
 
         thread.started.connect(worker.run)
+        worker.configData.connect(self.setConfigData)
         worker.finished.connect(thread.quit)
 
         return thread
+
+    def setConfigData(self, data):
+        self.configData = data
+        print(self.configData)
 
     def start_jobs_thread(self):
         if not self.__thread_jobs.isRunning():
             self.__thread_jobs = self.__get_thread_jobs()
             self.__thread_jobs.start()
-    
+
     def stop_jobs_thread(self):
         if self.__thread_jobs.isRunning():
             self.__thread_jobs.worker.stop()
@@ -576,8 +521,6 @@ class MainWindow(QMainWindow):
         returnValue = msgBox.exec()
         if returnValue == QMessageBox.Ok:
             print('OK clicked')
-
-
 
 
 if __name__ == "__main__":

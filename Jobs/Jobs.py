@@ -4,11 +4,13 @@ from modules.constants import config
 from time import sleep
 from modules.helpers import is_admin
 from function import sync_date_time
+from modules.backend_connection import get_config
+import asyncio
 
 class Jobs(QObject):
     finished = Signal()
     progress = Signal(int)
-    batteryInfo = Signal(list)
+    configData = Signal(dict)
     online = False
 
     def run(self):
@@ -25,7 +27,10 @@ class Jobs(QObject):
             sleep(1)
         self.online = self.check_online()
         if is_admin() and self.online:
+            
             sync_date_time()
+            
+        self.configData.emit(asyncio.run(get_config()))
         self.finished.emit()
 
     def check_online(self):
