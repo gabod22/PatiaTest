@@ -1,4 +1,5 @@
 import sys
+import re
 import asyncio
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PySide6.QtCore import QThreadPool, QThread
@@ -301,12 +302,12 @@ class MainWindow(QMainWindow):
 # SECTION - Get system info
 
     def set_system_info(self, info):
+        cpu_model = re.search("i\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
+        ram = str(convert_size(info["virtual_memory"]["total"])) + " " + info["memories"][0]["Tipo"]
         self.systeminfo = info
         self.ui.TextBiosVersion.setText(info["bios"]["Version"])
-        self.ui.TextRAMType.setText(info["memories"][0]["Tipo"])
-        self.ui.TextTotalRAM.setText(
-            str(convert_size(info["virtual_memory"]["total"])))
-        self.ui.TextProcessorName.setText(info["cpu"]["brand_raw"])
+        self.ui.TextTotalRAM.setText(ram)
+        self.ui.TextProcessorName.setText(cpu_model)
         self.ui.TextModel.setText(info["computer_system"]["Model"])
         self.ui.TextServiceNumber.setText(info["bios"]["SerialNumber"])
 
@@ -364,7 +365,7 @@ class MainWindow(QMainWindow):
                 "service_tag": self.systeminfo['bios']['SerialNumber'],
                 "internal_id": self.ui.TextPixelId.text(),
                 "product_id": 1,
-                "processor": self.systeminfo["cpu"]["brand_raw"],
+                "processor": re.search("i\d-\d{4}[A-Z]", self.systeminfo["cpu"]["brand_raw"]),
                 "ram_size": str(convert_size(self.systeminfo["virtual_memory"]["total"])),
                 "ram_type": self.systeminfo["memories"][0]["Tipo"],
                 "storage_size": self.array_disks[0][2],
@@ -380,6 +381,7 @@ class MainWindow(QMainWindow):
 #!SECTION
 
 # SECTION - Battery Test Thread
+
 
     def __get_thread_battery_test(self):
         thread = QThread()
@@ -430,6 +432,7 @@ class MainWindow(QMainWindow):
 
 # SECTION Monitor Thread
 
+
     def __get_thread_monitor(self):
         thread = QThread()
         worker = Monitor()
@@ -476,6 +479,7 @@ class MainWindow(QMainWindow):
         thread.started.connect(worker.run)
         worker.configData.connect(self.setConfigData)
         worker.finished.connect(thread.quit)
+        worker.error.connect(lambda: self.showFailDialog('No hay internet'))
 
         return thread
 

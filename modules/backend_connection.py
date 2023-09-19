@@ -1,6 +1,5 @@
 import aiohttp
-import asyncio
-
+import json
 URL = 'http://patiatest_web.test'
 
 headers = {
@@ -18,7 +17,9 @@ async def get_config():
             print("Content-type:", response.headers['content-type'])
 
             r = await response.text()
-            return response
+            res = json.loads(r)
+            print(type(res))
+            return res
 
 async def get_computer(serial_number):
     

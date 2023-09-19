@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -28,9 +28,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(959, 685)
+        MainWindow.resize(641, 488)
         icon = QIcon()
-        icon.addFile(u"C:/Users/brian/.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"../../../.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -42,8 +42,8 @@ class Ui_MainWindow(object):
         self.actionPrograma.setObjectName(u"actionPrograma")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayout_4 = QVBoxLayout(self.centralwidget)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.horizontalLayout_4 = QHBoxLayout(self.centralwidget)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tab_3 = QWidget()
@@ -52,118 +52,141 @@ class Ui_MainWindow(object):
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.verticalLayout_17 = QVBoxLayout()
-        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
-        self.horizontalLayout_4 = QHBoxLayout()
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.groupBox_4 = QGroupBox(self.tab_3)
-        self.groupBox_4.setObjectName(u"groupBox_4")
-        self.verticalLayout_7 = QVBoxLayout(self.groupBox_4)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.verticalLayout_6 = QVBoxLayout()
-        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.label_4 = QLabel(self.groupBox_4)
-        self.label_4.setObjectName(u"label_4")
-
-        self.verticalLayout_6.addWidget(self.label_4)
-
-        self.TextBiosVersion = QLineEdit(self.groupBox_4)
-        self.TextBiosVersion.setObjectName(u"TextBiosVersion")
-        self.TextBiosVersion.setAutoFillBackground(False)
-        self.TextBiosVersion.setStyleSheet(u"background-color: rgb(222, 222, 222);")
-        self.TextBiosVersion.setReadOnly(True)
-
-        self.verticalLayout_6.addWidget(self.TextBiosVersion)
-
-        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_6.addItem(self.verticalSpacer_5)
-
-
-        self.verticalLayout_7.addLayout(self.verticalLayout_6)
-
-
-        self.horizontalLayout_4.addWidget(self.groupBox_4)
-
-        self.groupBox = QGroupBox(self.tab_3)
-        self.groupBox.setObjectName(u"groupBox")
-        self.verticalLayout_9 = QVBoxLayout(self.groupBox)
-        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.verticalLayout = QVBoxLayout()
+        self.groupBox_2 = QGroupBox(self.tab_3)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        self.groupBox_2.setMinimumSize(QSize(0, 0))
+        self.groupBox_2.setMaximumSize(QSize(5000, 16777215))
+        self.verticalLayout = QVBoxLayout(self.groupBox_2)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.label_7 = QLabel(self.groupBox)
+        self.formLayout_2 = QFormLayout()
+        self.formLayout_2.setObjectName(u"formLayout_2")
+        self.label_2 = QLabel(self.groupBox_2)
+        self.label_2.setObjectName(u"label_2")
+
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_2)
+
+        self.TextModel = QLineEdit(self.groupBox_2)
+        self.TextModel.setObjectName(u"TextModel")
+        self.TextModel.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextModel.setReadOnly(True)
+
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.TextModel)
+
+        self.label_3 = QLabel(self.groupBox_2)
+        self.label_3.setObjectName(u"label_3")
+
+        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.label_3)
+
+        self.TextServiceNumber = QLineEdit(self.groupBox_2)
+        self.TextServiceNumber.setObjectName(u"TextServiceNumber")
+        self.TextServiceNumber.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextServiceNumber.setReadOnly(True)
+
+        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.TextServiceNumber)
+
+        self.label_6 = QLabel(self.groupBox_2)
+        self.label_6.setObjectName(u"label_6")
+
+        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_6)
+
+        self.TextBatteryHealth = QLineEdit(self.groupBox_2)
+        self.TextBatteryHealth.setObjectName(u"TextBatteryHealth")
+        self.TextBatteryHealth.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextBatteryHealth.setReadOnly(True)
+
+        self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.TextBatteryHealth)
+
+        self.label_7 = QLabel(self.groupBox_2)
         self.label_7.setObjectName(u"label_7")
 
-        self.verticalLayout.addWidget(self.label_7)
+        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_7)
 
-        self.TextProcessorName = QLineEdit(self.groupBox)
+        self.TextProcessorName = QLineEdit(self.groupBox_2)
         self.TextProcessorName.setObjectName(u"TextProcessorName")
         self.TextProcessorName.setAutoFillBackground(False)
         self.TextProcessorName.setStyleSheet(u"background-color: rgb(222, 222, 222);")
         self.TextProcessorName.setReadOnly(True)
 
-        self.verticalLayout.addWidget(self.TextProcessorName)
+        self.formLayout_2.setWidget(3, QFormLayout.FieldRole, self.TextProcessorName)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
-
-        self.verticalLayout_9.addLayout(self.verticalLayout)
-
-
-        self.horizontalLayout_4.addWidget(self.groupBox)
-
-        self.groupBox_5 = QGroupBox(self.tab_3)
-        self.groupBox_5.setObjectName(u"groupBox_5")
-        self.verticalLayout_3 = QVBoxLayout(self.groupBox_5)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_2 = QVBoxLayout()
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.label_5 = QLabel(self.groupBox_5)
-        self.label_5.setObjectName(u"label_5")
-
-        self.verticalLayout_2.addWidget(self.label_5)
-
-        self.TextRAMType = QLineEdit(self.groupBox_5)
-        self.TextRAMType.setObjectName(u"TextRAMType")
-        self.TextRAMType.setAutoFillBackground(False)
-        self.TextRAMType.setStyleSheet(u"background-color: rgb(222, 222, 222);")
-        self.TextRAMType.setReadOnly(True)
-
-        self.verticalLayout_2.addWidget(self.TextRAMType)
-
-
-        self.verticalLayout_3.addLayout(self.verticalLayout_2)
-
-        self.verticalLayout_27 = QVBoxLayout()
-        self.verticalLayout_27.setObjectName(u"verticalLayout_27")
-        self.label_34 = QLabel(self.groupBox_5)
+        self.label_34 = QLabel(self.groupBox_2)
         self.label_34.setObjectName(u"label_34")
 
-        self.verticalLayout_27.addWidget(self.label_34)
+        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.label_34)
 
-        self.TextTotalRAM = QLineEdit(self.groupBox_5)
+        self.TextTotalRAM = QLineEdit(self.groupBox_2)
         self.TextTotalRAM.setObjectName(u"TextTotalRAM")
         self.TextTotalRAM.setAutoFillBackground(False)
         self.TextTotalRAM.setStyleSheet(u"background-color: rgb(222, 222, 222);")
         self.TextTotalRAM.setReadOnly(True)
 
-        self.verticalLayout_27.addWidget(self.TextTotalRAM)
+        self.formLayout_2.setWidget(4, QFormLayout.FieldRole, self.TextTotalRAM)
 
-        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.label_4 = QLabel(self.groupBox_2)
+        self.label_4.setObjectName(u"label_4")
 
-        self.verticalLayout_27.addItem(self.verticalSpacer_6)
+        self.formLayout_2.setWidget(5, QFormLayout.LabelRole, self.label_4)
+
+        self.TextBiosVersion = QLineEdit(self.groupBox_2)
+        self.TextBiosVersion.setObjectName(u"TextBiosVersion")
+        self.TextBiosVersion.setAutoFillBackground(False)
+        self.TextBiosVersion.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextBiosVersion.setReadOnly(True)
+
+        self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.TextBiosVersion)
 
 
-        self.verticalLayout_3.addLayout(self.verticalLayout_27)
+        self.verticalLayout.addLayout(self.formLayout_2)
+
+        self.label_22 = QLabel(self.groupBox_2)
+        self.label_22.setObjectName(u"label_22")
+
+        self.verticalLayout.addWidget(self.label_22)
+
+        self.BarCPUPercentage = QProgressBar(self.groupBox_2)
+        self.BarCPUPercentage.setObjectName(u"BarCPUPercentage")
+        self.BarCPUPercentage.setValue(24)
+
+        self.verticalLayout.addWidget(self.BarCPUPercentage)
+
+        self.label_24 = QLabel(self.groupBox_2)
+        self.label_24.setObjectName(u"label_24")
+
+        self.verticalLayout.addWidget(self.label_24)
+
+        self.BarRAMPercentage = QProgressBar(self.groupBox_2)
+        self.BarRAMPercentage.setObjectName(u"BarRAMPercentage")
+        self.BarRAMPercentage.setValue(24)
+
+        self.verticalLayout.addWidget(self.BarRAMPercentage)
+
+        self.label_29 = QLabel(self.groupBox_2)
+        self.label_29.setObjectName(u"label_29")
+
+        self.verticalLayout.addWidget(self.label_29)
+
+        self.BarBatteryPercentage = QProgressBar(self.groupBox_2)
+        self.BarBatteryPercentage.setObjectName(u"BarBatteryPercentage")
+        self.BarBatteryPercentage.setValue(24)
+
+        self.verticalLayout.addWidget(self.BarBatteryPercentage)
+
+        self.line_5 = QFrame(self.groupBox_2)
+        self.line_5.setObjectName(u"line_5")
+        self.line_5.setFrameShape(QFrame.HLine)
+        self.line_5.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout.addWidget(self.line_5)
+
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer_3)
 
 
-        self.horizontalLayout_4.addWidget(self.groupBox_5)
+        self.horizontalLayout_5.addWidget(self.groupBox_2)
 
-
-        self.verticalLayout_17.addLayout(self.horizontalLayout_4)
-
+        self.verticalLayout_17 = QVBoxLayout()
+        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
         self.verticalLayout_8 = QVBoxLayout()
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.label_27 = QLabel(self.tab_3)
@@ -220,94 +243,6 @@ class Ui_MainWindow(object):
 
 
         self.horizontalLayout_5.addLayout(self.verticalLayout_17)
-
-        self.groupBox_2 = QGroupBox(self.tab_3)
-        self.groupBox_2.setObjectName(u"groupBox_2")
-        self.groupBox_2.setMaximumSize(QSize(200, 16777215))
-        self.verticalLayout_10 = QVBoxLayout(self.groupBox_2)
-        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.label_2 = QLabel(self.groupBox_2)
-        self.label_2.setObjectName(u"label_2")
-
-        self.verticalLayout_10.addWidget(self.label_2)
-
-        self.TextModel = QLineEdit(self.groupBox_2)
-        self.TextModel.setObjectName(u"TextModel")
-        self.TextModel.setStyleSheet(u"background-color: rgb(222, 222, 222);")
-        self.TextModel.setReadOnly(True)
-
-        self.verticalLayout_10.addWidget(self.TextModel)
-
-        self.label_3 = QLabel(self.groupBox_2)
-        self.label_3.setObjectName(u"label_3")
-
-        self.verticalLayout_10.addWidget(self.label_3)
-
-        self.TextServiceNumber = QLineEdit(self.groupBox_2)
-        self.TextServiceNumber.setObjectName(u"TextServiceNumber")
-        self.TextServiceNumber.setStyleSheet(u"background-color: rgb(222, 222, 222);")
-        self.TextServiceNumber.setReadOnly(True)
-
-        self.verticalLayout_10.addWidget(self.TextServiceNumber)
-
-        self.label_6 = QLabel(self.groupBox_2)
-        self.label_6.setObjectName(u"label_6")
-
-        self.verticalLayout_10.addWidget(self.label_6)
-
-        self.TextBatteryHealth = QLineEdit(self.groupBox_2)
-        self.TextBatteryHealth.setObjectName(u"TextBatteryHealth")
-        self.TextBatteryHealth.setStyleSheet(u"background-color: rgb(222, 222, 222);")
-        self.TextBatteryHealth.setReadOnly(True)
-
-        self.verticalLayout_10.addWidget(self.TextBatteryHealth)
-
-        self.label_22 = QLabel(self.groupBox_2)
-        self.label_22.setObjectName(u"label_22")
-
-        self.verticalLayout_10.addWidget(self.label_22)
-
-        self.BarCPUPercentage = QProgressBar(self.groupBox_2)
-        self.BarCPUPercentage.setObjectName(u"BarCPUPercentage")
-        self.BarCPUPercentage.setValue(24)
-
-        self.verticalLayout_10.addWidget(self.BarCPUPercentage)
-
-        self.label_24 = QLabel(self.groupBox_2)
-        self.label_24.setObjectName(u"label_24")
-
-        self.verticalLayout_10.addWidget(self.label_24)
-
-        self.BarRAMPercentage = QProgressBar(self.groupBox_2)
-        self.BarRAMPercentage.setObjectName(u"BarRAMPercentage")
-        self.BarRAMPercentage.setValue(24)
-
-        self.verticalLayout_10.addWidget(self.BarRAMPercentage)
-
-        self.label_29 = QLabel(self.groupBox_2)
-        self.label_29.setObjectName(u"label_29")
-
-        self.verticalLayout_10.addWidget(self.label_29)
-
-        self.BarBatteryPercentage = QProgressBar(self.groupBox_2)
-        self.BarBatteryPercentage.setObjectName(u"BarBatteryPercentage")
-        self.BarBatteryPercentage.setValue(24)
-
-        self.verticalLayout_10.addWidget(self.BarBatteryPercentage)
-
-        self.line_5 = QFrame(self.groupBox_2)
-        self.line_5.setObjectName(u"line_5")
-        self.line_5.setFrameShape(QFrame.HLine)
-        self.line_5.setFrameShadow(QFrame.Sunken)
-
-        self.verticalLayout_10.addWidget(self.line_5)
-
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_10.addItem(self.verticalSpacer_3)
-
-
-        self.horizontalLayout_5.addWidget(self.groupBox_2)
 
 
         self.verticalLayout_19.addLayout(self.horizontalLayout_5)
@@ -377,20 +312,23 @@ class Ui_MainWindow(object):
 
         self.groupBox_6 = QGroupBox(self.tabReport)
         self.groupBox_6.setObjectName(u"groupBox_6")
-        self.verticalLayout_5 = QVBoxLayout(self.groupBox_6)
-        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_2 = QVBoxLayout(self.groupBox_6)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.scrollArea = QScrollArea(self.groupBox_6)
+        self.scrollArea.setObjectName(u"scrollArea")
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_2 = QWidget()
+        self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 560, 408))
+        self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
         self.formLayout.setRowWrapPolicy(QFormLayout.WrapLongRows)
-        self.label_12 = QLabel(self.groupBox_6)
-        self.label_12.setObjectName(u"label_12")
-
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_12)
-
-        self.TextBatteryHealth_2 = QLineEdit(self.groupBox_6)
+        self.TextBatteryHealth_2 = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextBatteryHealth_2.setObjectName(u"TextBatteryHealth_2")
         self.TextBatteryHealth_2.setMaximumSize(QSize(300, 16777215))
         self.TextBatteryHealth_2.setStyleSheet(u"")
@@ -398,247 +336,252 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.TextBatteryHealth_2)
 
-        self.label_13 = QLabel(self.groupBox_6)
+        self.label_13 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_13.setObjectName(u"label_13")
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_13)
 
-        self.label_14 = QLabel(self.groupBox_6)
+        self.label_14 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_14.setObjectName(u"label_14")
 
         self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_14)
 
-        self.CboxPlug = QComboBox(self.groupBox_6)
+        self.CboxPlug = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxPlug.setObjectName(u"CboxPlug")
         self.CboxPlug.setMinimumSize(QSize(150, 0))
         self.CboxPlug.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.CboxPlug)
 
-        self.label_15 = QLabel(self.groupBox_6)
+        self.label_15 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_15.setObjectName(u"label_15")
 
         self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_15)
 
-        self.CboxUSB = QComboBox(self.groupBox_6)
+        self.CboxUSB = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxUSB.setObjectName(u"CboxUSB")
         self.CboxUSB.setMinimumSize(QSize(150, 0))
         self.CboxUSB.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(4, QFormLayout.FieldRole, self.CboxUSB)
 
-        self.label_16 = QLabel(self.groupBox_6)
+        self.label_16 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_16.setObjectName(u"label_16")
 
         self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_16)
 
-        self.CboxScreen = QComboBox(self.groupBox_6)
+        self.CboxScreen = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxScreen.setObjectName(u"CboxScreen")
         self.CboxScreen.setMinimumSize(QSize(150, 0))
         self.CboxScreen.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(5, QFormLayout.FieldRole, self.CboxScreen)
 
-        self.label_17 = QLabel(self.groupBox_6)
+        self.label_17 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_17.setObjectName(u"label_17")
 
         self.formLayout.setWidget(6, QFormLayout.LabelRole, self.label_17)
 
-        self.CboxSpikers = QComboBox(self.groupBox_6)
+        self.CboxSpikers = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxSpikers.setObjectName(u"CboxSpikers")
         self.CboxSpikers.setMinimumSize(QSize(150, 0))
         self.CboxSpikers.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(6, QFormLayout.FieldRole, self.CboxSpikers)
 
-        self.label_18 = QLabel(self.groupBox_6)
+        self.label_18 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_18.setObjectName(u"label_18")
 
         self.formLayout.setWidget(7, QFormLayout.LabelRole, self.label_18)
 
-        self.CboxKeyboard = QComboBox(self.groupBox_6)
+        self.CboxKeyboard = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxKeyboard.setObjectName(u"CboxKeyboard")
         self.CboxKeyboard.setMinimumSize(QSize(150, 0))
         self.CboxKeyboard.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(7, QFormLayout.FieldRole, self.CboxKeyboard)
 
-        self.label_19 = QLabel(self.groupBox_6)
+        self.label_19 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_19.setObjectName(u"label_19")
 
         self.formLayout.setWidget(8, QFormLayout.LabelRole, self.label_19)
 
-        self.CboxCamera = QComboBox(self.groupBox_6)
+        self.CboxCamera = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxCamera.setObjectName(u"CboxCamera")
         self.CboxCamera.setMinimumSize(QSize(150, 0))
         self.CboxCamera.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(8, QFormLayout.FieldRole, self.CboxCamera)
 
-        self.label_20 = QLabel(self.groupBox_6)
+        self.label_20 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_20.setObjectName(u"label_20")
 
         self.formLayout.setWidget(9, QFormLayout.LabelRole, self.label_20)
 
-        self.CboxMicro = QComboBox(self.groupBox_6)
+        self.CboxMicro = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxMicro.setObjectName(u"CboxMicro")
         self.CboxMicro.setMinimumSize(QSize(150, 0))
         self.CboxMicro.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(9, QFormLayout.FieldRole, self.CboxMicro)
 
-        self.label_21 = QLabel(self.groupBox_6)
+        self.label_21 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_21.setObjectName(u"label_21")
 
         self.formLayout.setWidget(11, QFormLayout.LabelRole, self.label_21)
 
-        self.CboxTouchpad = QComboBox(self.groupBox_6)
+        self.CboxTouchpad = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxTouchpad.setObjectName(u"CboxTouchpad")
         self.CboxTouchpad.setMinimumSize(QSize(150, 0))
         self.CboxTouchpad.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(11, QFormLayout.FieldRole, self.CboxTouchpad)
 
-        self.label_25 = QLabel(self.groupBox_6)
+        self.label_25 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_25.setObjectName(u"label_25")
 
         self.formLayout.setWidget(12, QFormLayout.LabelRole, self.label_25)
 
-        self.CboxTouchscreen = QComboBox(self.groupBox_6)
+        self.CboxTouchscreen = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxTouchscreen.setObjectName(u"CboxTouchscreen")
         self.CboxTouchscreen.setMinimumSize(QSize(150, 0))
         self.CboxTouchscreen.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(12, QFormLayout.FieldRole, self.CboxTouchscreen)
 
-        self.label_26 = QLabel(self.groupBox_6)
+        self.label_26 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_26.setObjectName(u"label_26")
 
         self.formLayout.setWidget(13, QFormLayout.LabelRole, self.label_26)
 
-        self.CboxHinges = QComboBox(self.groupBox_6)
+        self.CboxHinges = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxHinges.setObjectName(u"CboxHinges")
         self.CboxHinges.setMinimumSize(QSize(150, 0))
         self.CboxHinges.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(13, QFormLayout.FieldRole, self.CboxHinges)
 
-        self.CboxEthernet = QComboBox(self.groupBox_6)
+        self.CboxEthernet = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxEthernet.setObjectName(u"CboxEthernet")
         self.CboxEthernet.setMinimumSize(QSize(150, 0))
         self.CboxEthernet.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.CboxEthernet)
 
-        self.CboxBattery = QComboBox(self.groupBox_6)
+        self.CboxBattery = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxBattery.setObjectName(u"CboxBattery")
         self.CboxBattery.setMinimumSize(QSize(150, 0))
         self.CboxBattery.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.CboxBattery)
 
-        self.label_30 = QLabel(self.groupBox_6)
+        self.label_30 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_30.setObjectName(u"label_30")
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_30)
 
-        self.CboxConnectivity = QComboBox(self.groupBox_6)
+        self.CboxConnectivity = QComboBox(self.scrollAreaWidgetContents_2)
         self.CboxConnectivity.setObjectName(u"CboxConnectivity")
         self.CboxConnectivity.setMinimumSize(QSize(150, 0))
         self.CboxConnectivity.setMaximumSize(QSize(300, 16777215))
 
         self.formLayout.setWidget(10, QFormLayout.FieldRole, self.CboxConnectivity)
 
-        self.label_32 = QLabel(self.groupBox_6)
+        self.label_32 = QLabel(self.scrollAreaWidgetContents_2)
         self.label_32.setObjectName(u"label_32")
 
         self.formLayout.setWidget(10, QFormLayout.LabelRole, self.label_32)
+
+        self.label_12 = QLabel(self.scrollAreaWidgetContents_2)
+        self.label_12.setObjectName(u"label_12")
+
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_12)
 
 
         self.horizontalLayout_3.addLayout(self.formLayout)
 
         self.verticalLayout_14 = QVBoxLayout()
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
-        self.TextBatteryDuration = QLineEdit(self.groupBox_6)
+        self.TextBatteryDuration = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextBatteryDuration.setObjectName(u"TextBatteryDuration")
         self.TextBatteryDuration.setMinimumSize(QSize(0, 0))
         self.TextBatteryDuration.setClearButtonEnabled(False)
 
         self.verticalLayout_14.addWidget(self.TextBatteryDuration)
 
-        self.TextBatteryNote = QLineEdit(self.groupBox_6)
+        self.TextBatteryNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextBatteryNote.setObjectName(u"TextBatteryNote")
         self.TextBatteryNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextBatteryNote)
 
-        self.TextEthernetNote = QLineEdit(self.groupBox_6)
+        self.TextEthernetNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextEthernetNote.setObjectName(u"TextEthernetNote")
         self.TextEthernetNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextEthernetNote)
 
-        self.TextPlugNote = QLineEdit(self.groupBox_6)
+        self.TextPlugNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextPlugNote.setObjectName(u"TextPlugNote")
         self.TextPlugNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextPlugNote)
 
-        self.TextUSBNote = QLineEdit(self.groupBox_6)
+        self.TextUSBNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextUSBNote.setObjectName(u"TextUSBNote")
         self.TextUSBNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextUSBNote)
 
-        self.TextScreenNote = QLineEdit(self.groupBox_6)
+        self.TextScreenNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextScreenNote.setObjectName(u"TextScreenNote")
         self.TextScreenNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextScreenNote)
 
-        self.TextSpikersNote = QLineEdit(self.groupBox_6)
+        self.TextSpikersNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextSpikersNote.setObjectName(u"TextSpikersNote")
         self.TextSpikersNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextSpikersNote)
 
-        self.TextKeyboardNote = QLineEdit(self.groupBox_6)
+        self.TextKeyboardNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextKeyboardNote.setObjectName(u"TextKeyboardNote")
         self.TextKeyboardNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextKeyboardNote)
 
-        self.TextCameraNote = QLineEdit(self.groupBox_6)
+        self.TextCameraNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextCameraNote.setObjectName(u"TextCameraNote")
         self.TextCameraNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextCameraNote)
 
-        self.TextMicroNote = QLineEdit(self.groupBox_6)
+        self.TextMicroNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextMicroNote.setObjectName(u"TextMicroNote")
         self.TextMicroNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextMicroNote)
 
-        self.TextConnectivityNote = QLineEdit(self.groupBox_6)
+        self.TextConnectivityNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextConnectivityNote.setObjectName(u"TextConnectivityNote")
         self.TextConnectivityNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextConnectivityNote)
 
-        self.TextTouchpadNote = QLineEdit(self.groupBox_6)
+        self.TextTouchpadNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextTouchpadNote.setObjectName(u"TextTouchpadNote")
         self.TextTouchpadNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextTouchpadNote)
 
-        self.TextTouchscreenNote = QLineEdit(self.groupBox_6)
+        self.TextTouchscreenNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextTouchscreenNote.setObjectName(u"TextTouchscreenNote")
         self.TextTouchscreenNote.setMinimumSize(QSize(0, 0))
 
         self.verticalLayout_14.addWidget(self.TextTouchscreenNote)
 
-        self.TextHingesNote = QLineEdit(self.groupBox_6)
+        self.TextHingesNote = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextHingesNote.setObjectName(u"TextHingesNote")
         self.TextHingesNote.setMinimumSize(QSize(0, 0))
 
@@ -649,23 +592,23 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.setStretch(1, 1)
 
-        self.verticalLayout_5.addLayout(self.horizontalLayout_3)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
+
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
+
+        self.verticalLayout_2.addWidget(self.scrollArea)
 
         self.label_28 = QLabel(self.groupBox_6)
         self.label_28.setObjectName(u"label_28")
 
-        self.verticalLayout_5.addWidget(self.label_28)
+        self.verticalLayout_2.addWidget(self.label_28)
 
         self.PlainTextDetails = QPlainTextEdit(self.groupBox_6)
         self.PlainTextDetails.setObjectName(u"PlainTextDetails")
         self.PlainTextDetails.setMaximumSize(QSize(16777215, 50))
         self.PlainTextDetails.setTabChangesFocus(True)
 
-        self.verticalLayout_5.addWidget(self.PlainTextDetails)
-
-        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_5.addItem(self.verticalSpacer_4)
+        self.verticalLayout_2.addWidget(self.PlainTextDetails)
 
         self.BtnSaveToGoogleSheets = QPushButton(self.groupBox_6)
         self.BtnSaveToGoogleSheets.setObjectName(u"BtnSaveToGoogleSheets")
@@ -674,11 +617,11 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon1 = QIcon.fromTheme(iconThemeName)
         else:
-            icon1.addFile(u"C:/Users/brian/PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
+            icon1.addFile(u"../../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
 
         self.BtnSaveToGoogleSheets.setIcon(icon1)
 
-        self.verticalLayout_5.addWidget(self.BtnSaveToGoogleSheets)
+        self.verticalLayout_2.addWidget(self.BtnSaveToGoogleSheets)
 
 
         self.verticalLayout_16.addWidget(self.groupBox_6)
@@ -864,7 +807,7 @@ class Ui_MainWindow(object):
         self.AreaProrgrams.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 895, 473))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 577, 491))
         self.AreaProrgrams.setWidget(self.scrollAreaWidgetContents)
 
         self.verticalLayout_22.addWidget(self.AreaProrgrams)
@@ -874,12 +817,12 @@ class Ui_MainWindow(object):
 
         self.tabWidget.addTab(self.tab_4, "")
 
-        self.verticalLayout_4.addWidget(self.tabWidget)
+        self.horizontalLayout_4.addWidget(self.tabWidget)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 959, 22))
+        self.menubar.setGeometry(QRect(0, 0, 641, 22))
         self.menuConfiguraci_n = QMenu(self.menubar)
         self.menuConfiguraci_n.setObjectName(u"menuConfiguraci_n")
         self.menuTools = QMenu(self.menubar)
@@ -923,13 +866,16 @@ class Ui_MainWindow(object):
         self.actionSaveLocal.setText(QCoreApplication.translate("MainWindow", u"Guardar local", None))
         self.actionConfig.setText(QCoreApplication.translate("MainWindow", u"Configuraci\u00f3n", None))
         self.actionPrograma.setText(QCoreApplication.translate("MainWindow", u"Programa", None))
-        self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Versi\u00f3n del software/firmware", None))
+        self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"Info del pc", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Modelo", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"No. Servicio", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Salud de bater\u00eda", None))
+        self.label_7.setText(QCoreApplication.translate("MainWindow", u"Procesador", None))
+        self.label_34.setText(QCoreApplication.translate("MainWindow", u"RAM", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"BIOS", None))
-        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Procesador", None))
-        self.label_7.setText(QCoreApplication.translate("MainWindow", u"Nombre", None))
-        self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"Memoria RAM", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Tipo", None))
-        self.label_34.setText(QCoreApplication.translate("MainWindow", u"Total", None))
+        self.label_22.setText(QCoreApplication.translate("MainWindow", u"CPU", None))
+        self.label_24.setText(QCoreApplication.translate("MainWindow", u"RAM", None))
+        self.label_29.setText(QCoreApplication.translate("MainWindow", u"Bater\u00eda", None))
         self.label_27.setText(QCoreApplication.translate("MainWindow", u"Unidades de almacenamiento", None))
         ___qtablewidgetitem = self.TableStorage.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Nombre", None));
@@ -944,20 +890,12 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Nombre", None));
         ___qtablewidgetitem5 = self.TableGPUs.horizontalHeaderItem(1)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Capacidad", None));
-        self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"Info del pc", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Modelo", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"No. Servicio", None))
-        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Salud de bater\u00eda", None))
-        self.label_22.setText(QCoreApplication.translate("MainWindow", u"CPU", None))
-        self.label_24.setText(QCoreApplication.translate("MainWindow", u"RAM", None))
-        self.label_29.setText(QCoreApplication.translate("MainWindow", u"Bater\u00eda", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Informaci\u00f3n del equipo", None))
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"PIXEL ID", None))
         self.label_31.setText(QCoreApplication.translate("MainWindow", u"Est\u00e9tica", None))
         self.CboxAesthetics.setPlaceholderText(QCoreApplication.translate("MainWindow", u"-", None))
         self.label_33.setText(QCoreApplication.translate("MainWindow", u"Revisado por:", None))
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Reporte", None))
-        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Salud de bater\u00eda", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"Ethernet", None))
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"Puerto de carga", None))
         self.CboxPlug.setCurrentText("")
@@ -997,6 +935,7 @@ class Ui_MainWindow(object):
         self.CboxConnectivity.setCurrentText("")
         self.CboxConnectivity.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona", None))
         self.label_32.setText(QCoreApplication.translate("MainWindow", u"Conectividad", None))
+        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Salud de bater\u00eda", None))
         self.TextBatteryDuration.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Duraci\u00f3n de la bater\u00eda...", None))
         self.TextBatteryNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextEthernetNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
