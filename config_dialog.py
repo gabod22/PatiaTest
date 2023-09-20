@@ -14,23 +14,6 @@ class ConfigDialog(QDialog):
         
         self.info = dict()
         self.config = config
-        #SECTION - Employees
-        self.ui.BtnAddTechnician.clicked.connect(lambda: self.add_item_to_list(
-            self.ui.TextTechnicianName, self.ui.ListTechnician, self.ui.CboxDefaultTechnician))
-        self.ui.BtnDeleteTechnician.clicked.connect(
-            lambda: self.del_selected_item_from_list(self.ui.ListTechnician, self.ui.CboxDefaultTechnician))
-        
-        #SECTION - Component state options
-        self.ui.BtnAddComponenteStateOption.clicked.connect(lambda: self.add_item_to_list(
-            self.ui.TextComponentSatateOption, self.ui.ListComponentStateOptions))
-        self.ui.BtnDeleteComponenteStateOption.clicked.connect(
-            lambda: self.del_selected_item_from_list(self.ui.ListComponentStateOptions))
-        
-        #SECTION - Aesthetic options
-        self.ui.BtnAddAestheticOption.clicked.connect(lambda: self.add_item_to_list(
-            self.ui.TextAestheticOption, self.ui.ListAesthericOptions))
-        self.ui.BtnDeleteAestheticOption.clicked.connect(
-            lambda: self.del_selected_item_from_list(self.ui.ListAesthericOptions))
 
 
         #SECTION - Programs
@@ -46,8 +29,7 @@ class ConfigDialog(QDialog):
         self.set_config_info()
 
     def save_config(self):
-        self.config['SPREAD_CONFIG']['DOCUMENT_NAME'] = self.ui.TextDocumentName.text()
-        self.config['SPREAD_CONFIG']['WORKSHEET_NAME'] = self.ui.TextSheetName.text()
+
         self.config['DEFAULT_EMPLOYEE'] = self.ui.CboxDefaultTechnician.currentIndex()
 
         self.config['DEFAULT_VALUES']['ETHERNET'] = self.ui.CboxEthernet.currentIndex()
@@ -66,10 +48,7 @@ class ConfigDialog(QDialog):
         self.config['WIFI']['PASS5G'] = self.ui.TextPass5G.text()
         self.config['WIFI']['SSID'] = self.ui.TextSSID.text()
         self.config['WIFI']['PASS'] = self.ui.TextPass.text()
-        items = []
-        for x in range(self.ui.ListTechnician.count()):
-            items.append(self.ui.ListTechnician.item(x).text())
-        self.config['EMPLOYEES'] = items
+
         items = []
         for x in range(self.ui.ListSelectedProgrms.count()):
             items.append(self.ui.ListSelectedProgrms.item(x).text())

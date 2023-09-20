@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'config_dialog.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -39,154 +39,9 @@ class Ui_Dialog(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -331, 451, 806))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 468, 441))
         self.verticalLayout_16 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
-        self.groupBox_5 = QGroupBox(self.scrollAreaWidgetContents_2)
-        self.groupBox_5.setObjectName(u"groupBox_5")
-        self.horizontalLayout_8 = QHBoxLayout(self.groupBox_5)
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.ListTechnician = QListWidget(self.groupBox_5)
-        self.ListTechnician.setObjectName(u"ListTechnician")
-
-        self.horizontalLayout_8.addWidget(self.ListTechnician)
-
-        self.verticalLayout_15 = QVBoxLayout()
-        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
-        self.TextTechnicianName = QLineEdit(self.groupBox_5)
-        self.TextTechnicianName.setObjectName(u"TextTechnicianName")
-
-        self.verticalLayout_15.addWidget(self.TextTechnicianName)
-
-        self.BtnAddTechnician = QPushButton(self.groupBox_5)
-        self.BtnAddTechnician.setObjectName(u"BtnAddTechnician")
-
-        self.verticalLayout_15.addWidget(self.BtnAddTechnician)
-
-        self.BtnDeleteTechnician = QPushButton(self.groupBox_5)
-        self.BtnDeleteTechnician.setObjectName(u"BtnDeleteTechnician")
-
-        self.verticalLayout_15.addWidget(self.BtnDeleteTechnician)
-
-        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_15.addItem(self.verticalSpacer_8)
-
-        self.label_7 = QLabel(self.groupBox_5)
-        self.label_7.setObjectName(u"label_7")
-
-        self.verticalLayout_15.addWidget(self.label_7)
-
-        self.CboxDefaultTechnician = QComboBox(self.groupBox_5)
-        self.CboxDefaultTechnician.setObjectName(u"CboxDefaultTechnician")
-
-        self.verticalLayout_15.addWidget(self.CboxDefaultTechnician)
-
-
-        self.horizontalLayout_8.addLayout(self.verticalLayout_15)
-
-
-        self.verticalLayout_16.addWidget(self.groupBox_5)
-
-        self.groupBox_3 = QGroupBox(self.scrollAreaWidgetContents_2)
-        self.groupBox_3.setObjectName(u"groupBox_3")
-        self.horizontalLayout_6 = QHBoxLayout(self.groupBox_3)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.ListComponentStateOptions = QListWidget(self.groupBox_3)
-        self.ListComponentStateOptions.setObjectName(u"ListComponentStateOptions")
-
-        self.horizontalLayout_6.addWidget(self.ListComponentStateOptions)
-
-        self.verticalLayout_13 = QVBoxLayout()
-        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.TextComponentSatateOption = QLineEdit(self.groupBox_3)
-        self.TextComponentSatateOption.setObjectName(u"TextComponentSatateOption")
-
-        self.verticalLayout_13.addWidget(self.TextComponentSatateOption)
-
-        self.BtnAddComponenteStateOption = QPushButton(self.groupBox_3)
-        self.BtnAddComponenteStateOption.setObjectName(u"BtnAddComponenteStateOption")
-
-        self.verticalLayout_13.addWidget(self.BtnAddComponenteStateOption)
-
-        self.BtnDeleteComponenteStateOption = QPushButton(self.groupBox_3)
-        self.BtnDeleteComponenteStateOption.setObjectName(u"BtnDeleteComponenteStateOption")
-
-        self.verticalLayout_13.addWidget(self.BtnDeleteComponenteStateOption)
-
-        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_13.addItem(self.verticalSpacer_6)
-
-
-        self.horizontalLayout_6.addLayout(self.verticalLayout_13)
-
-
-        self.verticalLayout_16.addWidget(self.groupBox_3)
-
-        self.groupBox_4 = QGroupBox(self.scrollAreaWidgetContents_2)
-        self.groupBox_4.setObjectName(u"groupBox_4")
-        self.horizontalLayout_7 = QHBoxLayout(self.groupBox_4)
-        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.ListAesthericOptions = QListWidget(self.groupBox_4)
-        self.ListAesthericOptions.setObjectName(u"ListAesthericOptions")
-
-        self.horizontalLayout_7.addWidget(self.ListAesthericOptions)
-
-        self.verticalLayout_14 = QVBoxLayout()
-        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
-        self.TextAestheticOption = QLineEdit(self.groupBox_4)
-        self.TextAestheticOption.setObjectName(u"TextAestheticOption")
-
-        self.verticalLayout_14.addWidget(self.TextAestheticOption)
-
-        self.BtnAddAestheticOption = QPushButton(self.groupBox_4)
-        self.BtnAddAestheticOption.setObjectName(u"BtnAddAestheticOption")
-
-        self.verticalLayout_14.addWidget(self.BtnAddAestheticOption)
-
-        self.BtnDeleteAestheticOption = QPushButton(self.groupBox_4)
-        self.BtnDeleteAestheticOption.setObjectName(u"BtnDeleteAestheticOption")
-
-        self.verticalLayout_14.addWidget(self.BtnDeleteAestheticOption)
-
-        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_14.addItem(self.verticalSpacer_7)
-
-
-        self.horizontalLayout_7.addLayout(self.verticalLayout_14)
-
-
-        self.verticalLayout_16.addWidget(self.groupBox_4)
-
-        self.groupBox_6 = QGroupBox(self.scrollAreaWidgetContents_2)
-        self.groupBox_6.setObjectName(u"groupBox_6")
-        self.verticalLayout_4 = QVBoxLayout(self.groupBox_6)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.label = QLabel(self.groupBox_6)
-        self.label.setObjectName(u"label")
-
-        self.verticalLayout_4.addWidget(self.label)
-
-        self.TextDocumentName = QLineEdit(self.groupBox_6)
-        self.TextDocumentName.setObjectName(u"TextDocumentName")
-
-        self.verticalLayout_4.addWidget(self.TextDocumentName)
-
-        self.label_2 = QLabel(self.groupBox_6)
-        self.label_2.setObjectName(u"label_2")
-
-        self.verticalLayout_4.addWidget(self.label_2)
-
-        self.TextSheetName = QLineEdit(self.groupBox_6)
-        self.TextSheetName.setObjectName(u"TextSheetName")
-
-        self.verticalLayout_4.addWidget(self.TextSheetName)
-
-
-        self.verticalLayout_16.addWidget(self.groupBox_6)
-
         self.groupBox = QGroupBox(self.scrollAreaWidgetContents_2)
         self.groupBox.setObjectName(u"groupBox")
         self.verticalLayout_3 = QVBoxLayout(self.groupBox)
@@ -466,7 +321,7 @@ class Ui_Dialog(object):
         self.buttonBox.accepted.connect(Dialog.accept)
         self.buttonBox.rejected.connect(Dialog.reject)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         self.CboxEthernet.setCurrentIndex(-1)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
@@ -485,19 +340,6 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.groupBox_5.setTitle(QCoreApplication.translate("Dialog", u"T\u00e9cnicos", None))
-        self.BtnAddTechnician.setText(QCoreApplication.translate("Dialog", u"A\u00f1adir", None))
-        self.BtnDeleteTechnician.setText(QCoreApplication.translate("Dialog", u"Eliminar Seleccionado", None))
-        self.label_7.setText(QCoreApplication.translate("Dialog", u"Empledo por defecto", None))
-        self.groupBox_3.setTitle(QCoreApplication.translate("Dialog", u"Opciones de estado de componente", None))
-        self.BtnAddComponenteStateOption.setText(QCoreApplication.translate("Dialog", u"A\u00f1adir", None))
-        self.BtnDeleteComponenteStateOption.setText(QCoreApplication.translate("Dialog", u"Eliminar Seleccionado", None))
-        self.groupBox_4.setTitle(QCoreApplication.translate("Dialog", u"Opciones de est\u00e9tica", None))
-        self.BtnAddAestheticOption.setText(QCoreApplication.translate("Dialog", u"A\u00f1adir", None))
-        self.BtnDeleteAestheticOption.setText(QCoreApplication.translate("Dialog", u"Eliminar Seleccionado", None))
-        self.groupBox_6.setTitle(QCoreApplication.translate("Dialog", u"Google Sheets", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"Documento", None))
-        self.label_2.setText(QCoreApplication.translate("Dialog", u"Pesta\u00f1a", None))
         self.groupBox.setTitle(QCoreApplication.translate("Dialog", u"WIFI", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("Dialog", u"5G", None))
         self.label_17.setText(QCoreApplication.translate("Dialog", u"SSID", None))

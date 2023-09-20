@@ -28,27 +28,7 @@ def sync_date_time():
     run_powershell_command('net start w32time')
     run_powershell_command('w32tm /resync')
 
-def getGPUs():
-    gpus = GPUtil.getGPUs()
-    list_gpus = []
-    for gpu in gpus:
-        # get the GPU id
-        gpu_id = gpu.id
-        # name of GPU
-        gpu_name = gpu.name
-        # get % percentage of GPU usage of that GPU
-        gpu_load = f"{gpu.load*100}%"
-        # get free memory in MB format
-        gpu_free_memory = f"{gpu.memoryFree}MB"
-        # get used memory
-        gpu_used_memory = f"{gpu.memoryUsed}MB"
-        # get total memory
-        gpu_total_memory = (gpu.memoryTotal / 1024)
-        # get GPU temperature in Celsius
-        gpu_temperature = f"{gpu.temperature} C"
-        gpu_uuid = gpu.uuid
-        list_gpus.append([gpu_name, str(gpu_total_memory)+" GB"])
-    return list_gpus
+
 
 def get_gpu_percent():
     gpus = GPUtil.getGPUs()

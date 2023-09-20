@@ -28,9 +28,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(641, 488)
+        MainWindow.resize(896, 536)
         icon = QIcon()
-        icon.addFile(u"../../../.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"../../../../.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -296,6 +296,7 @@ class Ui_MainWindow(object):
 
         self.CboxCheckedBy = QComboBox(self.tabReport)
         self.CboxCheckedBy.setObjectName(u"CboxCheckedBy")
+        self.CboxCheckedBy.setMinimumSize(QSize(200, 0))
         self.CboxCheckedBy.setMaximumSize(QSize(500, 16777215))
 
         self.verticalLayout_20.addWidget(self.CboxCheckedBy)
@@ -319,7 +320,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 560, 408))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 758, 408))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
@@ -617,7 +618,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon1 = QIcon.fromTheme(iconThemeName)
         else:
-            icon1.addFile(u"../../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
+            icon1.addFile(u"../../../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
 
         self.BtnSaveToGoogleSheets.setIcon(icon1)
 
@@ -718,12 +719,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_13 = QVBoxLayout()
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.label_42 = QLabel(self.tab_2)
-        self.label_42.setObjectName(u"label_42")
-
-        self.verticalLayout_13.addWidget(self.label_42)
-
-        self.TableBatteryInfo = QTableWidget(self.tab_2)
+        self.groupBox_4 = QGroupBox(self.tab_2)
+        self.groupBox_4.setObjectName(u"groupBox_4")
+        self.verticalLayout_5 = QVBoxLayout(self.groupBox_4)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.TableBatteryInfo = QTableWidget(self.groupBox_4)
         if (self.TableBatteryInfo.columnCount() < 5):
             self.TableBatteryInfo.setColumnCount(5)
         __qtablewidgetitem6 = QTableWidgetItem()
@@ -750,7 +750,30 @@ class Ui_MainWindow(object):
         self.TableBatteryInfo.setAutoScrollMargin(16)
         self.TableBatteryInfo.setColumnCount(5)
 
-        self.verticalLayout_13.addWidget(self.TableBatteryInfo)
+        self.verticalLayout_5.addWidget(self.TableBatteryInfo)
+
+
+        self.verticalLayout_13.addWidget(self.groupBox_4)
+
+        self.groupBox = QGroupBox(self.tab_2)
+        self.groupBox.setObjectName(u"groupBox")
+        self.verticalLayout_4 = QVBoxLayout(self.groupBox)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.tableWidget = QTableWidget(self.groupBox)
+        if (self.tableWidget.columnCount() < 3):
+            self.tableWidget.setColumnCount(3)
+        __qtablewidgetitem15 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem15)
+        __qtablewidgetitem16 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem16)
+        __qtablewidgetitem17 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem17)
+        self.tableWidget.setObjectName(u"tableWidget")
+
+        self.verticalLayout_4.addWidget(self.tableWidget)
+
+
+        self.verticalLayout_13.addWidget(self.groupBox)
 
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_13)
@@ -807,7 +830,7 @@ class Ui_MainWindow(object):
         self.AreaProrgrams.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 577, 491))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 775, 329))
         self.AreaProrgrams.setWidget(self.scrollAreaWidgetContents)
 
         self.verticalLayout_22.addWidget(self.AreaProrgrams)
@@ -822,7 +845,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 641, 22))
+        self.menubar.setGeometry(QRect(0, 0, 896, 22))
         self.menuConfiguraci_n = QMenu(self.menubar)
         self.menuConfiguraci_n.setObjectName(u"menuConfiguraci_n")
         self.menuTools = QMenu(self.menubar)
@@ -841,7 +864,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(2)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -895,6 +918,7 @@ class Ui_MainWindow(object):
         self.label_31.setText(QCoreApplication.translate("MainWindow", u"Est\u00e9tica", None))
         self.CboxAesthetics.setPlaceholderText(QCoreApplication.translate("MainWindow", u"-", None))
         self.label_33.setText(QCoreApplication.translate("MainWindow", u"Revisado por:", None))
+        self.CboxCheckedBy.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona el t\u00e9cnico", None))
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Reporte", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"Ethernet", None))
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"Puerto de carga", None))
@@ -964,7 +988,7 @@ class Ui_MainWindow(object):
         self.LBTimeElapsed.setText(QCoreApplication.translate("MainWindow", u"No iniciado", None))
         self.BtnStopBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Detener prueba de bater\u00eda", None))
         self.BtnStartBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
-        self.label_42.setText(QCoreApplication.translate("MainWindow", u"Baterias", None))
+        self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Bater\u00edas", None))
         ___qtablewidgetitem6 = self.TableBatteryInfo.horizontalHeaderItem(0)
         ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"1", None));
         ___qtablewidgetitem7 = self.TableBatteryInfo.verticalHeaderItem(0)
@@ -983,6 +1007,13 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Battery Health", None));
         ___qtablewidgetitem14 = self.TableBatteryInfo.verticalHeaderItem(7)
         ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Cycles", None));
+        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Historial", None))
+        ___qtablewidgetitem15 = self.tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Nueva columna", None));
+        ___qtablewidgetitem16 = self.tableWidget.horizontalHeaderItem(1)
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"Cargador", None));
+        ___qtablewidgetitem17 = self.tableWidget.horizontalHeaderItem(2)
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Capacidad", None));
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Revisi\u00f3n de bater\u00eda", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("MainWindow", u"Probar el equipo", None))
         self.BtnTestKeyboard.setText(QCoreApplication.translate("MainWindow", u"Teclado", None))

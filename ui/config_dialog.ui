@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_6">
       <attribute name="title">
@@ -33,189 +33,12 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-331</y>
-            <width>451</width>
-            <height>806</height>
+            <y>0</y>
+            <width>468</width>
+            <height>441</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
-           <item>
-            <widget class="QGroupBox" name="groupBox_5">
-             <property name="title">
-              <string>Técnicos</string>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <item>
-               <widget class="QListWidget" name="ListTechnician"/>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_15">
-                <item>
-                 <widget class="QLineEdit" name="TextTechnicianName"/>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BtnAddTechnician">
-                  <property name="text">
-                   <string>Añadir</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BtnDeleteTechnician">
-                  <property name="text">
-                   <string>Eliminar Seleccionado</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="verticalSpacer_8">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>Empledo por defecto</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="CboxDefaultTechnician"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_3">
-             <property name="title">
-              <string>Opciones de estado de componente</string>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QListWidget" name="ListComponentStateOptions"/>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_13">
-                <item>
-                 <widget class="QLineEdit" name="TextComponentSatateOption"/>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BtnAddComponenteStateOption">
-                  <property name="text">
-                   <string>Añadir</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BtnDeleteComponenteStateOption">
-                  <property name="text">
-                   <string>Eliminar Seleccionado</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="verticalSpacer_6">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_4">
-             <property name="title">
-              <string>Opciones de estética</string>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QListWidget" name="ListAesthericOptions"/>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_14">
-                <item>
-                 <widget class="QLineEdit" name="TextAestheticOption"/>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BtnAddAestheticOption">
-                  <property name="text">
-                   <string>Añadir</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="BtnDeleteAestheticOption">
-                  <property name="text">
-                   <string>Eliminar Seleccionado</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="verticalSpacer_7">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_6">
-             <property name="title">
-              <string>Google Sheets</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_4">
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>Documento</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="TextDocumentName"/>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_2">
-                <property name="text">
-                 <string>Pestaña</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="TextSheetName"/>
-              </item>
-             </layout>
-            </widget>
-           </item>
            <item>
             <widget class="QGroupBox" name="groupBox">
              <property name="title">

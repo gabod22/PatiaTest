@@ -42,3 +42,14 @@ async def save_computer(computer):
 
             r = await response.text()
             return response
+
+async def save_inspection(computer):
+    
+    async with aiohttp.ClientSession(headers=headers) as session:
+        async with session.post(URL + '/api/computers', data=computer) as response:
+
+            print("Status:", response.status)
+            print("Content-type:", response.headers['content-type'])
+
+            r = await response.text()
+            return response

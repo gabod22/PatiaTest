@@ -44,7 +44,6 @@ class MainWindow(QMainWindow):
         self.__thread_monitor = QThread()
         self.__thread_battery = QThread()
         self.__thread_jobs = QThread()
-        self.__thread_stress = QThread()
 
         self.data = [[]]
         self.notes = []
@@ -54,9 +53,13 @@ class MainWindow(QMainWindow):
         self.configData = {}
 
         self.systeminfo = None
-        self.array_disks = get_disks_info()
-        self.array_gpus = getGPUs()
         battery_health = ""
+
+        self.threadpool = QThreadPool()
+        print("Multithreading with maximum %d threads" %
+              self.threadpool.maxThreadCount())
+        self.start_jobs_thread()
+        self.start_get_system_info_thread()
 
         print("Bateria instalada" if is_battery_installed() else "Sin bateria")
         if is_battery_installed():
@@ -71,15 +74,13 @@ class MainWindow(QMainWindow):
 
         # initial state
         self.ui.BtnStopTestSpeakers.hide()
-        self.setOptions()
+        
         self.asingMenuButtonsFunctions()
         self.asingAllButtonsFunctions()
-        self.update_config()
+        # self.update_config()
         self.setAllInitialValues()
 
-        # Add all Disks to table
-        self.ui.TableStorage.setRowCount(len(self.array_disks))
-        add_data_to_table(self.array_disks, self.ui.TableStorage)
+        
 
         batteries = get_battery_info()
         for idx, battery in enumerate(batteries):
@@ -113,16 +114,6 @@ class MainWindow(QMainWindow):
         self.ui.TextBatteryHealth.setText(battery_health)
         self.ui.TextBatteryHealth_2.setText(battery_health)
 
-        # Add all gpus to table
-        self.ui.TableGPUs.setRowCount(len(self.array_gpus))
-        add_data_to_table(self.array_gpus, self.ui.TableGPUs)
-
-        self.threadpool = QThreadPool()
-        print("Multithreading with maximum %d threads" %
-              self.threadpool.maxThreadCount())
-
-        self.start_jobs_thread()
-        self.start_get_system_info_thread()
         self.start_monitor_thread()
 
         self.ui.BtnStartBatteryTest.clicked.connect(
@@ -247,29 +238,32 @@ class MainWindow(QMainWindow):
         else:
             self.config_dialog = None
 
-    def update_config(self):
-        self.config = read_yaml(config_file)
-        self.ui.CboxCheckedBy.clear()
-        self.ui.CboxCheckedBy.addItems(self.config['EMPLOYEES'])
-        self.ui.CboxCheckedBy.setCurrentIndex(self.config['DEFAULT_EMPLOYEE'])
-        self.config_dialog = None
+    # def update_config(self):
+    #     self.config = read_yaml(config_file)
+    #     self.ui.CboxCheckedBy.clear()
+    #     self.ui.CboxCheckedBy.addItems(self.config['EMPLOYEES'])
+    #     self.ui.CboxCheckedBy.setCurrentIndex(self.config['DEFAULT_EMPLOYEE'])
+    #     self.config_dialog = None
 
     def setOptions(self):
-        self.ui.CboxAesthetics.addItems(config["AESTHETICS"])
-        self.ui.CboxCheckedBy.addItems(config["EMPLOYEES"])
-        self.ui.CboxBattery.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxEthernet.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxPlug.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxUSB.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxScreen.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxSpikers.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxKeyboard.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxCamera.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxConnectivity.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxTouchpad.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxTouchscreen.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxHinges.addItems(config["STATUS_OPTIONS"])
-        self.ui.CboxMicro.addItems(config["STATUS_OPTIONS"])
+        for aesthetic in self.configData['aesthetics']:
+            self.ui.CboxAesthetics.addItem(aesthetic['slug'])
+        for employee in self.configData['technicians']:
+            self.ui.CboxCheckedBy.addItem(employee['name'])
+        for status in self.configData['component_statuses']:
+            self.ui.CboxBattery.addItem(status['slug'])
+            self.ui.CboxEthernet.addItem(status['slug'])
+            self.ui.CboxPlug.addItem(status['slug'])
+            self.ui.CboxUSB.addItem(status['slug'])
+            self.ui.CboxScreen.addItem(status['slug'])
+            self.ui.CboxSpikers.addItem(status['slug'])
+            self.ui.CboxKeyboard.addItem(status['slug'])
+            self.ui.CboxCamera.addItem(status['slug'])
+            self.ui.CboxConnectivity.addItem(status['slug'])
+            self.ui.CboxTouchpad.addItem(status['slug'])
+            self.ui.CboxTouchscreen.addItem(status['slug'])
+            self.ui.CboxHinges.addItem(status['slug'])
+            self.ui.CboxMicro.addItem(status['slug'])
 
 # SECTION - Tests
     def asingAllButtonsFunctions(self):
@@ -302,14 +296,23 @@ class MainWindow(QMainWindow):
 # SECTION - Get system info
 
     def set_system_info(self, info):
-        cpu_model = re.search("i\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
-        ram = str(convert_size(info["virtual_memory"]["total"])) + " " + info["memories"][0]["Tipo"]
+        cpu_model = re.search(
+            "i\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
+        ram = str(convert_size(info["virtual_memory"]
+                  ["total"])) + " " + info["memories"][0]["Tipo"]
         self.systeminfo = info
         self.ui.TextBiosVersion.setText(info["bios"]["Version"])
         self.ui.TextTotalRAM.setText(ram)
         self.ui.TextProcessorName.setText(cpu_model)
         self.ui.TextModel.setText(info["computer_system"]["Model"])
         self.ui.TextServiceNumber.setText(info["bios"]["SerialNumber"])
+        # Add all Disks to table
+        self.ui.TableStorage.setRowCount(len(info['disks']))
+        add_data_to_table(info['disks'], self.ui.TableStorage)
+        # Add all gpus to table
+        self.ui.TableGPUs.setRowCount(len(info['gpus']))
+        add_data_to_table(info['gpus'], self.ui.TableGPUs)
+        
 
     def get_system_info_done(self):
         self.statusBar().showMessage('Información obtenida')
@@ -364,18 +367,17 @@ class MainWindow(QMainWindow):
             computer = {
                 "service_tag": self.systeminfo['bios']['SerialNumber'],
                 "internal_id": self.ui.TextPixelId.text(),
-                "product_id": 1,
                 "processor": re.search("i\d-\d{4}[A-Z]", self.systeminfo["cpu"]["brand_raw"]),
                 "ram_size": str(convert_size(self.systeminfo["virtual_memory"]["total"])),
                 "ram_type": self.systeminfo["memories"][0]["Tipo"],
-                "storage_size": self.array_disks[0][2],
-                "storage_type": self.array_disks[0][1],
+                "storage_size": self.systeminfo['disks'][0][2],
+                "storage_type": self.systeminfo['disks'][0][1],
                 "graphics_card_model": gpu_model,
                 "graphics_ram_size": gpu_ram,
-                "computer_status_id": 1,
-                "aesthetic_id": 1,
+                "aesthetic_id": self.ui.CboxAesthetics.currentIndex,
             }
             asyncio.run(save_computer(computer))
+        
 
 
 #!SECTION
@@ -479,13 +481,14 @@ class MainWindow(QMainWindow):
         thread.started.connect(worker.run)
         worker.configData.connect(self.setConfigData)
         worker.finished.connect(thread.quit)
-        worker.error.connect(lambda: self.showFailDialog('No hay internet'))
+        worker.error.connect(self.showFailDialog)
 
         return thread
 
     def setConfigData(self, data):
         self.configData = data
-        print(self.configData)
+        self.setOptions()
+        # print(self.configData)
 
     def start_jobs_thread(self):
         if not self.__thread_jobs.isRunning():

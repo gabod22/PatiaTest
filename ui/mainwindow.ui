@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>641</width>
-    <height>488</height>
+    <width>896</width>
+    <height>536</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,14 +15,14 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../.designer/assets/logo_min.ico</normaloff>../../../.designer/assets/logo_min.ico</iconset>
+    <normaloff>../../../../.designer/assets/logo_min.ico</normaloff>../../../../.designer/assets/logo_min.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -376,11 +376,20 @@
             </item>
             <item>
              <widget class="QComboBox" name="CboxCheckedBy">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>500</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="placeholderText">
+               <string>Selecciona el técnico</string>
               </property>
              </widget>
             </item>
@@ -417,7 +426,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>560</width>
+                <width>758</width>
                 <height>408</height>
                </rect>
               </property>
@@ -1095,7 +1104,7 @@
              </property>
              <property name="icon">
               <iconset theme="document-save">
-               <normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
+               <normaloff>../../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
              </property>
             </widget>
            </item>
@@ -1254,69 +1263,99 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_13">
           <item>
-           <widget class="QLabel" name="label_42">
-            <property name="text">
-             <string>Baterias</string>
+           <widget class="QGroupBox" name="groupBox_4">
+            <property name="title">
+             <string>Baterías</string>
             </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QTableWidget" name="TableBatteryInfo">
+               <property name="autoScrollMargin">
+                <number>16</number>
+               </property>
+               <property name="columnCount">
+                <number>5</number>
+               </property>
+               <row>
+                <property name="text">
+                 <string>Battery name</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>Manufacture Name</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>Manufacture Date</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>Serial Number</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>Full Charged Capacity</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>Designed Capacity</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>Battery Health</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>Cycles</string>
+                </property>
+               </row>
+               <column>
+                <property name="text">
+                 <string>1</string>
+                </property>
+               </column>
+               <column/>
+               <column/>
+               <column/>
+               <column/>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
-           <widget class="QTableWidget" name="TableBatteryInfo">
-            <property name="autoScrollMargin">
-             <number>16</number>
+           <widget class="QGroupBox" name="groupBox">
+            <property name="title">
+             <string>Historial</string>
             </property>
-            <property name="columnCount">
-             <number>5</number>
-            </property>
-            <row>
-             <property name="text">
-              <string>Battery name</string>
-             </property>
-            </row>
-            <row>
-             <property name="text">
-              <string>Manufacture Name</string>
-             </property>
-            </row>
-            <row>
-             <property name="text">
-              <string>Manufacture Date</string>
-             </property>
-            </row>
-            <row>
-             <property name="text">
-              <string>Serial Number</string>
-             </property>
-            </row>
-            <row>
-             <property name="text">
-              <string>Full Charged Capacity</string>
-             </property>
-            </row>
-            <row>
-             <property name="text">
-              <string>Designed Capacity</string>
-             </property>
-            </row>
-            <row>
-             <property name="text">
-              <string>Battery Health</string>
-             </property>
-            </row>
-            <row>
-             <property name="text">
-              <string>Cycles</string>
-             </property>
-            </row>
-            <column>
-             <property name="text">
-              <string>1</string>
-             </property>
-            </column>
-            <column/>
-            <column/>
-            <column/>
-            <column/>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QTableWidget" name="tableWidget">
+               <column>
+                <property name="text">
+                 <string>Nueva columna</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Cargador</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Capacidad</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -1398,8 +1437,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>577</width>
-                <height>491</height>
+                <width>775</width>
+                <height>329</height>
                </rect>
               </property>
              </widget>
@@ -1419,7 +1458,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>641</width>
+     <width>896</width>
      <height>22</height>
     </rect>
    </property>
