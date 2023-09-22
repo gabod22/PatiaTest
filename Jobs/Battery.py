@@ -12,6 +12,7 @@ class BatteryTest(QObject):
 
     full_charged_remaining_time = Signal(str)
     timeElapsed = Signal(str)
+    batteryPercent = Signal(str)
     finished = Signal()
 
     def __init__(self, parent=None):
@@ -34,9 +35,9 @@ class BatteryTest(QObject):
         while not self._stopped:
             battery = psutil.sensors_battery()
             if battery == None or battery.percent < 10:
-                self.timeElapsed.emit(self.seconds_elapsed)
                 self._stopped = True
             self.timeElapsed.emit(secs2hours(self.seconds_elapsed))
+            self.batteryPercent.emit(battery.percent)
             print(secs2hours(self.seconds_elapsed))
             sleep(self.WAIT_TIME)
             
