@@ -12,7 +12,7 @@ class BatteryTest(QObject):
 
     full_charged_remaining_time = Signal(str)
     timeElapsed = Signal(str)
-    batteryPercent = Signal(str)
+    battery = Signal(str,str)
     finished = Signal()
 
     def __init__(self, parent=None):
@@ -37,12 +37,12 @@ class BatteryTest(QObject):
             if battery == None or battery.percent < 10:
                 self._stopped = True
             self.timeElapsed.emit(secs2hours(self.seconds_elapsed))
-            self.batteryPercent.emit(battery.percent)
             print(secs2hours(self.seconds_elapsed))
             sleep(self.WAIT_TIME)
             
             d, r = divmod(self.seconds_elapsed, self.WRITE_TIME)
             if r == 0:
+                self.battery.emit(str(battery.percent),str(battery.power_plugged))
                 try:
                     with open('c:/battery_test.txt', 'a') as f:
                         f.write(secs2hours(self.seconds_elapsed))

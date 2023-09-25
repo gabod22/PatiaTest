@@ -96,30 +96,22 @@ class ConfigDialog(QDialog):
         to_list.addItem(item.text())
         
     def setOptions(self):
-        self.ui.CboxEthernet.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxPlug.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxUSB.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxScreen.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxSpikers.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxKeyboard.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxCamera.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxTouchpad.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxTouchscreen.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxHinges.addItems(self.config["STATUS_OPTIONS"])
-        self.ui.CboxMicro.addItems(self.config["STATUS_OPTIONS"])
+        self.ui.label_30.mouseDoubleClickEvent()
+        for status in self.parent.configData['component_statuses']:
+            self.ui.CboxBattery.addItem(status['slug'])
+            self.ui.CboxEthernet.addItem(status['slug'])
+            self.ui.CboxPlug.addItem(status['slug'])
+            self.ui.CboxUSB.addItem(status['slug'])
+            self.ui.CboxScreen.addItem(status['slug'])
+            self.ui.CboxSpikers.addItem(status['slug'])
+            self.ui.CboxKeyboard.addItem(status['slug'])
+            self.ui.CboxCamera.addItem(status['slug'])
+            self.ui.CboxConnectivity.addItem(status['slug'])
+            self.ui.CboxTouchpad.addItem(status['slug'])
+            self.ui.CboxTouchscreen.addItem(status['slug'])
+            self.ui.CboxHinges.addItem(status['slug'])
+            self.ui.CboxMicro.addItem(status['slug'])
     def set_config_info(self):
-        self.ui.TextDocumentName.setText(
-            self.config['SPREAD_CONFIG']['DOCUMENT_NAME'])
-        self.ui.TextSheetName.setText(
-            self.config['SPREAD_CONFIG']['WORKSHEET_NAME'])
-        
-        self.ui.CboxDefaultTechnician.addItems(self.config['EMPLOYEES'])
-        self.ui.CboxDefaultTechnician.setCurrentIndex(
-            self.config['DEFAULT_EMPLOYEE'])
-        
-        self.ui.ListTechnician.addItems(self.config['EMPLOYEES'])
-        self.ui.ListAesthericOptions.addItems(self.config['AESTHETICS'])
-        self.ui.ListComponentStateOptions.addItems(self.config['STATUS_OPTIONS'])
 
         for program in get_all_programs():
             self.ui.ListAllPrograms.addItem(program["name"])

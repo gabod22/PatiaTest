@@ -16,13 +16,13 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFormLayout,
-    QFrame, QGroupBox, QHBoxLayout, QHeaderView,
-    QLabel, QLineEdit, QMainWindow, QMenu,
-    QMenuBar, QPlainTextEdit, QProgressBar, QPushButton,
-    QScrollArea, QSizePolicy, QSpacerItem, QStatusBar,
-    QTabWidget, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QComboBox,
+    QFormLayout, QFrame, QGroupBox, QHBoxLayout,
+    QHeaderView, QLabel, QLineEdit, QMainWindow,
+    QMenu, QMenuBar, QPlainTextEdit, QProgressBar,
+    QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
+    QStatusBar, QTabWidget, QTableWidget, QTableWidgetItem,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -320,7 +320,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 758, 408))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 815, 454))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
@@ -595,6 +595,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
 
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer)
+
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
 
         self.verticalLayout_2.addWidget(self.scrollArea)
@@ -747,7 +751,9 @@ class Ui_MainWindow(object):
         __qtablewidgetitem14 = QTableWidgetItem()
         self.TableBatteryInfo.setVerticalHeaderItem(7, __qtablewidgetitem14)
         self.TableBatteryInfo.setObjectName(u"TableBatteryInfo")
+        self.TableBatteryInfo.setEnabled(True)
         self.TableBatteryInfo.setAutoScrollMargin(16)
+        self.TableBatteryInfo.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.TableBatteryInfo.setColumnCount(5)
 
         self.verticalLayout_5.addWidget(self.TableBatteryInfo)
@@ -759,18 +765,21 @@ class Ui_MainWindow(object):
         self.groupBox.setObjectName(u"groupBox")
         self.verticalLayout_4 = QVBoxLayout(self.groupBox)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.tableWidget = QTableWidget(self.groupBox)
-        if (self.tableWidget.columnCount() < 3):
-            self.tableWidget.setColumnCount(3)
+        self.TableBatteryLog = QTableWidget(self.groupBox)
+        if (self.TableBatteryLog.columnCount() < 4):
+            self.TableBatteryLog.setColumnCount(4)
         __qtablewidgetitem15 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem15)
+        self.TableBatteryLog.setHorizontalHeaderItem(0, __qtablewidgetitem15)
         __qtablewidgetitem16 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem16)
+        self.TableBatteryLog.setHorizontalHeaderItem(1, __qtablewidgetitem16)
         __qtablewidgetitem17 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem17)
-        self.tableWidget.setObjectName(u"tableWidget")
+        self.TableBatteryLog.setHorizontalHeaderItem(2, __qtablewidgetitem17)
+        __qtablewidgetitem18 = QTableWidgetItem()
+        self.TableBatteryLog.setHorizontalHeaderItem(3, __qtablewidgetitem18)
+        self.TableBatteryLog.setObjectName(u"TableBatteryLog")
+        self.TableBatteryLog.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
-        self.verticalLayout_4.addWidget(self.tableWidget)
+        self.verticalLayout_4.addWidget(self.TableBatteryLog)
 
 
         self.verticalLayout_13.addWidget(self.groupBox)
@@ -830,7 +839,7 @@ class Ui_MainWindow(object):
         self.AreaProrgrams.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 775, 329))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 832, 324))
         self.AreaProrgrams.setWidget(self.scrollAreaWidgetContents)
 
         self.verticalLayout_22.addWidget(self.AreaProrgrams)
@@ -864,7 +873,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(1)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -1008,12 +1017,14 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem14 = self.TableBatteryInfo.verticalHeaderItem(7)
         ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Cycles", None));
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Historial", None))
-        ___qtablewidgetitem15 = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Nueva columna", None));
-        ___qtablewidgetitem16 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"Cargador", None));
-        ___qtablewidgetitem17 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Capacidad", None));
+        ___qtablewidgetitem15 = self.TableBatteryLog.horizontalHeaderItem(0)
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Fecha", None));
+        ___qtablewidgetitem16 = self.TableBatteryLog.horizontalHeaderItem(1)
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"Porcentaje", None));
+        ___qtablewidgetitem17 = self.TableBatteryLog.horizontalHeaderItem(2)
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Cargador", None));
+        ___qtablewidgetitem18 = self.TableBatteryLog.horizontalHeaderItem(3)
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"CPU(%)", None));
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Revisi\u00f3n de bater\u00eda", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("MainWindow", u"Probar el equipo", None))
         self.BtnTestKeyboard.setText(QCoreApplication.translate("MainWindow", u"Teclado", None))

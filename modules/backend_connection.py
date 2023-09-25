@@ -1,5 +1,6 @@
 import aiohttp
 import json
+
 URL = 'http://patiatest_web.test'
 
 headers = {

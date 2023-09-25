@@ -2,7 +2,6 @@
 import math
 import os
 import subprocess
-import signal
 from ..constants import dirname
 import ctypes
 from PySide6.QtWidgets import QTableWidgetItem

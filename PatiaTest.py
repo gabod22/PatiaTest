@@ -1,7 +1,7 @@
 import sys
 import re
 import asyncio
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidgetItem
 from PySide6.QtCore import QThreadPool, QThread
 from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
 from ui.mainwindow_ui import Ui_MainWindow
@@ -238,12 +238,10 @@ class MainWindow(QMainWindow):
         else:
             self.config_dialog = None
 
-    # def update_config(self):
-    #     self.config = read_yaml(config_file)
-    #     self.ui.CboxCheckedBy.clear()
-    #     self.ui.CboxCheckedBy.addItems(self.config['EMPLOYEES'])
-    #     self.ui.CboxCheckedBy.setCurrentIndex(self.config['DEFAULT_EMPLOYEE'])
-    #     self.config_dialog = None
+    def update_config(self):
+        self.config = read_yaml(config_file)
+        self.ui.CboxCheckedBy.setCurrentIndex(self.config['DEFAULT_EMPLOYEE'])
+        self.config_dialog = None
 
     def setOptions(self):
         for aesthetic in self.configData['aesthetics']:
@@ -329,25 +327,7 @@ class MainWindow(QMainWindow):
         # Execute
         self.threadpool.start(worker)
 
-# #SECTION - Stresss
-#     def __get_thread_stress_CPU(self):
-#         thread = QThread()
-#         stress_cpu = StressCPU()
-#         stress_cpu.moveToThread(thread)
-#         thread.started.connect(stress_cpu.start_stress)
-#         return thread
 
-#     def start_stress_thread(self):
-#         if not self.__thread_stress.isRunning():
-#             self.__thread_stress = self.__get_thread_stress_CPU()
-#             self.__thread_stress.start()
-
-#     def stop_stress_thread(self):
-#         if self.__thread_stress.isRunning():
-#             self.__thread_stress.worker.stop_stress()
-#             self.__thread_stress.quit()
-
-#!SECTION
 # SECTION - Save inspectión
 
     def start_thread_save_inspection(self):
@@ -394,10 +374,22 @@ class MainWindow(QMainWindow):
         thread.worker = worker
         thread.started.connect(worker.run)
         worker.timeElapsed.connect(self.set_time_elapsed)
+        worker.battery.connect(self.add_entry_to_battey_log)
 
         worker.finished.connect(lambda: self.end_battery_test())
 
         return thread
+    
+    def add_entry_to_battey_log(self, percent, plugged):
+        timestamp = str(datetime.now().strftime("%d/%m/%Y, %H:%M:%S"))
+        rowPosition = self.ui.TableBatteryLog.rowCount()
+        self.ui.TableBatteryLog.insertRow(rowPosition)
+        self.ui.TableBatteryLog.setItem(rowPosition , 0, QTableWidgetItem(str(timestamp)))
+        self.ui.TableBatteryLog.setItem(rowPosition , 1, QTableWidgetItem(str(percent)+"%"))
+        self.ui.TableBatteryLog.setItem(rowPosition , 2, QTableWidgetItem(str(plugged)))
+        self.ui.TableBatteryLog.setItem(rowPosition , 3, QTableWidgetItem(str(self.ui.BarCPUPercentage.value())))
+        print(str(timestamp),str(percent),str(plugged) )
+        
 
     def open_battery_test_mode(self):
         open_program('power_max.exe')
