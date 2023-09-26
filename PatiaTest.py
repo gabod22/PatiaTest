@@ -33,6 +33,8 @@ from modules.systeminfo import get_system_info
 from modules.programs import get_all_programs
 
 from modules.backend_connection import get_computer, save_computer
+from loading_dialog import LoadingDialog
+
 
 
 class MainWindow(QMainWindow):
@@ -54,6 +56,9 @@ class MainWindow(QMainWindow):
 
         self.systeminfo = None
         battery_health = ""
+        
+        loadingDialog = LoadingDialog(self)
+        loadingDialog.show()
 
         self.threadpool = QThreadPool()
         print("Multithreading with maximum %d threads" %
@@ -122,6 +127,7 @@ class MainWindow(QMainWindow):
             lambda: self.stop_battery_test_mode())
         self.ui.BtnSaveToGoogleSheets.clicked.connect(
             lambda: self.start_thread_save_inspection())
+        
 
     def asingMenuButtonsFunctions(self):
         # Config Menu
@@ -474,6 +480,7 @@ class MainWindow(QMainWindow):
         worker.configData.connect(self.setConfigData)
         worker.finished.connect(thread.quit)
         worker.error.connect(self.showFailDialog)
+        
 
         return thread
 
@@ -481,8 +488,10 @@ class MainWindow(QMainWindow):
         self.configData = data
         self.setOptions()
         # print(self.configData)
+        self.show()
 
     def start_jobs_thread(self):
+        self.showSuccessDialog(message="Cargando la información")
         if not self.__thread_jobs.isRunning():
             self.__thread_jobs = self.__get_thread_jobs()
             self.__thread_jobs.start()
@@ -525,6 +534,8 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     freeze_support()
     app = QApplication(sys.argv)
+    
     mainwindow = MainWindow()
-    mainwindow.show()
+    
+    
     sys.exit(app.exec())
