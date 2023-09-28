@@ -13,9 +13,8 @@ from time import sleep
 
 # from dialogs.SuccessDialog import CustomDialog
 from Jobs.Battery import BatteryTest
-from Jobs.worker import Worker
+
 from Jobs.Monitor import Monitor
-from Jobs.Jobs import Jobs
 
 from config_dialog import ConfigDialog
 
@@ -28,8 +27,7 @@ from modules.files_managment import *
 from modules.powerManager import set_configuration_to_current_scheme, set_brightness, set_default_configuration
 from modules.battery import get_battery_info
 from modules.constants import config_file
-from modules.constants import config
-from modules.systeminfo import get_system_info
+
 from modules.programs import get_all_programs
 
 from modules.backend_connection import get_computer, save_computer
@@ -61,10 +59,6 @@ class MainWindow(QMainWindow):
         loadingDialog.show()
 
         self.threadpool = QThreadPool()
-        print("Multithreading with maximum %d threads" %
-              self.threadpool.maxThreadCount())
-        self.start_jobs_thread()
-        self.start_get_system_info_thread()
 
         print("Bateria instalada" if is_battery_installed() else "Sin bateria")
         if is_battery_installed():
@@ -297,41 +291,7 @@ class MainWindow(QMainWindow):
     def open_all_tests(self):
         for program in self.config['SELECTED_PROGRAMS']:
             open_program(program)
-# SECTION - Get system info
 
-    def set_system_info(self, info):
-        cpu_model = re.search(
-            "i\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
-        ram = str(convert_size(info["virtual_memory"]
-                  ["total"])) + " " + info["memories"][0]["Tipo"]
-        self.systeminfo = info
-        self.ui.TextBiosVersion.setText(info["bios"]["Version"])
-        self.ui.TextTotalRAM.setText(ram)
-        self.ui.TextProcessorName.setText(cpu_model)
-        self.ui.TextModel.setText(info["computer_system"]["Model"])
-        self.ui.TextServiceNumber.setText(info["bios"]["SerialNumber"])
-        # Add all Disks to table
-        self.ui.TableStorage.setRowCount(len(info['disks']))
-        add_data_to_table(info['disks'], self.ui.TableStorage)
-        # Add all gpus to table
-        self.ui.TableGPUs.setRowCount(len(info['gpus']))
-        add_data_to_table(info['gpus'], self.ui.TableGPUs)
-        
-
-    def get_system_info_done(self):
-        self.statusBar().showMessage('Información obtenida')
-
-    def start_get_system_info_thread(self):
-        # Pass the function to execute
-        # Any other args, kwargs are passed to the run function
-        pythoncom.CoInitialize()
-        worker = Worker(get_system_info)
-        worker.signals.result.connect(self.set_system_info)
-        worker.signals.finished.connect(self.get_system_info_done)
-        worker.signals.progress.connect(self.statusBar().showMessage)
-
-        # Execute
-        self.threadpool.start(worker)
 
 
 # SECTION - Save inspectión
@@ -467,40 +427,6 @@ class MainWindow(QMainWindow):
 
 #!SECTION
 
-# SECTION - Jobs Thread
-    def __get_thread_jobs(self):
-        thread = QThread()
-        worker = Jobs()
-        worker.moveToThread(thread)
-
-        # this is essential when worker is in local scope!
-        thread.worker = worker
-
-        thread.started.connect(worker.run)
-        worker.configData.connect(self.setConfigData)
-        worker.finished.connect(thread.quit)
-        worker.error.connect(self.showFailDialog)
-        
-
-        return thread
-
-    def setConfigData(self, data):
-        self.configData = data
-        self.setOptions()
-        # print(self.configData)
-        self.show()
-
-    def start_jobs_thread(self):
-        self.showSuccessDialog(message="Cargando la información")
-        if not self.__thread_jobs.isRunning():
-            self.__thread_jobs = self.__get_thread_jobs()
-            self.__thread_jobs.start()
-
-    def stop_jobs_thread(self):
-        if self.__thread_jobs.isRunning():
-            self.__thread_jobs.worker.stop()
-            self.__thread_jobs.quit()
-#!SECTION
 
     def closeEvent(self, event: QCloseEvent) -> None:
         self.stop_battery_test_mode()
