@@ -8,89 +8,73 @@ from modules.backend_connection import get_config
 from modules.files_managment import read_yaml
 from modules.constants import dirname, config_file
 import asyncio
-import socket
+
 import pickle
 from os import path
+
+from modules.systeminfo import get_system_info
+from modules.helpers import isConnected
 
 
 class Jobs(QObject):
     finished = Signal()
-    progress = Signal(int)
+    progress = Signal(str)
     configData = Signal(dict)
-    online = False
+    systemData = Signal(dict)
     error = Signal(str)
+    online = False
     config = None
 
     def run(self):
         """Long-running task."""
         self.config = read_yaml(config_file)
-        self.online = self.isConnected()
+        self.progress.emit('Comprobando conexion a internet.')
+        self.online = isConnected()
 
         if self.online == False:
+            self.progress.emit('No hay conexión a internet.')
             createNewConnection(
                 self.config['WIFI']['SSID'], self.config['WIFI']['SSID'], self.config['WIFI']['PASS'])
             createNewConnection(
                 self.config['WIFI']['SSID5G'], self.config['WIFI']['SSID5G'], self.config['WIFI']['PASS5G'])
+            self.progress.emit('Contectando a internet')
             connect(self.config['WIFI']['SSID'], self.config['WIFI']['SSID'])
             connect(self.config['WIFI']['SSID5G'], self.config['WIFI']['SSID5G'])
             sleep(2)
-        self.online = self.isConnected()
+        self.online = isConnected()
         if self.online:
-            config = asyncio.run(get_config())
-            self.configData.emit(config)
-            print(config)
-
+            self.progress.emit('Internet conectado.')
+            self.progress.emit('Obteniendo configuración del servidor.')
+            try:
+                config = asyncio.run(get_config())
+                self.configData.emit(config)
+                self.progress.emit('Configuración obtenida.')
+            except Exception as e:
+                print("Error al obtener la configuración: ", e)
+                self.progress.emit(e)
+            
+            self.progress.emit('Guardando configuración')
             with open(path.join(dirname, "config_files\config.pkl"), 'wb') as f:
                 pickle.dump(config, f)
 
         else:
+            self.progress.emit('No hay internet, obteniendo configuración guardada.')
             try:
                 with open(path.join(dirname, "config_files\config.pkl"), 'rb') as f:
                     config = pickle.load(f)
                     self.configData.emit(config)
-                    print("imprimiendo configuracion",config)
             except Exception as e:
-                self.error.emit('No hay coneccion a internet y no se pudo cargar la información')
+                self.error.emit('No hay coneccion a internet y no se pudo cargar la información.')
                 print(e)
-            self.error.emit('No hay coneccion a internet, revise la conexión. Se cargó la información de respaldo')
+            self.error.emit('No hay coneccion a internet, revise la conexión. Se cargó la información de respaldo.')
 
         if is_admin() and self.online:
-            print('Está en linea C:')
+            self.progress.emit('Sincronizando la hora')
             sync_date_time()
+        
 
         self.finished.emit()
 
-    def isConnected(self):
-        try:
-            # connect to the host -- tells us if the host is actually
-            # reachable
-            sock = socket.create_connection(("www.google.com", 80))
-            if sock is not None:
-                print('Clossing socket')
-                sock.close
-            return True
-        except OSError:
-            pass
-        return False
 
-    def showSuccessDialog(self, message):
-        msgBox = QMessageBox()
-        msgBox.setIcon(QMessageBox.Information)
-        msgBox.setText(message)
-        msgBox.setWindowTitle('Todo correcto')
-        msgBox.setStandardButtons(QMessageBox.Ok)
 
-        returnValue = msgBox.exec()
-        if returnValue == QMessageBox.Ok:
-            print('OK clicked')
-
-    def showFailDialog(self, message):
-        msgBox = QMessageBox()
-        msgBox.setIcon(QMessageBox.Critical)
-        msgBox.setText(message)
-        msgBox.setWindowTitle('Error')
-        msgBox.setStandardButtons(QMessageBox.Ok)
-
-        returnValue = msgBox.exec()
-        if returnValue == QMessageBox.Ok:
-            print('OK clicked')
+    

@@ -1,14 +1,14 @@
 import sys
 import re
 import asyncio
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidgetItem
+from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 from PySide6.QtCore import QThreadPool, QThread
 from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
 from ui.mainwindow_ui import Ui_MainWindow
 
 from functools import partial
 from datetime import datetime
-import pythoncom
+
 from time import sleep
 
 # from dialogs.SuccessDialog import CustomDialog
@@ -18,7 +18,7 @@ from Jobs.Monitor import Monitor
 
 from config_dialog import ConfigDialog
 
-from modules.systeminfo import get_system_info
+
 from modules.helpers import convert_size
 from modules.gspread import *
 from function import *
@@ -33,6 +33,7 @@ from modules.programs import get_all_programs
 from modules.backend_connection import get_computer, save_computer
 from loading_dialog import LoadingDialog
 
+from Dialogs.SuccessDialog import CustomDialog
 
 
 class MainWindow(QMainWindow):
@@ -43,7 +44,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.__thread_monitor = QThread()
         self.__thread_battery = QThread()
-        self.__thread_jobs = QThread()
+        
 
         self.data = [[]]
         self.notes = []
@@ -78,8 +79,6 @@ class MainWindow(QMainWindow):
         self.asingAllButtonsFunctions()
         # self.update_config()
         self.setAllInitialValues()
-
-        
 
         batteries = get_battery_info()
         for idx, battery in enumerate(batteries):
@@ -297,32 +296,7 @@ class MainWindow(QMainWindow):
 # SECTION - Save inspectión
 
     def start_thread_save_inspection(self):
-        r = asyncio.run(get_computer(
-            serial_number=self.systeminfo['bios']['SerialNumber']))
-        gpu_model = ""
-        gpu_ram = ""
-        if (r.status == 404):
-            print(r.status)
-            if self.array_gpus != []:
-                gpu_model = self.array_gpus[0][0]
-                gpu_ram = self.array_gpus[0][1]
-            else:
-                gpu_model = "Sin grafica"
-                gpu_ram = ""
-
-            computer = {
-                "service_tag": self.systeminfo['bios']['SerialNumber'],
-                "internal_id": self.ui.TextPixelId.text(),
-                "processor": re.search("i\d-\d{4}[A-Z]", self.systeminfo["cpu"]["brand_raw"]),
-                "ram_size": str(convert_size(self.systeminfo["virtual_memory"]["total"])),
-                "ram_type": self.systeminfo["memories"][0]["Tipo"],
-                "storage_size": self.systeminfo['disks'][0][2],
-                "storage_type": self.systeminfo['disks'][0][1],
-                "graphics_card_model": gpu_model,
-                "graphics_ram_size": gpu_ram,
-                "aesthetic_id": self.ui.CboxAesthetics.currentIndex,
-            }
-            asyncio.run(save_computer(computer))
+        pass
         
 
 
@@ -427,34 +401,14 @@ class MainWindow(QMainWindow):
 
 #!SECTION
 
+        
 
     def closeEvent(self, event: QCloseEvent) -> None:
         self.stop_battery_test_mode()
         self.stop_monitor_thread()
         sleep(1)
 
-        # dialogs
-    def showSuccessDialog(self, message):
-        msgBox = QMessageBox()
-        msgBox.setIcon(QMessageBox.Information)
-        msgBox.setText(message)
-        msgBox.setWindowTitle('Todo correcto')
-        msgBox.setStandardButtons(QMessageBox.Ok)
 
-        returnValue = msgBox.exec()
-        if returnValue == QMessageBox.Ok:
-            print('OK clicked')
-
-    def showFailDialog(self, message):
-        msgBox = QMessageBox()
-        msgBox.setIcon(QMessageBox.Critical)
-        msgBox.setText(message)
-        msgBox.setWindowTitle('Error')
-        msgBox.setStandardButtons(QMessageBox.Ok)
-
-        returnValue = msgBox.exec()
-        if returnValue == QMessageBox.Ok:
-            print('OK clicked')
 
 
 if __name__ == "__main__":

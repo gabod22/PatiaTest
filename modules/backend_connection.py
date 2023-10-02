@@ -1,7 +1,7 @@
 import aiohttp
 import json
 
-URL = 'http://patiatest_web.test'
+URL = 'http://patiatest.test'
 
 headers = {
     'Authorization': 'Bearer ' + 'cAQUqXpjrNzpoPkNiaYrwpXPw9l08kpO6rDZbyLi',
@@ -54,3 +54,4 @@ async def save_inspection(computer):
 
             r = await response.text()
             return response
+

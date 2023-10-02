@@ -10,7 +10,7 @@ import pythoncom
 import GPUtil
 
 
-def get_system_info(progress_callback, on_error):
+def get_system_info(progress_callback, on_error,show_dialog):
     pythoncom.CoInitialize()
     info = dict()
     w = wmi.WMI()
@@ -23,7 +23,7 @@ def get_system_info(progress_callback, on_error):
         24: "DDR3",
         26: "DDR4",
     }
-    progress_callback.emit('Obteniendo info de la plataforma')
+    progress_callback.emit('Obteniendo info de la computadora')
 
     # INFO
     info['computer_system'] = dict(wmiToDict(w.Win32_ComputerSystem()[0]))

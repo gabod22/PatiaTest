@@ -1,8 +1,8 @@
 # dialogs
-from PySide6.QtWidgets import QApplication, QDialog, QMainWindow, QPushButton, QDialogButtonBox, QVBoxLayout, QLabel
+from PySide6.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout, QLabel
 
 class CustomDialog(QDialog):
-    def __init__(self, title, message_txt):
+    def __init__(self, title, message):
         super().__init__()
 
         self.setWindowTitle(title)
@@ -14,7 +14,7 @@ class CustomDialog(QDialog):
         self.buttonBox.rejected.connect(self.reject)
 
         self.layout = QVBoxLayout()
-        message = QLabel(message_txt)
+        message = QLabel(message)
         self.layout.addWidget(message)
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
