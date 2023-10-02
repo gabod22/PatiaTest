@@ -47,33 +47,45 @@ class Jobs(QObject):
             self.progress.emit('Obteniendo configuración del servidor.')
             try:
                 config = asyncio.run(get_config())
-                self.configData.emit(config)
-                self.progress.emit('Configuración obtenida.')
+                if config == None:
+                    print('No se pudo obtener la configuración')
+                    raise Exception('No se obtuvo la configuración')
+                else:
+                    self.configData.emit(config)
+                    print(config)
+                    self.progress.emit('Configuración obtenida.')
+                    self.progress.emit('Guardando configuración')
+                    with open(path.join(dirname, "config_files\config.pkl"), 'wb') as f:
+                        pickle.dump(config, f)
             except Exception as e:
                 print("Error al obtener la configuración: ", e)
                 self.progress.emit(e)
+                self.get_offline_config()
             
-            self.progress.emit('Guardando configuración')
-            with open(path.join(dirname, "config_files\config.pkl"), 'wb') as f:
-                pickle.dump(config, f)
+            
 
         else:
             self.progress.emit('No hay internet, obteniendo configuración guardada.')
-            try:
-                with open(path.join(dirname, "config_files\config.pkl"), 'rb') as f:
-                    config = pickle.load(f)
-                    self.configData.emit(config)
-            except Exception as e:
-                self.error.emit('No hay coneccion a internet y no se pudo cargar la información.')
-                print(e)
-            self.error.emit('No hay coneccion a internet, revise la conexión. Se cargó la información de respaldo.')
-
+            self.get_offline_config()
+        
         if is_admin() and self.online:
             self.progress.emit('Sincronizando la hora')
             sync_date_time()
         
 
         self.finished.emit()
+        
+    def get_offline_config(self):
+        try:
+            with open(path.join(dirname, "config_files\config.pkl"), 'rb') as f:
+                config = pickle.load(f)
+                self.configData.emit(config)
+                print('Cargando desde el archivo')
+                print(config)
+        except Exception as e:
+            self.error.emit('No hay coneccion a internet y no se pudo cargar la información.')
+            print(e)
+        self.error.emit('No hay coneccion a internet, revise la conexión. Se cargó la información de respaldo.')
 
 
 

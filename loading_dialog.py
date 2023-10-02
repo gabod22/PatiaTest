@@ -4,7 +4,6 @@ import asyncio
 
 from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import QThreadPool, QThread
-from PySide6.QtWidgets import QMessageBox
 
 from modules.helpers import add_data_to_table
 from modules.systeminfo import get_system_info
@@ -125,12 +124,15 @@ class LoadingDialog(QDialog):
     def get_computer_from_server(self, progress_callback, on_error, show_dialog):
 
         progress_callback.emit('Obteniendo registro de la computadora')
-        r = asyncio.run(get_computer(serial_number=self.serial_number))
-        if r.status != 404:
-            progress_callback.emit('La computadora ya está registrada')
-        else:
-            progress_callback.emit('No hay registro de la computadora')
-            show_dialog.emit()
+        try:
+            r = asyncio.run(get_computer(serial_number=self.serial_number))
+            if r.status != 404:
+                progress_callback.emit('La computadora ya está registrada')
+            else:
+                progress_callback.emit('No hay registro de la computadora')
+                show_dialog.emit()
+        except Exception as e:
+            showFailDialog(self, str(e))
 
     def show_dialog(self):
         print('Mostrando dialogo')
