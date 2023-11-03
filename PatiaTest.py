@@ -33,7 +33,7 @@ from modules.programs import get_all_programs
 from modules.backend_connection import get_computer, save_computer
 from loading_dialog import LoadingDialog
 
-from Dialogs.SuccessDialog import CustomDialog
+from Dialogs.CustomDialogs import CustomDialog
 
 
 class MainWindow(QMainWindow):
@@ -299,6 +299,10 @@ class MainWindow(QMainWindow):
         pass
         
 
+# SECTION - Save inspectión
+
+    def start_thread_register_computer(self):
+        pass
 
 #!SECTION
 
@@ -360,9 +364,6 @@ class MainWindow(QMainWindow):
         self.ui.LBTimeElapsed.setText(time)
         self.ui.TextBatteryDuration.setText(time)
 #!SECTION
-
-# SECTION - Initial Jobs
-
 
 # SECTION Monitor Thread
 
