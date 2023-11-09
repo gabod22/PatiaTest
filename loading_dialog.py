@@ -151,6 +151,7 @@ class LoadingDialog(QDialog):
         if result:
             print("Guardando info")
             self.loading_finished()
+        self.loading_finished()
         
     def printMessage(self):
         print("se ha registrado")
