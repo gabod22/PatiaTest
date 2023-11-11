@@ -1,6 +1,4 @@
 import sys
-import re
-import asyncio
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 from PySide6.QtCore import QThreadPool, QThread
 from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
@@ -18,8 +16,6 @@ from Jobs.Monitor import Monitor
 
 from config_dialog import ConfigDialog
 
-
-from modules.helpers import convert_size
 from modules.gspread import *
 from function import *
 from modules.battery import is_battery_installed
@@ -30,10 +26,8 @@ from modules.constants import config_file
 
 from modules.programs import get_all_programs
 
-from modules.backend_connection import get_computer, save_computer
 from loading_dialog import LoadingDialog
 
-from Dialogs.CustomDialogs import CustomDialog
 
 
 class MainWindow(QMainWindow):
@@ -58,6 +52,7 @@ class MainWindow(QMainWindow):
         
         loadingDialog = LoadingDialog(self)
         loadingDialog.show()
+        self.ui.tabReport.setEnabled(False)
 
         self.threadpool = QThreadPool()
 
@@ -184,6 +179,7 @@ class MainWindow(QMainWindow):
             self.ui.CboxTouchpad.setCurrentIndex(dataSaved['TOUCHPAD'])
             self.ui.CboxTouchscreen.setCurrentIndex(dataSaved['TOUCHSCREEN'])
             self.ui.CboxHinges.setCurrentIndex(dataSaved['HINGES'])
+            
 
             self.ui.TextBatteryNote.setText(dataSaved['BATTERY_NOTE'])
             self.ui.TextBatteryDuration.setText(dataSaved['BATTERY_DURATION'])
@@ -299,7 +295,7 @@ class MainWindow(QMainWindow):
         pass
         
 
-# SECTION - Save inspectión
+# SECTION - register computer
 
     def start_thread_register_computer(self):
         pass
