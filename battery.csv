@@ -1,19 +1,19 @@
 Description,Value
-Battery Name,DELL 2X39G
-Manufacture Name,LGC-LGC7.780
-Serial Number,1990
+Battery Name,Primary
+Manufacture Name,HP
+Serial Number, 
 Manufacture Date,
 Power State,AC Power
 Current Capacity (in %),100.0%
-Current Capacity Value,"39,131 mWh"
-Full Charged Capacity,"39,131 mWh"
-Designed Capacity,"42,920 mWh"
-Battery Health,91.2%
-Voltage,"7,946 millivolts "
-Charge/Discharge Rate ,0 milliwatts 
+Current Capacity Value,"47,181 mWh"
+Full Charged Capacity,"47,181 mWh"
+Designed Capacity,"47,181 mWh"
+Battery Health,100.0%
+Voltage,"16,559 millivolts "
+Charge/Discharge Rate ,
 Chemistry ,Lithium Ion
-Low Battery Capacity (1),"1,295 mWh"
-Low Battery Capacity (2),"4,292 mWh"
+Low Battery Capacity (1),"3,435 mWh"
+Low Battery Capacity (2),"5,867 mWh"
 Critical Bias,
 Number of charge/discharge cycles,0
 Battery Temperature,
