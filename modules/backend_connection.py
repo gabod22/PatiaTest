@@ -1,7 +1,7 @@
 import aiohttp
 import json
 
-URL = 'http://patiatest_web.test'
+URL = 'http://patiatest_app.test'
 
 headers = {
     'Authorization': 'Bearer ' + 'cAQUqXpjrNzpoPkNiaYrwpXPw9l08kpO6rDZbyLi',
@@ -33,6 +33,7 @@ async def get_computer(serial_number):
                 print("Content-type:", response.headers['content-type'])
 
                 r = await response.text()
+                print(r)
                 return response
     except aiohttp.ClientConnectionError as e:
         print('Error al conectar con el servidor, revisar el servidor o la url')
@@ -46,9 +47,10 @@ async def save_computer(computer):
                 print("Content-type:", response.headers['content-type'])
 
                 r = await response.text()
-                return response
+                return r
     except aiohttp.ClientConnectionError as e:
         print('Error al conectar con el servidor, revisar el servidor o la url')
+        return {'error': 'No se pudo conectar al servidor'}
 
 async def save_inspection(computer):
     try:

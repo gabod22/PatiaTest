@@ -1,5 +1,6 @@
 Description,Value
 Battery Name,Primary
+<<<<<<< HEAD
 Manufacture Name,HP
 Serial Number, 
 Manufacture Date,
@@ -14,8 +15,24 @@ Charge/Discharge Rate ,
 Chemistry ,Lithium Ion
 Low Battery Capacity (1),"3,435 mWh"
 Low Battery Capacity (2),"5,867 mWh"
+=======
+Manufacture Name,Hewlett-Packard
+Serial Number,25949 2015/12/25
+Manufacture Date,
+Power State,AC Power
+Current Capacity (in %),100.0%
+Current Capacity Value,"35,614 mWh"
+Full Charged Capacity,"35,614 mWh"
+Designed Capacity,"46,512 mWh"
+Battery Health,76.6%
+Voltage,"12,914 millivolts "
+Charge/Discharge Rate ,0 milliwatts 
+Chemistry ,Lithium Ion
+Low Battery Capacity (1),"1,414 mWh"
+Low Battery Capacity (2),"3,557 mWh"
+>>>>>>> 3a968a1f8828bde19dd5693debb36436c92eaa0f
 Critical Bias,
-Number of charge/discharge cycles,0
+Number of charge/discharge cycles,607
 Battery Temperature,
 Remaining battery time for the current activity (Estimated),
 Full battery time for the current activity (Estimated),

@@ -29,7 +29,7 @@ class WorkerSignals(QObject):
     error = Signal(tuple)
     result = Signal(object)
     progress = Signal(str)
-    onError = Signal(tuple)
+    onError = Signal(tuple) 
     showDialog = Signal()
 
 

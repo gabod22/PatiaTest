@@ -1,10 +1,11 @@
 import re
 import pythoncom
 import asyncio
+from time import sleep
 
 from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import QThreadPool, QThread
-
+from PySide6.QtGui import QCloseEvent
 from modules.helpers import add_data_to_table
 from modules.systeminfo import get_system_info
 
@@ -13,10 +14,12 @@ from Jobs.Jobs import Jobs
 from modules.helpers import convert_size
 from ui.loading_dialog_ui import Ui_LoadingDialog
 
-from Dialogs.SuccessDialog import CustomDialog
+from Dialogs.CustomDialogs import CustomDialog
 
 from Dialogs import showSuccessDialog, showFailDialog
+from Dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from modules.backend_connection import get_computer
+
 
 
 class LoadingDialog(QDialog):
@@ -24,11 +27,13 @@ class LoadingDialog(QDialog):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
+        self.enable_register = False
         self.ui = Ui_LoadingDialog()
         self.ui.setupUi(self)
         self.__thread_jobs = QThread()
         self.threadpool = QThreadPool()
         self.serial_number = ""
+        self.system_info = None
         print("Multithreading with maximum %d threads" %
               self.threadpool.maxThreadCount())
         self.start_jobs_thread()
@@ -50,15 +55,13 @@ class LoadingDialog(QDialog):
 
         return thread
 
-    def loading_finished(self):
-        self.parent.show()
-        self.close()
+    
 
     def setConfigData(self, data):
 
         self.parent.configData = data
         self.parent.setOptions()
-        print("imprimiendo configuracion", data)
+        # print("imprimiendo configuracion", data)
 
         # print(self.configData)
 
@@ -75,6 +78,7 @@ class LoadingDialog(QDialog):
     # SECTION - Get system info
 
     def set_system_info(self, info):
+        self.system_info = info
         cpu_model = re.search(
             "i\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
         ram = str(convert_size(info["virtual_memory"]
@@ -94,7 +98,6 @@ class LoadingDialog(QDialog):
         self.serial_number = info["bios"]["SerialNumber"]
 
     def get_system_info_done(self):
-        # self.statusBar().showMessage('Información obtenida')
         self.ui.PlainTextLog.appendPlainText('Información obtenida')
         self.start_get_computer_thread()
 
@@ -116,8 +119,10 @@ class LoadingDialog(QDialog):
         worker = Worker(self.get_computer_from_server)
         # worker.signals.result.connect(self.show_dialog)
         worker.signals.progress.connect(self.ui.PlainTextLog.appendPlainText)
-        worker.signals.showDialog.connect(lambda: self.show_dialog())
-
+        worker.signals.showDialog.connect(lambda: self.showRegisterComputerdialog())
+        worker.signals.onError.connect(lambda error: showFailDialog(self, error[1]))
+        worker.signals.onError.connect(lambda: self.loading_finished())
+        worker.signals.finished.connect(lambda: self.loading_finished())
         # Execute
         self.threadpool.start(worker)
 
@@ -126,17 +131,48 @@ class LoadingDialog(QDialog):
         progress_callback.emit('Obteniendo registro de la computadora')
         try:
             r = asyncio.run(get_computer(serial_number=self.serial_number))
+            
             if r.status != 404:
                 progress_callback.emit('La computadora ya está registrada')
+                self.enable_register = True
+                self.parent.ui.TextPixelId.setText(r[])
             else:
                 progress_callback.emit('No hay registro de la computadora')
                 show_dialog.emit()
-        except Exception as e:
-            showFailDialog(self, str(e))
+        except (TypeError, AttributeError):
+            on_error.emit(("Error", 'No hay conexion con el servidor, se deshabilitará la opcion de reporte'))
 
-    def show_dialog(self):
+    def showRegisterComputerdialog(self):
         print('Mostrando dialogo')
-        showSuccessDialog(self, 'La computadora no está registrada, si desea registrar la computadora, de click en registrar')
-
-    def get_computer_done():
+        register = RegisterComputerDialog(self)
+        result = register.exec_()
+        if result:
+            self.showRegisterFormDialog()
+        else:
+            self.loading_finished()
+    
+    def showRegisterFormDialog(self):
+        print('Mostrando form')
+        register = RegisterFormDialog(self)
+        result = register.exec_()
+        if result:
+            print("Guardando info")
+            self.loading_finished()
+        self.loading_finished()
+        
+    def printMessage(self):
+        print("se ha registrado")
+        
+    def get_computer_done(self):
         print('asdasdads')
+    
+    
+    def loading_finished(self):
+        if self.enable_register:
+            self.parent.ui.tabReport.setEnabled(True)
+        self.parent.show()
+        self.hide()
+        
+    def closeEvent(self, event: QCloseEvent) -> None:
+        self.parent.close()
+        sleep(1)
