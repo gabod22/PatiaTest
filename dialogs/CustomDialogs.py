@@ -92,4 +92,4 @@ class RegisterFormDialog(QDialog):
         # print(json.encoder(str(computer)))
         response = await save_computer(computer=computer)
         if "warn" in response:
-            print(response['warn'])
+            print(response)

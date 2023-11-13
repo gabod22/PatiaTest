@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(896, 536)
         icon = QIcon()
-        icon.addFile(u"../../../../.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"../../../.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -40,6 +40,8 @@ class Ui_MainWindow(object):
         self.actionConfig.setObjectName(u"actionConfig")
         self.actionPrograma = QAction(MainWindow)
         self.actionPrograma.setObjectName(u"actionPrograma")
+        self.actionReconectar_servidor = QAction(MainWindow)
+        self.actionReconectar_servidor.setObjectName(u"actionReconectar_servidor")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout_4 = QHBoxLayout(self.centralwidget)
@@ -265,7 +267,7 @@ class Ui_MainWindow(object):
         self.TextPixelId.setObjectName(u"TextPixelId")
         self.TextPixelId.setMaximumSize(QSize(16777215, 16777215))
         self.TextPixelId.setAutoFillBackground(True)
-        self.TextPixelId.setReadOnly(False)
+        self.TextPixelId.setReadOnly(True)
 
         self.verticalLayout_15.addWidget(self.TextPixelId)
 
@@ -320,7 +322,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 815, 440))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 815, 454))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
@@ -622,7 +624,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon1 = QIcon.fromTheme(iconThemeName)
         else:
-            icon1.addFile(u"../../../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
+            icon1.addFile(u"../../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
 
         self.BtnSaveToGoogleSheets.setIcon(icon1)
 
@@ -870,10 +872,11 @@ class Ui_MainWindow(object):
         self.menuConfiguraci_n.addAction(self.actionSaveLocal)
         self.menuConfiguraci_n.addSeparator()
         self.menuConfiguraci_n.addAction(self.actionConfig)
+        self.menuConfiguraci_n.addAction(self.actionReconectar_servidor)
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(1)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -898,6 +901,7 @@ class Ui_MainWindow(object):
         self.actionSaveLocal.setText(QCoreApplication.translate("MainWindow", u"Guardar local", None))
         self.actionConfig.setText(QCoreApplication.translate("MainWindow", u"Configuraci\u00f3n", None))
         self.actionPrograma.setText(QCoreApplication.translate("MainWindow", u"Programa", None))
+        self.actionReconectar_servidor.setText(QCoreApplication.translate("MainWindow", u"Reconectar servidor", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"Info del pc", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Modelo", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"No. Servicio", None))

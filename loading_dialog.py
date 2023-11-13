@@ -2,6 +2,7 @@ import re
 import pythoncom
 import asyncio
 from time import sleep
+import json
 
 from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import QThreadPool, QThread
@@ -13,8 +14,6 @@ from Jobs.worker import Worker
 from Jobs.Jobs import Jobs
 from modules.helpers import convert_size
 from ui.loading_dialog_ui import Ui_LoadingDialog
-
-from Dialogs.CustomDialogs import CustomDialog
 
 from Dialogs import showSuccessDialog, showFailDialog
 from Dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
@@ -34,8 +33,11 @@ class LoadingDialog(QDialog):
         self.threadpool = QThreadPool()
         self.serial_number = ""
         self.system_info = None
+        self.this_computer = None
+        
         print("Multithreading with maximum %d threads" %
               self.threadpool.maxThreadCount())
+        
         self.start_jobs_thread()
         self.start_get_system_info_thread()
 
@@ -96,6 +98,7 @@ class LoadingDialog(QDialog):
         self.parent.ui.TableGPUs.setRowCount(len(info['gpus']))
         add_data_to_table(info['gpus'],  self.parent.ui.TableGPUs)
         self.serial_number = info["bios"]["SerialNumber"]
+        self.parent.ui.TextPixelId.setText(str(info['internal_id']))
 
     def get_system_info_done(self):
         self.ui.PlainTextLog.appendPlainText('Información obtenida')
@@ -130,16 +133,20 @@ class LoadingDialog(QDialog):
 
         progress_callback.emit('Obteniendo registro de la computadora')
         try:
-            r = asyncio.run(get_computer(serial_number=self.serial_number))
-            
-            if r.status != 404:
+            (response,r) = asyncio.run(get_computer(serial_number=self.serial_number))
+            r = json.loads(r)
+            self.this_computer = r['data']
+            print(self.this_computer)
+            if response.status != 404:
+                
                 progress_callback.emit('La computadora ya está registrada')
                 self.enable_register = True
-                self.parent.ui.TextPixelId.setText(r[])
+                print('asdad')
             else:
                 progress_callback.emit('No hay registro de la computadora')
                 show_dialog.emit()
-        except (TypeError, AttributeError):
+        except (TypeError, AttributeError) as e:
+            print(e)
             on_error.emit(("Error", 'No hay conexion con el servidor, se deshabilitará la opcion de reporte'))
 
     def showRegisterComputerdialog(self):

@@ -33,8 +33,7 @@ async def get_computer(serial_number):
                 print("Content-type:", response.headers['content-type'])
 
                 r = await response.text()
-                print(r)
-                return response
+                return response,r
     except aiohttp.ClientConnectionError as e:
         print('Error al conectar con el servidor, revisar el servidor o la url')
         

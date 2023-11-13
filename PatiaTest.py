@@ -46,12 +46,11 @@ class MainWindow(QMainWindow):
         self.wks = None
         self.config = read_yaml(config_file)
         self.configData = {}
-
+        self.loading_dialog = None
         self.systeminfo = None
         battery_health = ""
         
-        loadingDialog = LoadingDialog(self)
-        loadingDialog.show()
+        self.start_loading_dialog()
         self.ui.tabReport.setEnabled(False)
 
         self.threadpool = QThreadPool()
@@ -116,7 +115,9 @@ class MainWindow(QMainWindow):
         self.ui.BtnSaveToGoogleSheets.clicked.connect(
             lambda: self.start_thread_save_inspection())
         
-
+    def start_loading_dialog(self):
+        self.loading_dialog = LoadingDialog(self)
+        self.loading_dialog.show()
     def asingMenuButtonsFunctions(self):
         # Config Menu
         self.ui.actionConfig.triggered.connect(
@@ -124,6 +125,7 @@ class MainWindow(QMainWindow):
         self.ui.actionSave.triggered.connect(
             lambda: self.start_thread_save_inspection())
         self.ui.actionSaveLocal.triggered.connect(lambda: self.save_local())
+        self.ui.actionReconectar_servidor.triggered.connect(lambda: self.start_loading_dialog())
 
     def save_local(self):
         info = {}

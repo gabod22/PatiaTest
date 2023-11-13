@@ -15,14 +15,14 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../../.designer/assets/logo_min.ico</normaloff>../../../../.designer/assets/logo_min.ico</iconset>
+    <normaloff>../../../.designer/assets/logo_min.ico</normaloff>../../../.designer/assets/logo_min.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -341,7 +341,7 @@
                <bool>true</bool>
               </property>
               <property name="readOnly">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -427,7 +427,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>815</width>
-                <height>440</height>
+                <height>454</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1117,7 +1117,7 @@
              </property>
              <property name="icon">
               <iconset theme="document-save">
-               <normaloff>../../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
+               <normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
              </property>
             </widget>
            </item>
@@ -1497,6 +1497,7 @@
     <addaction name="actionSaveLocal"/>
     <addaction name="separator"/>
     <addaction name="actionConfig"/>
+    <addaction name="actionReconectar_servidor"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -1525,6 +1526,11 @@
   <action name="actionPrograma">
    <property name="text">
     <string>Programa</string>
+   </property>
+  </action>
+  <action name="actionReconectar_servidor">
+   <property name="text">
+    <string>Reconectar servidor</string>
    </property>
   </action>
  </widget>
