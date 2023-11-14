@@ -38,8 +38,8 @@ class LoadingDialog(QDialog):
         print("Multithreading with maximum %d threads" %
               self.threadpool.maxThreadCount())
         
+        # self.start_get_system_info_thread()
         self.start_jobs_thread()
-        self.start_get_system_info_thread()
 
     # SECTION - Jobs Thread
     def __get_thread_jobs(self):
@@ -48,12 +48,17 @@ class LoadingDialog(QDialog):
         worker.moveToThread(thread)
 
         # this is essential when worker is in local scope!
+        pythoncom.CoInitialize()
         thread.worker = worker
 
         thread.started.connect(worker.run)
         worker.configData.connect(self.setConfigData)
+        worker.thisComputer.connect(self.setThisComputerData)
+        worker.systemData.connect(self.set_system_info)
         worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
+        worker.showDialog.connect(lambda: self.showRegisterComputerdialog())
         worker.error.connect(showFailDialog)
+        worker.finished.connect(lambda: self.loading_finished())
 
         return thread
 
@@ -66,6 +71,9 @@ class LoadingDialog(QDialog):
         # print("imprimiendo configuracion", data)
 
         # print(self.configData)
+    def setThisComputerData(self, data):
+        self.enable_register = True
+        self.parent.ui.TextPixelId.setText(str(data['internal_id']))
 
     def start_jobs_thread(self):
         if not self.__thread_jobs.isRunning():
@@ -98,56 +106,7 @@ class LoadingDialog(QDialog):
         self.parent.ui.TableGPUs.setRowCount(len(info['gpus']))
         add_data_to_table(info['gpus'],  self.parent.ui.TableGPUs)
         self.serial_number = info["bios"]["SerialNumber"]
-        self.parent.ui.TextPixelId.setText(str(info['internal_id']))
-
-    def get_system_info_done(self):
-        self.ui.PlainTextLog.appendPlainText('Información obtenida')
-        self.start_get_computer_thread()
-
-    def start_get_system_info_thread(self):
-        # Pass the function to execute
-        # Any other args, kwargs are passed to the run function
-        pythoncom.CoInitialize()
-        worker = Worker(get_system_info)
-        worker.signals.result.connect(self.set_system_info)
-        worker.signals.finished.connect(self.get_system_info_done)
-        worker.signals.progress.connect(self.ui.PlainTextLog.appendPlainText)
-
-        # Execute
-        self.threadpool.start(worker)
-
-    def start_get_computer_thread(self):
-        # Pass the function to execute
-        # Any other args, kwargs are passed to the run function
-        worker = Worker(self.get_computer_from_server)
-        # worker.signals.result.connect(self.show_dialog)
-        worker.signals.progress.connect(self.ui.PlainTextLog.appendPlainText)
-        worker.signals.showDialog.connect(lambda: self.showRegisterComputerdialog())
-        worker.signals.onError.connect(lambda error: showFailDialog(self, error[1]))
-        worker.signals.onError.connect(lambda: self.loading_finished())
-        worker.signals.finished.connect(lambda: self.loading_finished())
-        # Execute
-        self.threadpool.start(worker)
-
-    def get_computer_from_server(self, progress_callback, on_error, show_dialog):
-
-        progress_callback.emit('Obteniendo registro de la computadora')
-        try:
-            (response,r) = asyncio.run(get_computer(serial_number=self.serial_number))
-            r = json.loads(r)
-            self.this_computer = r['data']
-            print(self.this_computer)
-            if response.status != 404:
-                
-                progress_callback.emit('La computadora ya está registrada')
-                self.enable_register = True
-                print('asdad')
-            else:
-                progress_callback.emit('No hay registro de la computadora')
-                show_dialog.emit()
-        except (TypeError, AttributeError) as e:
-            print(e)
-            on_error.emit(("Error", 'No hay conexion con el servidor, se deshabilitará la opcion de reporte'))
+        
 
     def showRegisterComputerdialog(self):
         print('Mostrando dialogo')
@@ -162,8 +121,12 @@ class LoadingDialog(QDialog):
         print('Mostrando form')
         register = RegisterFormDialog(self)
         result = register.exec_()
+        print(result)
         if result:
             print("Guardando info")
+            self.enable_register = True
+            print(self.this_computer)
+            self.parent.ui.TextPixelId.setText(self.this_computer['internal_id'])
             self.loading_finished()
         self.loading_finished()
         

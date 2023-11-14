@@ -49,7 +49,6 @@ class RegisterComputerDialog(QDialog):
 class RegisterFormDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        print(parent.system_info)
         self.parent = parent
         self.setWindowTitle("Colocar el Pixel-ID")
 
@@ -90,6 +89,9 @@ class RegisterFormDialog(QDialog):
             "model": model,
         }
         # print(json.encoder(str(computer)))
-        response = await save_computer(computer=computer)
-        if "warn" in response:
-            print(response)
+        (response, r) = await save_computer(computer=computer)
+        if response.status == 200 or response.status == 201 :
+            self.parent.this_computer = json.loads(r)
+            self.accept()
+            if "warn" in r:
+                print(r)

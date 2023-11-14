@@ -4,12 +4,14 @@ from modules.wifi import connect, createNewConnection
 from time import sleep
 from modules.helpers import is_admin
 from function import sync_date_time
-from modules.backend_connection import get_config
+from modules.backend_connection import get_config, get_computer
 from modules.files_managment import read_yaml
 from modules.constants import dirname, config_file
 import asyncio
 
+
 import pickle
+import json
 from os import path
 
 from modules.systeminfo import get_system_info
@@ -24,13 +26,20 @@ class Jobs(QObject):
     error = Signal(str)
     online = False
     config = None
+    system = None
+    showDialog = Signal()
+    thisComputer = Signal(dict)
 
     def run(self):
         """Long-running task."""
         self.config = read_yaml(config_file)
         self.progress.emit('Comprobando conexion a internet.')
         self.online = isConnected()
-
+        
+        self.system = get_system_info(progress_callback=self.progress, on_error=self.error,show_dialog=None)
+        
+        self.systemData.emit(self.system)
+        print(self.system)
         if self.online == False:
             self.progress.emit('No hay conexión a internet.')
             createNewConnection(
@@ -61,6 +70,22 @@ class Jobs(QObject):
                 print("Error al obtener la configuración: ", e)
                 self.progress.emit(e)
                 self.get_offline_config()
+                
+            self.progress.emit('Obteniendo registro de la computadora')
+            try:
+                (response,r) = asyncio.run(get_computer(serial_number=self.system["bios"]["SerialNumber"]))
+                
+                if response.status != 404:
+                    r = json.loads(r)
+                    self.thisComputer.emit(r['data'])
+                    self.progress.emit('La computadora ya está registrada')
+                    self.enable_register = True
+                else:
+                    self.progress.emit('No hay registro de la computadora')
+                    self.showDialog.emit()
+            except (TypeError, AttributeError) as e:
+                print(e)
+                self.progress.emit('No hay conexion con el servidor, se deshabilitará la opcion de reporte')
             
             
 

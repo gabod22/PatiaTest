@@ -46,7 +46,7 @@ async def save_computer(computer):
                 print("Content-type:", response.headers['content-type'])
 
                 r = await response.text()
-                return r
+                return (response,r)
     except aiohttp.ClientConnectionError as e:
         print('Error al conectar con el servidor, revisar el servidor o la url')
         return {'error': 'No se pudo conectar al servidor'}
