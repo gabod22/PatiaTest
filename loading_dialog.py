@@ -8,7 +8,6 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import QThreadPool, QThread
 from PySide6.QtGui import QCloseEvent
 from modules.helpers import add_data_to_table
-from modules.systeminfo import get_system_info
 
 from Jobs.worker import Worker
 from Jobs.Jobs import Jobs
@@ -17,8 +16,6 @@ from ui.loading_dialog_ui import Ui_LoadingDialog
 
 from Dialogs import showSuccessDialog, showFailDialog
 from Dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
-from modules.backend_connection import get_computer
-
 
 
 class LoadingDialog(QDialog):
@@ -34,10 +31,10 @@ class LoadingDialog(QDialog):
         self.serial_number = ""
         self.system_info = None
         self.this_computer = None
-        
+
         print("Multithreading with maximum %d threads" %
               self.threadpool.maxThreadCount())
-        
+
         # self.start_get_system_info_thread()
         self.start_jobs_thread()
 
@@ -61,8 +58,6 @@ class LoadingDialog(QDialog):
         worker.finished.connect(lambda: self.loading_finished())
 
         return thread
-
-    
 
     def setConfigData(self, data):
 
@@ -106,7 +101,6 @@ class LoadingDialog(QDialog):
         self.parent.ui.TableGPUs.setRowCount(len(info['gpus']))
         add_data_to_table(info['gpus'],  self.parent.ui.TableGPUs)
         self.serial_number = info["bios"]["SerialNumber"]
-        
 
     def showRegisterComputerdialog(self):
         print('Mostrando dialogo')
@@ -116,7 +110,7 @@ class LoadingDialog(QDialog):
             self.showRegisterFormDialog()
         else:
             self.loading_finished()
-    
+
     def showRegisterFormDialog(self):
         print('Mostrando form')
         register = RegisterFormDialog(self)
@@ -126,23 +120,23 @@ class LoadingDialog(QDialog):
             print("Guardando info")
             self.enable_register = True
             print(self.this_computer)
-            self.parent.ui.TextPixelId.setText(self.this_computer['internal_id'])
+            self.parent.ui.TextPixelId.setText(
+                self.this_computer['internal_id'])
             self.loading_finished()
         self.loading_finished()
-        
+
     def printMessage(self):
         print("se ha registrado")
-        
+
     def get_computer_done(self):
         print('asdasdads')
-    
-    
+
     def loading_finished(self):
         if self.enable_register:
             self.parent.ui.tabReport.setEnabled(True)
         self.parent.show()
         self.hide()
-        
+
     def closeEvent(self, event: QCloseEvent) -> None:
         self.parent.close()
         sleep(1)
