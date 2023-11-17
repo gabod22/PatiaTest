@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -322,7 +322,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 815, 454))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 815, 440))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
@@ -792,62 +792,80 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_4 = QWidget()
         self.tab_4.setObjectName(u"tab_4")
-        self.verticalLayout_21 = QVBoxLayout(self.tab_4)
-        self.verticalLayout_21.setObjectName(u"verticalLayout_21")
+        self.horizontalLayout_6 = QHBoxLayout(self.tab_4)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.groupBox_7 = QGroupBox(self.tab_4)
         self.groupBox_7.setObjectName(u"groupBox_7")
-        self.horizontalLayout_6 = QHBoxLayout(self.groupBox_7)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.BtnTestKeyboard = QPushButton(self.groupBox_7)
-        self.BtnTestKeyboard.setObjectName(u"BtnTestKeyboard")
+        self.verticalLayout_6 = QVBoxLayout(self.groupBox_7)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.BtnOpenPrograms = QPushButton(self.groupBox_7)
+        self.BtnOpenPrograms.setObjectName(u"BtnOpenPrograms")
 
-        self.horizontalLayout_6.addWidget(self.BtnTestKeyboard)
+        self.verticalLayout_6.addWidget(self.BtnOpenPrograms)
 
-        self.BtnTestCamera = QPushButton(self.groupBox_7)
-        self.BtnTestCamera.setObjectName(u"BtnTestCamera")
+        self.BtnTestTouchscreen = QPushButton(self.groupBox_7)
+        self.BtnTestTouchscreen.setObjectName(u"BtnTestTouchscreen")
 
-        self.horizontalLayout_6.addWidget(self.BtnTestCamera)
-
-        self.BtnTestSpeakers = QPushButton(self.groupBox_7)
-        self.BtnTestSpeakers.setObjectName(u"BtnTestSpeakers")
-
-        self.horizontalLayout_6.addWidget(self.BtnTestSpeakers)
+        self.verticalLayout_6.addWidget(self.BtnTestTouchscreen)
 
         self.BtnStopTestSpeakers = QPushButton(self.groupBox_7)
         self.BtnStopTestSpeakers.setObjectName(u"BtnStopTestSpeakers")
         self.BtnStopTestSpeakers.setEnabled(True)
 
-        self.horizontalLayout_6.addWidget(self.BtnStopTestSpeakers)
+        self.verticalLayout_6.addWidget(self.BtnStopTestSpeakers)
 
-        self.BtnTestTouchscreen = QPushButton(self.groupBox_7)
-        self.BtnTestTouchscreen.setObjectName(u"BtnTestTouchscreen")
+        self.BtnTestSpeakers = QPushButton(self.groupBox_7)
+        self.BtnTestSpeakers.setObjectName(u"BtnTestSpeakers")
 
-        self.horizontalLayout_6.addWidget(self.BtnTestTouchscreen)
+        self.verticalLayout_6.addWidget(self.BtnTestSpeakers)
 
-        self.BtnOpenPrograms = QPushButton(self.groupBox_7)
-        self.BtnOpenPrograms.setObjectName(u"BtnOpenPrograms")
+        self.BtnTestCamera = QPushButton(self.groupBox_7)
+        self.BtnTestCamera.setObjectName(u"BtnTestCamera")
 
-        self.horizontalLayout_6.addWidget(self.BtnOpenPrograms)
+        self.verticalLayout_6.addWidget(self.BtnTestCamera)
+
+        self.BtnTestKeyboard = QPushButton(self.groupBox_7)
+        self.BtnTestKeyboard.setObjectName(u"BtnTestKeyboard")
+
+        self.verticalLayout_6.addWidget(self.BtnTestKeyboard)
+
+        self.BtnTestScreen = QPushButton(self.groupBox_7)
+        self.BtnTestScreen.setObjectName(u"BtnTestScreen")
+
+        self.verticalLayout_6.addWidget(self.BtnTestScreen)
+
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_6.addItem(self.verticalSpacer_4)
 
 
-        self.verticalLayout_21.addWidget(self.groupBox_7)
+        self.horizontalLayout_6.addWidget(self.groupBox_7)
 
         self.groupBox_8 = QGroupBox(self.tab_4)
         self.groupBox_8.setObjectName(u"groupBox_8")
         self.verticalLayout_22 = QVBoxLayout(self.groupBox_8)
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
-        self.AreaProrgrams = QScrollArea(self.groupBox_8)
-        self.AreaProrgrams.setObjectName(u"AreaProrgrams")
-        self.AreaProrgrams.setWidgetResizable(True)
-        self.scrollAreaWidgetContents = QWidget()
-        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 832, 324))
-        self.AreaProrgrams.setWidget(self.scrollAreaWidgetContents)
+        self.BtnStartCameraCapture = QPushButton(self.groupBox_8)
+        self.BtnStartCameraCapture.setObjectName(u"BtnStartCameraCapture")
 
-        self.verticalLayout_22.addWidget(self.AreaProrgrams)
+        self.verticalLayout_22.addWidget(self.BtnStartCameraCapture)
+
+        self.BtnStopCameraCapture = QPushButton(self.groupBox_8)
+        self.BtnStopCameraCapture.setObjectName(u"BtnStopCameraCapture")
+
+        self.verticalLayout_22.addWidget(self.BtnStopCameraCapture)
+
+        self.CameraLabel = QLabel(self.groupBox_8)
+        self.CameraLabel.setObjectName(u"CameraLabel")
+
+        self.verticalLayout_22.addWidget(self.CameraLabel)
+
+        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_22.addItem(self.verticalSpacer_5)
 
 
-        self.verticalLayout_21.addWidget(self.groupBox_8)
+        self.horizontalLayout_6.addWidget(self.groupBox_8)
 
         self.tabWidget.addTab(self.tab_4, "")
 
@@ -876,7 +894,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(3)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -1031,13 +1049,17 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"CPU(%)", None));
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Revisi\u00f3n de bater\u00eda", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("MainWindow", u"Probar el equipo", None))
-        self.BtnTestKeyboard.setText(QCoreApplication.translate("MainWindow", u"Teclado", None))
-        self.BtnTestCamera.setText(QCoreApplication.translate("MainWindow", u"C\u00e1mara", None))
-        self.BtnTestSpeakers.setText(QCoreApplication.translate("MainWindow", u"Reproducir sonido", None))
-        self.BtnStopTestSpeakers.setText(QCoreApplication.translate("MainWindow", u"Detener Sonido", None))
-        self.BtnTestTouchscreen.setText(QCoreApplication.translate("MainWindow", u"Touchscreen", None))
         self.BtnOpenPrograms.setText(QCoreApplication.translate("MainWindow", u"Abrir programas", None))
+        self.BtnTestTouchscreen.setText(QCoreApplication.translate("MainWindow", u"Touchscreen", None))
+        self.BtnStopTestSpeakers.setText(QCoreApplication.translate("MainWindow", u"Detener Sonido", None))
+        self.BtnTestSpeakers.setText(QCoreApplication.translate("MainWindow", u"Reproducir sonido", None))
+        self.BtnTestCamera.setText(QCoreApplication.translate("MainWindow", u"Abrir c\u00e1mara", None))
+        self.BtnTestKeyboard.setText(QCoreApplication.translate("MainWindow", u"Teclado", None))
+        self.BtnTestScreen.setText(QCoreApplication.translate("MainWindow", u"Pantalla", None))
         self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Programas", None))
+        self.BtnStartCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Probar c\u00e1mara", None))
+        self.BtnStopCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Detener", None))
+        self.CameraLabel.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Herramientas", None))
         self.menuConfiguraci_n.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))
         self.menuTools.setTitle(QCoreApplication.translate("MainWindow", u"Herramientas", None))

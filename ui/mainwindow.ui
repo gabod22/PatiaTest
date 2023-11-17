@@ -22,7 +22,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -427,7 +427,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>815</width>
-                <height>454</height>
+                <height>440</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1393,31 +1393,24 @@
        <attribute name="title">
         <string>Herramientas</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_21">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
          <widget class="QGroupBox" name="groupBox_7">
           <property name="title">
            <string>Probar el equipo</string>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <widget class="QPushButton" name="BtnTestKeyboard">
+            <widget class="QPushButton" name="BtnOpenPrograms">
              <property name="text">
-              <string>Teclado</string>
+              <string>Abrir programas</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="BtnTestCamera">
+            <widget class="QPushButton" name="BtnTestTouchscreen">
              <property name="text">
-              <string>Cámara</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="BtnTestSpeakers">
-             <property name="text">
-              <string>Reproducir sonido</string>
+              <string>Touchscreen</string>
              </property>
             </widget>
            </item>
@@ -1432,18 +1425,45 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="BtnTestTouchscreen">
+            <widget class="QPushButton" name="BtnTestSpeakers">
              <property name="text">
-              <string>Touchscreen</string>
+              <string>Reproducir sonido</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="BtnOpenPrograms">
+            <widget class="QPushButton" name="BtnTestCamera">
              <property name="text">
-              <string>Abrir programas</string>
+              <string>Abrir cámara</string>
              </property>
             </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnTestKeyboard">
+             <property name="text">
+              <string>Teclado</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnTestScreen">
+             <property name="text">
+              <string>Pantalla</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>
@@ -1455,21 +1475,38 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_22">
            <item>
-            <widget class="QScrollArea" name="AreaProrgrams">
-             <property name="widgetResizable">
-              <bool>true</bool>
+            <widget class="QPushButton" name="BtnStartCameraCapture">
+             <property name="text">
+              <string>Probar cámara</string>
              </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>832</width>
-                <height>324</height>
-               </rect>
-              </property>
-             </widget>
             </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnStopCameraCapture">
+             <property name="text">
+              <string>Detener</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="CameraLabel">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>

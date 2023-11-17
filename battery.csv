@@ -4,18 +4,18 @@ Manufacture Name,Hewlett-Packard
 Serial Number,25949 2015/12/25
 Manufacture Date,
 Power State,AC Power
-Current Capacity (in %),95.8%
-Current Capacity Value,"34,086 mWh"
-Full Charged Capacity,"35,579 mWh"
+Current Capacity (in %),98.8%
+Current Capacity Value,"35,625 mWh"
+Full Charged Capacity,"36,058 mWh"
 Designed Capacity,"46,512 mWh"
-Battery Health,76.5%
-Voltage,"12,715 millivolts "
+Battery Health,77.5%
+Voltage,"12,787 millivolts "
 Charge/Discharge Rate ,0 milliwatts 
 Chemistry ,Lithium Ion
-Low Battery Capacity (1),"1,414 mWh"
-Low Battery Capacity (2),"3,557 mWh"
+Low Battery Capacity (1),"1,436 mWh"
+Low Battery Capacity (2),"3,602 mWh"
 Critical Bias,
-Number of charge/discharge cycles,607
+Number of charge/discharge cycles,609
 Battery Temperature,
 Remaining battery time for the current activity (Estimated),
 Full battery time for the current activity (Estimated),
