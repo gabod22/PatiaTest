@@ -1,9 +1,11 @@
-from PySide6.QtWidgets import QDialog, QLineEdit, QListWidget,QMessageBox, QComboBox
+from PySide6.QtWidgets import QDialog, QLineEdit, QListWidget, QMessageBox, QComboBox
 from PySide6.QtGui import QCloseEvent
 from ui.config_dialog_ui import Ui_Dialog
 from modules.constants import config, config_file
 from modules.files_managment import write_yaml
 from modules.programs import get_all_programs
+
+
 class ConfigDialog(QDialog):
 
     def __init__(self, parent):
@@ -11,12 +13,11 @@ class ConfigDialog(QDialog):
         self.parent = parent
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        
+
         self.info = dict()
         self.config = config
 
-
-        #SECTION - Programs
+        # SECTION - Programs
         self.ui.BtnAddToSelectedPrograms.clicked.connect(lambda: self.move_item_to_list(
             self.ui.ListAllPrograms, self.ui.ListSelectedProgrms))
         self.ui.BtnDeleteFromSelectedPrograms.clicked.connect(
@@ -66,7 +67,7 @@ class ConfigDialog(QDialog):
 
     # Preferences
     def add_item_to_list(self, item: QLineEdit, list: QListWidget, cbox: QComboBox = None):
-        if(item.text() != ""):
+        if (item.text() != ""):
             list.addItem(item.text())
             if cbox != None:
                 cbox.addItem(item.text())
@@ -94,9 +95,8 @@ class ConfigDialog(QDialog):
             if to_list.item(x).text() == item.text():
                 return
         to_list.addItem(item.text())
-        
+
     def setOptions(self):
-        self.ui.label_30.mouseDoubleClickEvent()
         for status in self.parent.configData['component_statuses']:
             self.ui.CboxBattery.addItem(status['slug'])
             self.ui.CboxEthernet.addItem(status['slug'])
@@ -111,6 +111,7 @@ class ConfigDialog(QDialog):
             self.ui.CboxTouchscreen.addItem(status['slug'])
             self.ui.CboxHinges.addItem(status['slug'])
             self.ui.CboxMicro.addItem(status['slug'])
+
     def set_config_info(self):
 
         for program in get_all_programs():

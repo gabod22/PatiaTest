@@ -53,6 +53,7 @@ class MainWindow(QMainWindow):
         self.loading_dialog = None
         self.systeminfo = None
         battery_health = ""
+        self.ui.BtnStopCameraCapture.setVisible(False)
         self.start_loading_dialog()
         self.ui.tabReport.setEnabled(False)
 
@@ -268,6 +269,8 @@ class MainWindow(QMainWindow):
             self.ui.CboxAesthetics.addItem(aesthetic['slug'])
         for employee in self.configData['technicians']:
             self.ui.CboxCheckedBy.addItem(employee['name'])
+            self.ui.CboxBatCheckedBy.addItem(employee['name'])
+
         for status in self.configData['component_statuses']:
             self.ui.CboxBattery.addItem(status['slug'])
             self.ui.CboxEthernet.addItem(status['slug'])
@@ -304,6 +307,7 @@ class MainWindow(QMainWindow):
         # self.ui.BtnConnectToWifi.clicked.connect(
         #     lambda: self.start_jobs_thread())
         # self.ui.BtnCmd.clicked.connect(lambda: self.executeCommand())
+        self.ui.BtnTestMicrophone.clicked.connect(open_record_config)
 
     def playSound(self):
         play_speaker_test_sound()
@@ -352,11 +356,15 @@ class MainWindow(QMainWindow):
         if not self.__thread_CameraCapture.isRunning():
             self.__thread_CameraCapture = self.__get_thread_camera_capure()
             self.__thread_CameraCapture.running = True
+            self.ui.BtnStopCameraCapture.setVisible(True)
+            self.ui.BtnStopCameraCapture.setEnabled(True)
+            self.ui.BtnStartCameraCapture.setVisible(False)
+            self.ui.BtnStartCameraCapture.setEnabled(False)
             self.__thread_CameraCapture.start()
 
     def stop_feed(self):
         if self.__thread_CameraCapture.isRunning():
-
+            self.ui.BtnStopCameraCapture.setEnabled(False)
             self.__thread_CameraCapture.worker.camera.release()
             self.__thread_CameraCapture.worker.running = False
             print("feed was asked to stop")
@@ -368,6 +376,10 @@ class MainWindow(QMainWindow):
 
     def thread_done(self):
         print("thread finished")
+        self.ui.BtnStopCameraCapture.setVisible(False)
+        self.ui.BtnStopCameraCapture.setEnabled(False)
+        self.ui.BtnStartCameraCapture.setVisible(True)
+        self.ui.BtnStartCameraCapture.setEnabled(True)
         self.ui.CameraLabel.setPixmap(self.pix)
 
     def set_new_img(self, Image):
@@ -482,6 +494,7 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event: QCloseEvent) -> None:
         self.stop_battery_test_mode()
         self.stop_monitor_thread()
+        self.stop_feed()
         sleep(1)
 
 

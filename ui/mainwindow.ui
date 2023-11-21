@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>896</width>
-    <height>536</height>
+    <width>915</width>
+    <height>749</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,14 +15,14 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../.designer/assets/logo_min.ico</normaloff>../../../.designer/assets/logo_min.ico</iconset>
+    <normaloff>../../../../../.designer/assets/logo_min.ico</normaloff>../../../../../.designer/assets/logo_min.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -426,8 +426,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>815</width>
-                <height>440</height>
+                <width>851</width>
+                <height>442</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1117,7 +1117,7 @@
              </property>
              <property name="icon">
               <iconset theme="document-save">
-               <normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
+               <normaloff>../../../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
              </property>
             </widget>
            </item>
@@ -1148,7 +1148,7 @@
           <property name="title">
            <string>Estado general</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_11">
+          <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
             <widget class="QLabel" name="label_23">
              <property name="text">
@@ -1232,6 +1232,36 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_23">
+             <item>
+              <widget class="QLabel" name="label_37">
+               <property name="text">
+                <string>Revisado por:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="CboxBatCheckedBy">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>500</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="placeholderText">
+                <string>Selecciona el técnico</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QCheckBox" name="ChkBoxSaveAtEnd">
@@ -1439,6 +1469,13 @@
             </widget>
            </item>
            <item>
+            <widget class="QPushButton" name="BtnTestMicrophone">
+             <property name="text">
+              <string>Abrir configuracion micro</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="BtnTestKeyboard">
              <property name="text">
               <string>Teclado</string>
@@ -1491,7 +1528,7 @@
            <item>
             <widget class="QLabel" name="CameraLabel">
              <property name="text">
-              <string>TextLabel</string>
+              <string>Camera</string>
              </property>
             </widget>
            </item>
@@ -1522,7 +1559,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>896</width>
+     <width>915</width>
      <height>22</height>
     </rect>
    </property>

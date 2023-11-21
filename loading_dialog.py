@@ -135,8 +135,8 @@ class LoadingDialog(QDialog):
         if self.enable_register:
             self.parent.ui.tabReport.setEnabled(True)
         self.parent.show()
-        self.hide()
+        self.close()
 
     def closeEvent(self, event: QCloseEvent) -> None:
-        self.parent.close()
+        # self.parent.close()
         sleep(1)

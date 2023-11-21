@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'config_dialog.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -25,7 +25,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(402, 538)
+        Dialog.resize(637, 604)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.tabWidget = QTabWidget(Dialog)
@@ -39,89 +39,76 @@ class Ui_Dialog(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 358, 441))
-        self.verticalLayout_16 = QVBoxLayout(self.scrollAreaWidgetContents_2)
-        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
-        self.groupBox = QGroupBox(self.scrollAreaWidgetContents_2)
-        self.groupBox.setObjectName(u"groupBox")
-        self.verticalLayout_3 = QVBoxLayout(self.groupBox)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.groupBox_2 = QGroupBox(self.groupBox)
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 593, 507))
+        self.verticalLayout_2 = QVBoxLayout(self.scrollAreaWidgetContents_2)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.groupBox_2 = QGroupBox(self.scrollAreaWidgetContents_2)
         self.groupBox_2.setObjectName(u"groupBox_2")
         self.horizontalLayout = QHBoxLayout(self.groupBox_2)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.verticalLayout_6 = QVBoxLayout()
-        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.formLayout_2 = QFormLayout()
+        self.formLayout_2.setObjectName(u"formLayout_2")
         self.label_17 = QLabel(self.groupBox_2)
         self.label_17.setObjectName(u"label_17")
 
-        self.verticalLayout_6.addWidget(self.label_17)
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_17)
 
         self.TextSSID5G = QLineEdit(self.groupBox_2)
         self.TextSSID5G.setObjectName(u"TextSSID5G")
 
-        self.verticalLayout_6.addWidget(self.TextSSID5G)
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.TextSSID5G)
 
-
-        self.horizontalLayout.addLayout(self.verticalLayout_6)
-
-        self.verticalLayout_7 = QVBoxLayout()
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.label_6 = QLabel(self.groupBox_2)
         self.label_6.setObjectName(u"label_6")
 
-        self.verticalLayout_7.addWidget(self.label_6)
+        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.label_6)
 
         self.TextPass5G = QLineEdit(self.groupBox_2)
         self.TextPass5G.setObjectName(u"TextPass5G")
 
-        self.verticalLayout_7.addWidget(self.TextPass5G)
+        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.TextPass5G)
 
 
-        self.horizontalLayout.addLayout(self.verticalLayout_7)
+        self.horizontalLayout.addLayout(self.formLayout_2)
 
 
-        self.verticalLayout_3.addWidget(self.groupBox_2)
+        self.verticalLayout_2.addWidget(self.groupBox_2)
 
-        self.groupBox_7 = QGroupBox(self.groupBox)
+        self.groupBox_7 = QGroupBox(self.scrollAreaWidgetContents_2)
         self.groupBox_7.setObjectName(u"groupBox_7")
         self.horizontalLayout_3 = QHBoxLayout(self.groupBox_7)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.verticalLayout_8 = QVBoxLayout()
-        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.formLayout_3 = QFormLayout()
+        self.formLayout_3.setObjectName(u"formLayout_3")
         self.label_5 = QLabel(self.groupBox_7)
         self.label_5.setObjectName(u"label_5")
 
-        self.verticalLayout_8.addWidget(self.label_5)
+        self.formLayout_3.setWidget(0, QFormLayout.LabelRole, self.label_5)
 
         self.TextSSID = QLineEdit(self.groupBox_7)
         self.TextSSID.setObjectName(u"TextSSID")
 
-        self.verticalLayout_8.addWidget(self.TextSSID)
+        self.formLayout_3.setWidget(0, QFormLayout.FieldRole, self.TextSSID)
 
-
-        self.horizontalLayout_3.addLayout(self.verticalLayout_8)
-
-        self.verticalLayout_9 = QVBoxLayout()
-        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.label_4 = QLabel(self.groupBox_7)
         self.label_4.setObjectName(u"label_4")
 
-        self.verticalLayout_9.addWidget(self.label_4)
+        self.formLayout_3.setWidget(1, QFormLayout.LabelRole, self.label_4)
 
         self.TextPass = QLineEdit(self.groupBox_7)
         self.TextPass.setObjectName(u"TextPass")
 
-        self.verticalLayout_9.addWidget(self.TextPass)
+        self.formLayout_3.setWidget(1, QFormLayout.FieldRole, self.TextPass)
 
 
-        self.horizontalLayout_3.addLayout(self.verticalLayout_9)
+        self.horizontalLayout_3.addLayout(self.formLayout_3)
 
 
-        self.verticalLayout_3.addWidget(self.groupBox_7)
+        self.verticalLayout_2.addWidget(self.groupBox_7)
 
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.verticalLayout_16.addWidget(self.groupBox)
+        self.verticalLayout_2.addItem(self.verticalSpacer)
 
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
 
@@ -138,7 +125,7 @@ class Ui_Dialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 358, 441))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 593, 507))
         self.formLayout = QFormLayout(self.scrollAreaWidgetContents)
         self.formLayout.setObjectName(u"formLayout")
         self.label_30 = QLabel(self.scrollAreaWidgetContents)
@@ -567,11 +554,10 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.groupBox.setTitle(QCoreApplication.translate("Dialog", u"WIFI", None))
-        self.groupBox_2.setTitle(QCoreApplication.translate("Dialog", u"5G", None))
+        self.groupBox_2.setTitle(QCoreApplication.translate("Dialog", u"WIFI 5G", None))
         self.label_17.setText(QCoreApplication.translate("Dialog", u"SSID", None))
         self.label_6.setText(QCoreApplication.translate("Dialog", u"Contrase\u00f1a", None))
-        self.groupBox_7.setTitle(QCoreApplication.translate("Dialog", u"2.4G", None))
+        self.groupBox_7.setTitle(QCoreApplication.translate("Dialog", u"WIFI 2.4G", None))
         self.label_5.setText(QCoreApplication.translate("Dialog", u"SSID", None))
         self.label_4.setText(QCoreApplication.translate("Dialog", u"Contrase\u00f1a", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QCoreApplication.translate("Dialog", u"General", None))
