@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'loading_dialog.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -22,6 +22,7 @@ class Ui_LoadingDialog(object):
     def setupUi(self, LoadingDialog):
         if not LoadingDialog.objectName():
             LoadingDialog.setObjectName(u"LoadingDialog")
+        LoadingDialog.setWindowModality(Qt.ApplicationModal)
         LoadingDialog.resize(449, 358)
         LoadingDialog.setSizeGripEnabled(False)
         self.verticalLayout = QVBoxLayout(LoadingDialog)

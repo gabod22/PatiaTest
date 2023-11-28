@@ -39,29 +39,29 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        """
+            Crea una instancia de los Threads que se utilizan
+        """
         self.__thread_monitor = QThread()
         self.__thread_battery = QThread()
         self.__thread_CameraCapture = QThread()
+
         self.video_size = QSize(320, 240)
         self.ui.CameraLabel.setFixedSize(self.video_size)
-        self.data = [[]]
-        self.notes = []
+        self.ui.BtnStopCameraCapture.setVisible(False)
+
         self.config_dialog = None
-        self.wks = None
+        self.loading_dialog = None
+
         self.config = read_yaml(config_file)
         self.configData = {}
-        self.loading_dialog = None
         self.systeminfo = None
-        battery_health = ""
-        self.ui.BtnStopCameraCapture.setVisible(False)
         self.start_loading_dialog()
+
         self.ui.tabReport.setEnabled(False)
 
         self.threadpool = QThreadPool()
-
-        print("Bateria instalada" if is_battery_installed() else "Sin bateria")
-        if is_battery_installed():
-            self.ui.BtnStartBatteryTest.setEnabled(True)
 
         # MenuBar
         for program in get_all_programs():
@@ -75,40 +75,7 @@ class MainWindow(QMainWindow):
 
         self.asingMenuButtonsFunctions()
         self.asingAllButtonsFunctions()
-        # self.update_config()
         self.setAllInitialValues()
-
-        batteries = get_battery_info()
-        for idx, battery in enumerate(batteries):
-            self.ui.TableBatteryInfo.setItem(0, idx, QTableWidgetItem(
-                str(battery["Battery Name"])))
-            self.ui.TableBatteryInfo.setItem(1, idx, QTableWidgetItem(
-                str(battery["Manufacture Name"])))
-            self.ui.TableBatteryInfo.setItem(2, idx, QTableWidgetItem(
-                str(battery["Manufacture Date"])))
-            self.ui.TableBatteryInfo.setItem(3, idx, QTableWidgetItem(
-                str(battery["Serial Number"])))
-            self.ui.TableBatteryInfo.setItem(4, idx, QTableWidgetItem(
-                str(battery["Full Charged Capacity"])))
-            self.ui.TableBatteryInfo.setItem(5, idx, QTableWidgetItem(
-                str(battery["Designed Capacity"])))
-            self.ui.TableBatteryInfo.setItem(6, idx, QTableWidgetItem(
-                str(battery["Battery Health"])))
-            self.ui.TableBatteryInfo.setItem(7, idx, QTableWidgetItem(
-                str(battery["Number of charge/discharge cycles"])))
-
-            if (batteries[idx]["Voltage"] != ""):
-                if idx != len(batteries) - 1:
-                    battery_health = battery_health + \
-                        batteries[idx]["Battery Health"] + ", "
-                else:
-                    battery_health = battery_health + \
-                        batteries[idx]["Battery Health"]
-            else:
-                battery_health = "Sin bateria"
-
-        self.ui.TextBatteryHealth.setText(battery_health)
-        self.ui.TextBatteryHealth_2.setText(battery_health)
 
         self.start_monitor_thread()
 
@@ -326,14 +293,10 @@ class MainWindow(QMainWindow):
 
 # SECTION - Save inspectión
 
-    def start_thread_save_inspection(self):
-        pass
+    async def start_thread_save_inspection(self):
+        inspection = dict()
+        inspection['comptuer_id'] = self.systeminfo['']
 
-
-# SECTION - register computer
-
-    def start_thread_register_computer(self):
-        pass
 
 #!SECTION
     def __get_thread_camera_capure(self):

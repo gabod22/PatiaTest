@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>915</width>
-    <height>749</height>
+    <width>940</width>
+    <height>752</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -426,8 +426,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>851</width>
-                <height>442</height>
+                <width>876</width>
+                <height>445</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1113,7 +1113,7 @@
            <item>
             <widget class="QPushButton" name="BtnSaveToGoogleSheets">
              <property name="text">
-              <string>Guardar test</string>
+              <string>Guardar reporte</string>
              </property>
              <property name="icon">
               <iconset theme="document-save">
@@ -1126,7 +1126,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="tabBatteryTest">
        <attribute name="title">
         <string>Revisión de batería</string>
        </attribute>
@@ -1234,43 +1234,6 @@
             </spacer>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_23">
-             <item>
-              <widget class="QLabel" name="label_37">
-               <property name="text">
-                <string>Revisado por:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="CboxBatCheckedBy">
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>500</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="placeholderText">
-                <string>Selecciona el técnico</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="ChkBoxSaveAtEnd">
-             <property name="text">
-              <string>¿Guardar al terminar?</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="LBTimeElapsed">
              <property name="font">
               <font>
@@ -1297,6 +1260,57 @@
             <widget class="QPushButton" name="BtnStartBatteryTest">
              <property name="text">
               <string>Iniciar prueba de batería</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_23">
+             <item>
+              <widget class="QLabel" name="label_37">
+               <property name="text">
+                <string>Revisado por:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="CboxBatCheckedBy">
+               <property name="maximumSize">
+                <size>
+                 <width>500</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="placeholderText">
+                <string>Selecciona el técnico</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="ChkBoxSaveAtEnd">
+             <property name="text">
+              <string>¿Guardar al terminar?</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnSaveBatteryRecord">
+             <property name="text">
+              <string>Guardar prueba</string>
              </property>
             </widget>
            </item>
@@ -1559,7 +1573,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>915</width>
+     <width>940</width>
      <height>22</height>
     </rect>
    </property>
