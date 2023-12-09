@@ -894,6 +894,22 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_22.addItem(self.verticalSpacer_5)
 
+        self.BtnRecordAudio = QPushButton(self.groupBox_8)
+        self.BtnRecordAudio.setObjectName(u"BtnRecordAudio")
+
+        self.verticalLayout_22.addWidget(self.BtnRecordAudio)
+
+        self.BtnPlayAudio = QPushButton(self.groupBox_8)
+        self.BtnPlayAudio.setObjectName(u"BtnPlayAudio")
+
+        self.verticalLayout_22.addWidget(self.BtnPlayAudio)
+
+        self.BtnStopAudio = QPushButton(self.groupBox_8)
+        self.BtnStopAudio.setObjectName(u"BtnStopAudio")
+        self.BtnStopAudio.setEnabled(True)
+
+        self.verticalLayout_22.addWidget(self.BtnStopAudio)
+
 
         self.horizontalLayout_6.addWidget(self.groupBox_8)
 
@@ -924,7 +940,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(3)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -1094,6 +1110,9 @@ class Ui_MainWindow(object):
         self.BtnStartCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Probar c\u00e1mara", None))
         self.BtnStopCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Detener", None))
         self.CameraLabel.setText(QCoreApplication.translate("MainWindow", u"Camera", None))
+        self.BtnRecordAudio.setText(QCoreApplication.translate("MainWindow", u"Grabar microfono", None))
+        self.BtnPlayAudio.setText(QCoreApplication.translate("MainWindow", u"Reproducir grabaci\u00f3n", None))
+        self.BtnStopAudio.setText(QCoreApplication.translate("MainWindow", u"Detener audio", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Herramientas", None))
         self.menuConfiguraci_n.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))
         self.menuTools.setTitle(QCoreApplication.translate("MainWindow", u"Herramientas", None))

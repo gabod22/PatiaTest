@@ -68,5 +68,15 @@ def stop_speaker_test_sound():
     winsound.PlaySound(None, winsound.SND_PURGE)
 
 
+def play_recorded_audio_test():
+    audio = os.path.join(dirname, 'output.wav')
+    print(audio)
+    winsound.PlaySound(audio, winsound.SND_ASYNC)
+
+
+def stop_recorded_audio_test():
+    winsound.PlaySound(None, winsound.SND_PURGE)
+
+
 def open_record_config():
     os.popen('rundll32.exe Shell32.dll,Control_RunDLL Mmsys.cpl,,1')

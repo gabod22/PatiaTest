@@ -24,6 +24,7 @@ def get_system_info(progress_callback, on_error, show_dialog):
         22: "DDR2 FB-DIMM",
         24: "DDR3",
         26: "DDR4",
+        29: "Row of chips"
     }
     progress_callback.emit('Obteniendo info de la computadora')
 
@@ -85,7 +86,7 @@ def get_system_info(progress_callback, on_error, show_dialog):
     info['swap_memory'] = dict(psutil.swap_memory()._asdict())
     memories = []
     for memory in w.Win32_PhysicalMemory():
-
+        print("tipo de memoria", memory.SMBIOSMemoryType)
         memories.append({
             "capacidad": convert_size(memory.Capacity),
             "Tipo": MemoryType[memory.SMBIOSMemoryType],

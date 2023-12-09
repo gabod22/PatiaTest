@@ -1,32 +1,26 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 
-block_cipher = None
-
-
 a = Analysis(
-    ['PatiaTest.py'],
+    ['Patiatest.py'],
     pathex=[],
     binaries=[],
-    datas=[('programs/*', 'programs'), ('config_files/*', 'config_files'), ('assets/*', 'assets')],
+    datas=[('C:\\Users\\brian\\Proyectos\\patiatest\\config_files', 'config_files'), ('C:\\Users\\brian\\Proyectos\\patiatest\\programs', 'programs'), ('C:\\Users\\brian\\Proyectos\\patiatest\\assets', 'assets')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
-    win_no_prefer_redirects=False,
-    win_private_assemblies=False,
-    cipher=block_cipher,
     noarchive=False,
 )
-pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+pyz = PYZ(a.pure)
 
 exe = EXE(
     pyz,
     a.scripts,
     [],
     exclude_binaries=True,
-    name='PatiaTest',
+    name='Patiatest',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -38,15 +32,14 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     uac_admin=True,
-    icon=['E:\\Proyectos\\PatiaTest_v3\\assets\\logo_min.ico'],
+    icon=['C:\\Users\\brian\\Proyectos\\patiatest\\assets\\logo_min.ico'],
 )
 coll = COLLECT(
     exe,
     a.binaries,
-    a.zipfiles,
     a.datas,
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='PatiaTest',
+    name='Patiatest',
 )

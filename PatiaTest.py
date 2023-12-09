@@ -1,13 +1,18 @@
+from chunk import Chunk
+from concurrent.futures import thread
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize
 from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
 from PIL.ImageQt import ImageQt
+from numpy import rec
 from ui.mainwindow_ui import Ui_MainWindow
 from os import path
 
 from functools import partial
 from datetime import datetime
+
+from Jobs.worker import Worker
 
 from time import sleep
 
@@ -30,6 +35,10 @@ from modules.constants import config_file, dirname
 
 from modules.programs import get_all_programs
 
+from cpu_load_generator import load_single_core, load_all_cores, from_profile
+import pyaudio
+import wave
+import struct
 from loading_dialog import LoadingDialog
 
 
@@ -72,6 +81,7 @@ class MainWindow(QMainWindow):
 
         # initial state
         self.ui.BtnStopTestSpeakers.hide()
+        self.ui.BtnStopAudio.hide()
 
         self.asingMenuButtonsFunctions()
         self.asingAllButtonsFunctions()
@@ -276,6 +286,10 @@ class MainWindow(QMainWindow):
         # self.ui.BtnCmd.clicked.connect(lambda: self.executeCommand())
         self.ui.BtnTestMicrophone.clicked.connect(open_record_config)
 
+        self.ui.BtnRecordAudio.clicked.connect(self.thread_record_audio)
+        self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
+        self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
+
     def playSound(self):
         play_speaker_test_sound()
         self.ui.BtnTestSpeakers.hide()
@@ -290,6 +304,59 @@ class MainWindow(QMainWindow):
         for program in self.config['SELECTED_PROGRAMS']:
             open_program(program)
 
+    def play_recorded_audio(self):
+        play_recorded_audio_test()
+        self.ui.BtnPlayAudio.hide()
+        self.ui.BtnStopAudio.show()
+
+    def stop_recorded_audio(self):
+        stop_recorded_audio_test()
+        self.ui.BtnPlayAudio.show()
+        self.ui.BtnStopAudio.hide()
+
+    def record_audio(self, progress_callback, on_error, show_dialog):
+        CHUNK = 1024
+        FORMAT = pyaudio.paInt16
+        CHANNELS = 1
+        RATE = 44100
+        p = pyaudio.PyAudio()
+
+        frames = []
+        seconds = 5
+        # progress_callback('Inicando la grabacion')
+        print('inicializando la grabacion')
+        try:
+            recorder = p.open(format=FORMAT, channels=CHANNELS,
+                              rate=RATE, input=True, frames_per_buffer=CHUNK)
+            for i in range(0, int(RATE / CHUNK * seconds)):
+                data = recorder.read(CHUNK)
+                frames.append(data)
+
+            print('Grabacion detenida')
+        except Exception as e:
+            print(e)
+        finally:
+            recorder.stop_stream()
+            recorder.close()
+            p.terminate()
+
+        try:
+            wf = wave.open('output.wav', 'wb')
+            wf.setnchannels(CHANNELS)
+            wf.setsampwidth(p.get_sample_size(FORMAT))
+            wf.setframerate(RATE)
+            wf.writeframes(b''.join(frames))
+            wf.close()
+        except Exception as e:
+            print(e)
+
+    def thread_record_audio(self):
+
+        worker = Worker(self.record_audio)
+        # worker.signals.result.connect(self.printDiksInfo)
+        # worker.signals.finished.connect(self.DiskInfoDone)
+        worker.signals.progress.connect(self.statusBar().showMessage)
+        self.threadpool.start(worker)
 
 # SECTION - Save inspectión
 
@@ -299,6 +366,7 @@ class MainWindow(QMainWindow):
 
 
 #!SECTION
+
     def __get_thread_camera_capure(self):
         thread = QThread()
         worker = CameraCapture()
@@ -355,9 +423,11 @@ class MainWindow(QMainWindow):
     #         self.__thread_CameraCapture = self.__get_thread_camera_capure()
     #         self.__thread_CameraCapture.start()
 
+    # def __get_stress_cpu(self):
+    #     thread = QThread()
+    #     worker =
 
 # SECTION - Battery Test Thread
-
 
     def __get_thread_battery_test(self):
         thread = QThread()
