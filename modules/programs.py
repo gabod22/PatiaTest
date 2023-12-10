@@ -13,15 +13,19 @@ def filter_exe_files(file):
 
 def get_all_programs():
     entries = os.listdir(os.path.join(dirname, 'programs'))
+    # print(entries)
     programs = list(filter(filter_exe_files, entries))
     program_list = list()
     for program in programs:
         p = dict()
-        icon = extract_icon(os.path.join(
-            dirname, 'programs/') + program, IconSize.LARGE)
-        img = win32_icon_to_image(icon, IconSize.LARGE)
+        print(os.path.join(
+            dirname, 'programs') + "/" + program)
+        # icon = extract_icon(os.path.join(
+        #     dirname, 'programs') + "/" + program, IconSize.LARGE)
+
+        # img = win32_icon_to_image(icon, IconSize.LARGE)
         p["name"] = program
-        p["icon"] = img
+        p["icon"] = None
 
         program_list.append(p)
 

@@ -2,10 +2,10 @@
 
 
 a = Analysis(
-    ['Patiatest.py'],
+    ['PatiaTest.py'],
     pathex=[],
     binaries=[],
-    datas=[('C:\\Users\\brian\\Proyectos\\patiatest\\config_files', 'config_files'), ('C:\\Users\\brian\\Proyectos\\patiatest\\programs', 'programs'), ('C:\\Users\\brian\\Proyectos\\patiatest\\assets', 'assets')],
+    datas=[('config_files/*', 'config_files'), ('programs/*', 'programs'), ('assets/*', 'assets')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -20,7 +20,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='Patiatest',
+    name='PatiaTest',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -41,5 +41,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='Patiatest',
+    name='PatiaTest',
 )

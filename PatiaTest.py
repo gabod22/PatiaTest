@@ -66,7 +66,6 @@ class MainWindow(QMainWindow):
         self.config = read_yaml(config_file)
         self.configData = {}
         self.systeminfo = None
-        self.start_loading_dialog()
 
         self.ui.tabReport.setEnabled(False)
 
@@ -74,10 +73,10 @@ class MainWindow(QMainWindow):
 
         # MenuBar
         for program in get_all_programs():
-            pixmap = QPixmap(program['icon'])
-            icon = QIcon(pixmap)
+            # pixmap = QPixmap(program['icon'])
+            # icon = QIcon(pixmap)
             self.ui.menuTools.addAction(
-                icon, program["name"], partial(open_program, program["name"]))
+                program["name"], partial(open_program, program["name"]))
 
         # initial state
         self.ui.BtnStopTestSpeakers.hide()
@@ -99,6 +98,7 @@ class MainWindow(QMainWindow):
         qim = ImageQt(path.join(dirname + "/assets/no_camera.jpg"))
         self.pix = QPixmap.fromImage(qim)
         self.ui.CameraLabel.setPixmap(self.pix)
+        self.start_loading_dialog()
 
     def start_loading_dialog(self):
         self.loading_dialog = LoadingDialog(self)
