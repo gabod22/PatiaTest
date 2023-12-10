@@ -12,10 +12,10 @@ Battery Health,100.0%
 Voltage,"16,516 millivolts "
 Charge/Discharge Rate ,
 Chemistry ,Lithium Ion
-Low Battery Capacity (1),"3,435 mWh"
-Low Battery Capacity (2),"5,867 mWh"
+Low Battery Capacity (1),"1,414 mWh"
+Low Battery Capacity (2),"3,557 mWh"
 Critical Bias,
-Number of charge/discharge cycles,0
+Number of charge/discharge cycles,607
 Battery Temperature,
 Remaining battery time for the current activity (Estimated),
 Full battery time for the current activity (Estimated),

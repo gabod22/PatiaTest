@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>896</width>
-    <height>536</height>
+    <width>940</width>
+    <height>752</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,14 +15,14 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../.designer/assets/logo_min.ico</normaloff>../../../.designer/assets/logo_min.ico</iconset>
+    <normaloff>../../../../../.designer/assets/logo_min.ico</normaloff>../../../../../.designer/assets/logo_min.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -426,8 +426,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>815</width>
-                <height>454</height>
+                <width>876</width>
+                <height>445</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1113,11 +1113,11 @@
            <item>
             <widget class="QPushButton" name="BtnSaveToGoogleSheets">
              <property name="text">
-              <string>Guardar test</string>
+              <string>Guardar reporte</string>
              </property>
              <property name="icon">
               <iconset theme="document-save">
-               <normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
+               <normaloff>../../../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
              </property>
             </widget>
            </item>
@@ -1126,7 +1126,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="tabBatteryTest">
        <attribute name="title">
         <string>Revisión de batería</string>
        </attribute>
@@ -1148,7 +1148,7 @@
           <property name="title">
            <string>Estado general</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_11">
+          <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
             <widget class="QLabel" name="label_23">
              <property name="text">
@@ -1234,13 +1234,6 @@
             </spacer>
            </item>
            <item>
-            <widget class="QCheckBox" name="ChkBoxSaveAtEnd">
-             <property name="text">
-              <string>¿Guardar al terminar?</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="LBTimeElapsed">
              <property name="font">
               <font>
@@ -1267,6 +1260,57 @@
             <widget class="QPushButton" name="BtnStartBatteryTest">
              <property name="text">
               <string>Iniciar prueba de batería</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_23">
+             <item>
+              <widget class="QLabel" name="label_37">
+               <property name="text">
+                <string>Revisado por:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="CboxBatCheckedBy">
+               <property name="maximumSize">
+                <size>
+                 <width>500</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="placeholderText">
+                <string>Selecciona el técnico</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="ChkBoxSaveAtEnd">
+             <property name="text">
+              <string>¿Guardar al terminar?</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnSaveBatteryRecord">
+             <property name="text">
+              <string>Guardar prueba</string>
              </property>
             </widget>
            </item>
@@ -1393,31 +1437,24 @@
        <attribute name="title">
         <string>Herramientas</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_21">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
          <widget class="QGroupBox" name="groupBox_7">
           <property name="title">
            <string>Probar el equipo</string>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <widget class="QPushButton" name="BtnTestKeyboard">
+            <widget class="QPushButton" name="BtnOpenPrograms">
              <property name="text">
-              <string>Teclado</string>
+              <string>Abrir programas</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="BtnTestCamera">
+            <widget class="QPushButton" name="BtnTestTouchscreen">
              <property name="text">
-              <string>Cámara</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="BtnTestSpeakers">
-             <property name="text">
-              <string>Reproducir sonido</string>
+              <string>Touchscreen</string>
              </property>
             </widget>
            </item>
@@ -1432,18 +1469,52 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="BtnTestTouchscreen">
+            <widget class="QPushButton" name="BtnTestSpeakers">
              <property name="text">
-              <string>Touchscreen</string>
+              <string>Reproducir sonido</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="BtnOpenPrograms">
+            <widget class="QPushButton" name="BtnTestCamera">
              <property name="text">
-              <string>Abrir programas</string>
+              <string>Abrir cámara</string>
              </property>
             </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnTestMicrophone">
+             <property name="text">
+              <string>Abrir configuracion micro</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnTestKeyboard">
+             <property name="text">
+              <string>Teclado</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnTestScreen">
+             <property name="text">
+              <string>Pantalla</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>
@@ -1455,20 +1526,61 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_22">
            <item>
-            <widget class="QScrollArea" name="AreaProrgrams">
-             <property name="widgetResizable">
+            <widget class="QPushButton" name="BtnStartCameraCapture">
+             <property name="text">
+              <string>Probar cámara</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnStopCameraCapture">
+             <property name="text">
+              <string>Detener</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="CameraLabel">
+             <property name="text">
+              <string>Camera</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnRecordAudio">
+             <property name="text">
+              <string>Grabar microfono</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnPlayAudio">
+             <property name="text">
+              <string>Reproducir grabación</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="BtnStopAudio">
+             <property name="enabled">
               <bool>true</bool>
              </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>832</width>
-                <height>324</height>
-               </rect>
-              </property>
-             </widget>
+             <property name="text">
+              <string>Detener audio</string>
+             </property>
             </widget>
            </item>
           </layout>
@@ -1485,7 +1597,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>896</width>
+     <width>940</width>
      <height>22</height>
     </rect>
    </property>

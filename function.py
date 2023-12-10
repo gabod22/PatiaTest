@@ -19,7 +19,8 @@ bios = c.Win32_BIOS()[0]
 
 my_system = c.Win32_ComputerSystem()[0]
 freeze_support()
-#cpu_info = get_cpu_info()
+# cpu_info = get_cpu_info()
+
 
 def sync_date_time():
     run_powershell_command('net stop w32time')
@@ -29,7 +30,6 @@ def sync_date_time():
     run_powershell_command('w32tm /resync')
 
 
-
 def get_gpu_percent():
     gpus = GPUtil.getGPUs()
     if len(gpus) > 0:
@@ -37,29 +37,46 @@ def get_gpu_percent():
     return 0
 
 
-#Get Disks information
+# Get Disks information
 def get_disks_info():
     disks = []
     for drive in c.query("SELECT * FROM Win32_DiskDrive"):
-        if(drive.InterfaceType != 'USB'):
+        if (drive.InterfaceType != 'USB'):
             disks.append(
-            [drive.Caption, drive.InterfaceType, convert_size(int(drive.Size)), drive.Status]
+                [drive.Caption, drive.InterfaceType,
+                    convert_size(int(drive.Size)), drive.Status]
             )
     return disks
+
 
 def get_disks():
     text = ""
     for drive in c.query("SELECT * FROM Win32_DiskDrive"):
-        if(drive.InterfaceType != 'USB'):
-            text = text + 'm: %s, t: %s, i: %s, s: %s;' % (drive.Caption, convert_size(int(drive.Size)), drive.InterfaceType, drive.Status)
+        if (drive.InterfaceType != 'USB'):
+            text = text + 'm: %s, t: %s, i: %s, s: %s;' % (drive.Caption, convert_size(
+                int(drive.Size)), drive.InterfaceType, drive.Status)
     return text
 
 
-
-#Sound tests
+# Sound tests
 def play_speaker_test_sound():
     soundtest = os.path.join(dirname, 'assets\soundtest.wav')
     winsound.PlaySound(soundtest, winsound.SND_ASYNC)
 
+
 def stop_speaker_test_sound():
     winsound.PlaySound(None, winsound.SND_PURGE)
+
+
+def play_recorded_audio_test():
+    audio = os.path.join(dirname, 'output.wav')
+    print(audio)
+    winsound.PlaySound(audio, winsound.SND_ASYNC)
+
+
+def stop_recorded_audio_test():
+    winsound.PlaySound(None, winsound.SND_PURGE)
+
+
+def open_record_config():
+    os.popen('rundll32.exe Shell32.dll,Control_RunDLL Mmsys.cpl,,1')

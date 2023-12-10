@@ -1,11 +1,18 @@
+from chunk import Chunk
+from concurrent.futures import thread
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
-from PySide6.QtCore import QThreadPool, QThread
+from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize
 from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
+from PIL.ImageQt import ImageQt
+from numpy import rec
 from ui.mainwindow_ui import Ui_MainWindow
+from os import path
 
 from functools import partial
 from datetime import datetime
+
+from Jobs.worker import Worker
 
 from time import sleep
 
@@ -13,8 +20,10 @@ from time import sleep
 from Jobs.Battery import BatteryTest
 
 from Jobs.Monitor import Monitor
-
+from Jobs.CameraCapture import CameraCapture
 from config_dialog import ConfigDialog
+
+from Dialogs import showFailDialog
 
 from modules.gspread import *
 from function import *
@@ -22,12 +31,15 @@ from modules.battery import is_battery_installed
 from modules.files_managment import *
 from modules.powerManager import set_configuration_to_current_scheme, set_brightness, set_default_configuration
 from modules.battery import get_battery_info
-from modules.constants import config_file
+from modules.constants import config_file, dirname
 
 from modules.programs import get_all_programs
 
+from cpu_load_generator import load_single_core, load_all_cores, from_profile
+import pyaudio
+import wave
+import struct
 from loading_dialog import LoadingDialog
-
 
 
 class MainWindow(QMainWindow):
@@ -36,75 +48,43 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        """
+            Crea una instancia de los Threads que se utilizan
+        """
         self.__thread_monitor = QThread()
         self.__thread_battery = QThread()
-        
+        self.__thread_CameraCapture = QThread()
 
-        self.data = [[]]
-        self.notes = []
+        self.video_size = QSize(320, 240)
+        self.ui.CameraLabel.setFixedSize(self.video_size)
+        self.ui.BtnStopCameraCapture.setVisible(False)
+
         self.config_dialog = None
-        self.wks = None
+        self.loading_dialog = None
+
         self.config = read_yaml(config_file)
         self.configData = {}
-        self.loading_dialog = None
         self.systeminfo = None
-        battery_health = ""
-        
-        self.start_loading_dialog()
+
         self.ui.tabReport.setEnabled(False)
 
         self.threadpool = QThreadPool()
 
-        print("Bateria instalada" if is_battery_installed() else "Sin bateria")
-        if is_battery_installed():
-            self.ui.BtnStartBatteryTest.setEnabled(True)
-
         # MenuBar
         for program in get_all_programs():
-            pixmap = QPixmap(program['icon'])
-            icon = QIcon(pixmap)
+            # pixmap = QPixmap(program['icon'])
+            # icon = QIcon(pixmap)
             self.ui.menuTools.addAction(
-                icon, program["name"], partial(open_program, program["name"]))
+                program["name"], partial(open_program, program["name"]))
 
         # initial state
         self.ui.BtnStopTestSpeakers.hide()
-        
+        self.ui.BtnStopAudio.hide()
+
         self.asingMenuButtonsFunctions()
         self.asingAllButtonsFunctions()
-        # self.update_config()
         self.setAllInitialValues()
-
-        batteries = get_battery_info()
-        for idx, battery in enumerate(batteries):
-            self.ui.TableBatteryInfo.setItem(0, idx, QTableWidgetItem(
-                str(battery["Battery Name"])))
-            self.ui.TableBatteryInfo.setItem(1, idx, QTableWidgetItem(
-                str(battery["Manufacture Name"])))
-            self.ui.TableBatteryInfo.setItem(2, idx, QTableWidgetItem(
-                str(battery["Manufacture Date"])))
-            self.ui.TableBatteryInfo.setItem(3, idx, QTableWidgetItem(
-                str(battery["Serial Number"])))
-            self.ui.TableBatteryInfo.setItem(4, idx, QTableWidgetItem(
-                str(battery["Full Charged Capacity"])))
-            self.ui.TableBatteryInfo.setItem(5, idx, QTableWidgetItem(
-                str(battery["Designed Capacity"])))
-            self.ui.TableBatteryInfo.setItem(6, idx, QTableWidgetItem(
-                str(battery["Battery Health"])))
-            self.ui.TableBatteryInfo.setItem(7, idx, QTableWidgetItem(
-                str(battery["Number of charge/discharge cycles"])))
-
-            if (batteries[idx]["Voltage"] != ""):
-                if idx != len(batteries) - 1:
-                    battery_health = battery_health + \
-                        batteries[idx]["Battery Health"] + ", "
-                else:
-                    battery_health = battery_health + \
-                        batteries[idx]["Battery Health"]
-            else:
-                battery_health = "Sin bateria"
-
-        self.ui.TextBatteryHealth.setText(battery_health)
-        self.ui.TextBatteryHealth_2.setText(battery_health)
 
         self.start_monitor_thread()
 
@@ -114,10 +94,16 @@ class MainWindow(QMainWindow):
             lambda: self.stop_battery_test_mode())
         self.ui.BtnSaveToGoogleSheets.clicked.connect(
             lambda: self.start_thread_save_inspection())
-        
+
+        qim = ImageQt(path.join(dirname + "/assets/no_camera.jpg"))
+        self.pix = QPixmap.fromImage(qim)
+        self.ui.CameraLabel.setPixmap(self.pix)
+        self.start_loading_dialog()
+
     def start_loading_dialog(self):
         self.loading_dialog = LoadingDialog(self)
         self.loading_dialog.show()
+
     def asingMenuButtonsFunctions(self):
         # Config Menu
         self.ui.actionConfig.triggered.connect(
@@ -125,7 +111,8 @@ class MainWindow(QMainWindow):
         self.ui.actionSave.triggered.connect(
             lambda: self.start_thread_save_inspection())
         self.ui.actionSaveLocal.triggered.connect(lambda: self.save_local())
-        self.ui.actionReconectar_servidor.triggered.connect(lambda: self.start_loading_dialog())
+        self.ui.actionReconectar_servidor.triggered.connect(
+            lambda: self.start_loading_dialog())
 
     def save_local(self):
         info = {}
@@ -181,7 +168,6 @@ class MainWindow(QMainWindow):
             self.ui.CboxTouchpad.setCurrentIndex(dataSaved['TOUCHPAD'])
             self.ui.CboxTouchscreen.setCurrentIndex(dataSaved['TOUCHSCREEN'])
             self.ui.CboxHinges.setCurrentIndex(dataSaved['HINGES'])
-            
 
             self.ui.TextBatteryNote.setText(dataSaved['BATTERY_NOTE'])
             self.ui.TextBatteryDuration.setText(dataSaved['BATTERY_DURATION'])
@@ -241,10 +227,27 @@ class MainWindow(QMainWindow):
         self.config_dialog = None
 
     def setOptions(self):
+        self.ui.CboxAesthetics.clear()
+        self.ui.CboxCheckedBy.clear()
+        self.ui.CboxBattery.clear()
+        self.ui.CboxEthernet.clear()
+        self.ui.CboxPlug.clear()
+        self.ui.CboxUSB.clear()
+        self.ui.CboxScreen.clear()
+        self.ui.CboxSpikers.clear()
+        self.ui.CboxKeyboard.clear()
+        self.ui.CboxCamera.clear()
+        self.ui.CboxConnectivity.clear()
+        self.ui.CboxTouchpad.clear()
+        self.ui.CboxTouchscreen.clear()
+        self.ui.CboxHinges.clear()
+        self.ui.CboxMicro.clear()
         for aesthetic in self.configData['aesthetics']:
             self.ui.CboxAesthetics.addItem(aesthetic['slug'])
         for employee in self.configData['technicians']:
             self.ui.CboxCheckedBy.addItem(employee['name'])
+            self.ui.CboxBatCheckedBy.addItem(employee['name'])
+
         for status in self.configData['component_statuses']:
             self.ui.CboxBattery.addItem(status['slug'])
             self.ui.CboxEthernet.addItem(status['slug'])
@@ -267,13 +270,25 @@ class MainWindow(QMainWindow):
         self.ui.BtnStopTestSpeakers.clicked.connect(lambda: self.stopSound())
         self.ui.BtnTestKeyboard.clicked.connect(
             lambda: open_program('keyboard_test.exe'))
+        self.ui.BtnTestScreen.clicked.connect(
+            lambda: open_program('DPT.exe'))
         self.ui.BtnTestTouchscreen.clicked.connect(
             lambda: open_program('touch_test.exe'))
         self.ui.BtnTestCamera.clicked.connect(
             lambda: run_powershell_command('start microsoft.windows.camera:'))
+
+        self.ui.BtnStopCameraCapture.clicked.connect(
+            self.stop_feed)
+        self.ui.BtnStartCameraCapture.clicked.connect(
+            self.start_feed)
         # self.ui.BtnConnectToWifi.clicked.connect(
         #     lambda: self.start_jobs_thread())
         # self.ui.BtnCmd.clicked.connect(lambda: self.executeCommand())
+        self.ui.BtnTestMicrophone.clicked.connect(open_record_config)
+
+        self.ui.BtnRecordAudio.clicked.connect(self.thread_record_audio)
+        self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
+        self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
 
     def playSound(self):
         play_speaker_test_sound()
@@ -289,23 +304,130 @@ class MainWindow(QMainWindow):
         for program in self.config['SELECTED_PROGRAMS']:
             open_program(program)
 
+    def play_recorded_audio(self):
+        play_recorded_audio_test()
+        self.ui.BtnPlayAudio.hide()
+        self.ui.BtnStopAudio.show()
 
+    def stop_recorded_audio(self):
+        stop_recorded_audio_test()
+        self.ui.BtnPlayAudio.show()
+        self.ui.BtnStopAudio.hide()
+
+    def record_audio(self, progress_callback, on_error, show_dialog):
+        CHUNK = 1024
+        FORMAT = pyaudio.paInt16
+        CHANNELS = 1
+        RATE = 44100
+        p = pyaudio.PyAudio()
+
+        frames = []
+        seconds = 5
+        # progress_callback('Inicando la grabacion')
+        print('inicializando la grabacion')
+        try:
+            recorder = p.open(format=FORMAT, channels=CHANNELS,
+                              rate=RATE, input=True, frames_per_buffer=CHUNK)
+            for i in range(0, int(RATE / CHUNK * seconds)):
+                data = recorder.read(CHUNK)
+                frames.append(data)
+
+            print('Grabacion detenida')
+        except Exception as e:
+            print(e)
+        finally:
+            recorder.stop_stream()
+            recorder.close()
+            p.terminate()
+
+        try:
+            wf = wave.open('output.wav', 'wb')
+            wf.setnchannels(CHANNELS)
+            wf.setsampwidth(p.get_sample_size(FORMAT))
+            wf.setframerate(RATE)
+            wf.writeframes(b''.join(frames))
+            wf.close()
+        except Exception as e:
+            print(e)
+
+    def thread_record_audio(self):
+
+        worker = Worker(self.record_audio)
+        # worker.signals.result.connect(self.printDiksInfo)
+        # worker.signals.finished.connect(self.DiskInfoDone)
+        worker.signals.progress.connect(self.statusBar().showMessage)
+        self.threadpool.start(worker)
 
 # SECTION - Save inspectión
 
-    def start_thread_save_inspection(self):
-        pass
-        
+    async def start_thread_save_inspection(self):
+        inspection = dict()
+        inspection['comptuer_id'] = self.systeminfo['']
 
-# SECTION - register computer
-
-    def start_thread_register_computer(self):
-        pass
 
 #!SECTION
 
-# SECTION - Battery Test Thread
+    def __get_thread_camera_capure(self):
+        thread = QThread()
+        worker = CameraCapture()
+        worker.moveToThread(thread)
+        thread.worker = worker
 
+        thread.started.connect(worker.run)
+
+        worker.imageUpdate.connect(self.set_new_img)
+        worker.onError.connect(lambda message: showFailDialog(self, message))
+
+        worker.finished.connect(self.worker_done)
+        thread.finished.connect(self.thread_done)
+
+        return thread
+
+    def start_feed(self):
+        if not self.__thread_CameraCapture.isRunning():
+            self.__thread_CameraCapture = self.__get_thread_camera_capure()
+            self.__thread_CameraCapture.running = True
+            self.ui.BtnStopCameraCapture.setVisible(True)
+            self.ui.BtnStopCameraCapture.setEnabled(True)
+            self.ui.BtnStartCameraCapture.setVisible(False)
+            self.ui.BtnStartCameraCapture.setEnabled(False)
+            self.__thread_CameraCapture.start()
+
+    def stop_feed(self):
+        if self.__thread_CameraCapture.isRunning():
+            self.ui.BtnStopCameraCapture.setEnabled(False)
+            self.__thread_CameraCapture.worker.camera.release()
+            self.__thread_CameraCapture.worker.running = False
+            print("feed was asked to stop")
+
+    def worker_done(self):
+        print("worker finished")
+        self.__thread_CameraCapture.worker.camera.release()
+        self.__thread_CameraCapture.quit()
+
+    def thread_done(self):
+        print("thread finished")
+        self.ui.BtnStopCameraCapture.setVisible(False)
+        self.ui.BtnStopCameraCapture.setEnabled(False)
+        self.ui.BtnStartCameraCapture.setVisible(True)
+        self.ui.BtnStartCameraCapture.setEnabled(True)
+        self.ui.CameraLabel.setPixmap(self.pix)
+
+    def set_new_img(self, Image):
+        print("it received the signal")
+        print(Image)
+        self.ui.CameraLabel.setPixmap(QPixmap.fromImage(Image))
+
+    # def start_camera_capture_tread(self):
+    #     if not self.__thread_CameraCapture.isRunning():
+    #         self.__thread_CameraCapture = self.__get_thread_camera_capure()
+    #         self.__thread_CameraCapture.start()
+
+    # def __get_stress_cpu(self):
+    #     thread = QThread()
+    #     worker =
+
+# SECTION - Battery Test Thread
 
     def __get_thread_battery_test(self):
         thread = QThread()
@@ -321,17 +443,20 @@ class MainWindow(QMainWindow):
         worker.finished.connect(lambda: self.end_battery_test())
 
         return thread
-    
+
     def add_entry_to_battey_log(self, percent, plugged):
         timestamp = str(datetime.now().strftime("%d/%m/%Y, %H:%M:%S"))
         rowPosition = self.ui.TableBatteryLog.rowCount()
         self.ui.TableBatteryLog.insertRow(rowPosition)
-        self.ui.TableBatteryLog.setItem(rowPosition , 0, QTableWidgetItem(str(timestamp)))
-        self.ui.TableBatteryLog.setItem(rowPosition , 1, QTableWidgetItem(str(percent)+"%"))
-        self.ui.TableBatteryLog.setItem(rowPosition , 2, QTableWidgetItem(str(plugged)))
-        self.ui.TableBatteryLog.setItem(rowPosition , 3, QTableWidgetItem(str(self.ui.BarCPUPercentage.value())))
-        print(str(timestamp),str(percent),str(plugged) )
-        
+        self.ui.TableBatteryLog.setItem(
+            rowPosition, 0, QTableWidgetItem(str(timestamp)))
+        self.ui.TableBatteryLog.setItem(
+            rowPosition, 1, QTableWidgetItem(str(percent)+"%"))
+        self.ui.TableBatteryLog.setItem(
+            rowPosition, 2, QTableWidgetItem(str(plugged)))
+        self.ui.TableBatteryLog.setItem(rowPosition, 3, QTableWidgetItem(
+            str(self.ui.BarCPUPercentage.value())))
+        print(str(timestamp), str(percent), str(plugged))
 
     def open_battery_test_mode(self):
         open_program('power_max.exe')
@@ -364,7 +489,6 @@ class MainWindow(QMainWindow):
 #!SECTION
 
 # SECTION Monitor Thread
-
 
     def __get_thread_monitor(self):
         thread = QThread()
@@ -400,21 +524,17 @@ class MainWindow(QMainWindow):
 
 #!SECTION
 
-        
-
     def closeEvent(self, event: QCloseEvent) -> None:
         self.stop_battery_test_mode()
         self.stop_monitor_thread()
+        self.stop_feed()
         sleep(1)
-
-
 
 
 if __name__ == "__main__":
     freeze_support()
     app = QApplication(sys.argv)
-    
+
     mainwindow = MainWindow()
-    
-    
+
     sys.exit(app.exec())

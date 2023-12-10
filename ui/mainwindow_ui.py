@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -28,9 +28,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(896, 536)
+        MainWindow.resize(940, 752)
         icon = QIcon()
-        icon.addFile(u"../../../.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"../../../../../.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -322,7 +322,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 815, 454))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 876, 445))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
@@ -624,7 +624,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon1 = QIcon.fromTheme(iconThemeName)
         else:
-            icon1.addFile(u"../../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
+            icon1.addFile(u"../../../../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
 
         self.BtnSaveToGoogleSheets.setIcon(icon1)
 
@@ -634,37 +634,37 @@ class Ui_MainWindow(object):
         self.verticalLayout_16.addWidget(self.groupBox_6)
 
         self.tabWidget.addTab(self.tabReport, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        self.horizontalLayout_2 = QHBoxLayout(self.tab_2)
+        self.tabBatteryTest = QWidget()
+        self.tabBatteryTest.setObjectName(u"tabBatteryTest")
+        self.horizontalLayout_2 = QHBoxLayout(self.tabBatteryTest)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.groupBox_3 = QGroupBox(self.tab_2)
+        self.groupBox_3 = QGroupBox(self.tabBatteryTest)
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.groupBox_3.setMinimumSize(QSize(0, 0))
         self.groupBox_3.setMaximumSize(QSize(200, 16777215))
-        self.verticalLayout_11 = QVBoxLayout(self.groupBox_3)
-        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.verticalLayout_7 = QVBoxLayout(self.groupBox_3)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.label_23 = QLabel(self.groupBox_3)
         self.label_23.setObjectName(u"label_23")
 
-        self.verticalLayout_11.addWidget(self.label_23)
+        self.verticalLayout_7.addWidget(self.label_23)
 
         self.BarCPUPercentage_2 = QProgressBar(self.groupBox_3)
         self.BarCPUPercentage_2.setObjectName(u"BarCPUPercentage_2")
         self.BarCPUPercentage_2.setValue(24)
 
-        self.verticalLayout_11.addWidget(self.BarCPUPercentage_2)
+        self.verticalLayout_7.addWidget(self.BarCPUPercentage_2)
 
         self.label_8 = QLabel(self.groupBox_3)
         self.label_8.setObjectName(u"label_8")
 
-        self.verticalLayout_11.addWidget(self.label_8)
+        self.verticalLayout_7.addWidget(self.label_8)
 
         self.BarBatteryPercentage_2 = QProgressBar(self.groupBox_3)
         self.BarBatteryPercentage_2.setObjectName(u"BarBatteryPercentage_2")
         self.BarBatteryPercentage_2.setValue(24)
 
-        self.verticalLayout_11.addWidget(self.BarBatteryPercentage_2)
+        self.verticalLayout_7.addWidget(self.BarBatteryPercentage_2)
 
         self.LbBatteryStatus = QLabel(self.groupBox_3)
         self.LbBatteryStatus.setObjectName(u"LbBatteryStatus")
@@ -672,33 +672,28 @@ class Ui_MainWindow(object):
         font.setPointSize(11)
         self.LbBatteryStatus.setFont(font)
 
-        self.verticalLayout_11.addWidget(self.LbBatteryStatus)
+        self.verticalLayout_7.addWidget(self.LbBatteryStatus)
 
         self.LbPluggedIn = QLabel(self.groupBox_3)
         self.LbPluggedIn.setObjectName(u"LbPluggedIn")
         self.LbPluggedIn.setFont(font)
 
-        self.verticalLayout_11.addWidget(self.LbPluggedIn)
+        self.verticalLayout_7.addWidget(self.LbPluggedIn)
 
         self.label_36 = QLabel(self.groupBox_3)
         self.label_36.setObjectName(u"label_36")
 
-        self.verticalLayout_11.addWidget(self.label_36)
+        self.verticalLayout_7.addWidget(self.label_36)
 
         self.LbBatteryRemain = QLabel(self.groupBox_3)
         self.LbBatteryRemain.setObjectName(u"LbBatteryRemain")
         self.LbBatteryRemain.setFont(font)
 
-        self.verticalLayout_11.addWidget(self.LbBatteryRemain)
+        self.verticalLayout_7.addWidget(self.LbBatteryRemain)
 
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.verticalLayout_11.addItem(self.verticalSpacer_2)
-
-        self.ChkBoxSaveAtEnd = QCheckBox(self.groupBox_3)
-        self.ChkBoxSaveAtEnd.setObjectName(u"ChkBoxSaveAtEnd")
-
-        self.verticalLayout_11.addWidget(self.ChkBoxSaveAtEnd)
+        self.verticalLayout_7.addItem(self.verticalSpacer_2)
 
         self.LBTimeElapsed = QLabel(self.groupBox_3)
         self.LBTimeElapsed.setObjectName(u"LBTimeElapsed")
@@ -707,25 +702,55 @@ class Ui_MainWindow(object):
         font1.setBold(False)
         self.LBTimeElapsed.setFont(font1)
 
-        self.verticalLayout_11.addWidget(self.LBTimeElapsed)
+        self.verticalLayout_7.addWidget(self.LBTimeElapsed)
 
         self.BtnStopBatteryTest = QPushButton(self.groupBox_3)
         self.BtnStopBatteryTest.setObjectName(u"BtnStopBatteryTest")
         self.BtnStopBatteryTest.setEnabled(False)
 
-        self.verticalLayout_11.addWidget(self.BtnStopBatteryTest)
+        self.verticalLayout_7.addWidget(self.BtnStopBatteryTest)
 
         self.BtnStartBatteryTest = QPushButton(self.groupBox_3)
         self.BtnStartBatteryTest.setObjectName(u"BtnStartBatteryTest")
 
-        self.verticalLayout_11.addWidget(self.BtnStartBatteryTest)
+        self.verticalLayout_7.addWidget(self.BtnStartBatteryTest)
+
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_7.addItem(self.verticalSpacer_6)
+
+        self.verticalLayout_23 = QVBoxLayout()
+        self.verticalLayout_23.setObjectName(u"verticalLayout_23")
+        self.label_37 = QLabel(self.groupBox_3)
+        self.label_37.setObjectName(u"label_37")
+
+        self.verticalLayout_23.addWidget(self.label_37)
+
+        self.CboxBatCheckedBy = QComboBox(self.groupBox_3)
+        self.CboxBatCheckedBy.setObjectName(u"CboxBatCheckedBy")
+        self.CboxBatCheckedBy.setMaximumSize(QSize(500, 16777215))
+
+        self.verticalLayout_23.addWidget(self.CboxBatCheckedBy)
+
+
+        self.verticalLayout_7.addLayout(self.verticalLayout_23)
+
+        self.ChkBoxSaveAtEnd = QCheckBox(self.groupBox_3)
+        self.ChkBoxSaveAtEnd.setObjectName(u"ChkBoxSaveAtEnd")
+
+        self.verticalLayout_7.addWidget(self.ChkBoxSaveAtEnd)
+
+        self.BtnSaveBatteryRecord = QPushButton(self.groupBox_3)
+        self.BtnSaveBatteryRecord.setObjectName(u"BtnSaveBatteryRecord")
+
+        self.verticalLayout_7.addWidget(self.BtnSaveBatteryRecord)
 
 
         self.horizontalLayout_2.addWidget(self.groupBox_3)
 
         self.verticalLayout_13 = QVBoxLayout()
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.groupBox_4 = QGroupBox(self.tab_2)
+        self.groupBox_4 = QGroupBox(self.tabBatteryTest)
         self.groupBox_4.setObjectName(u"groupBox_4")
         self.verticalLayout_5 = QVBoxLayout(self.groupBox_4)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
@@ -763,7 +788,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_13.addWidget(self.groupBox_4)
 
-        self.groupBox = QGroupBox(self.tab_2)
+        self.groupBox = QGroupBox(self.tabBatteryTest)
         self.groupBox.setObjectName(u"groupBox")
         self.verticalLayout_4 = QVBoxLayout(self.groupBox)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -789,65 +814,104 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_13)
 
-        self.tabWidget.addTab(self.tab_2, "")
+        self.tabWidget.addTab(self.tabBatteryTest, "")
         self.tab_4 = QWidget()
         self.tab_4.setObjectName(u"tab_4")
-        self.verticalLayout_21 = QVBoxLayout(self.tab_4)
-        self.verticalLayout_21.setObjectName(u"verticalLayout_21")
+        self.horizontalLayout_6 = QHBoxLayout(self.tab_4)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.groupBox_7 = QGroupBox(self.tab_4)
         self.groupBox_7.setObjectName(u"groupBox_7")
-        self.horizontalLayout_6 = QHBoxLayout(self.groupBox_7)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.BtnTestKeyboard = QPushButton(self.groupBox_7)
-        self.BtnTestKeyboard.setObjectName(u"BtnTestKeyboard")
+        self.verticalLayout_6 = QVBoxLayout(self.groupBox_7)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.BtnOpenPrograms = QPushButton(self.groupBox_7)
+        self.BtnOpenPrograms.setObjectName(u"BtnOpenPrograms")
 
-        self.horizontalLayout_6.addWidget(self.BtnTestKeyboard)
+        self.verticalLayout_6.addWidget(self.BtnOpenPrograms)
 
-        self.BtnTestCamera = QPushButton(self.groupBox_7)
-        self.BtnTestCamera.setObjectName(u"BtnTestCamera")
+        self.BtnTestTouchscreen = QPushButton(self.groupBox_7)
+        self.BtnTestTouchscreen.setObjectName(u"BtnTestTouchscreen")
 
-        self.horizontalLayout_6.addWidget(self.BtnTestCamera)
-
-        self.BtnTestSpeakers = QPushButton(self.groupBox_7)
-        self.BtnTestSpeakers.setObjectName(u"BtnTestSpeakers")
-
-        self.horizontalLayout_6.addWidget(self.BtnTestSpeakers)
+        self.verticalLayout_6.addWidget(self.BtnTestTouchscreen)
 
         self.BtnStopTestSpeakers = QPushButton(self.groupBox_7)
         self.BtnStopTestSpeakers.setObjectName(u"BtnStopTestSpeakers")
         self.BtnStopTestSpeakers.setEnabled(True)
 
-        self.horizontalLayout_6.addWidget(self.BtnStopTestSpeakers)
+        self.verticalLayout_6.addWidget(self.BtnStopTestSpeakers)
 
-        self.BtnTestTouchscreen = QPushButton(self.groupBox_7)
-        self.BtnTestTouchscreen.setObjectName(u"BtnTestTouchscreen")
+        self.BtnTestSpeakers = QPushButton(self.groupBox_7)
+        self.BtnTestSpeakers.setObjectName(u"BtnTestSpeakers")
 
-        self.horizontalLayout_6.addWidget(self.BtnTestTouchscreen)
+        self.verticalLayout_6.addWidget(self.BtnTestSpeakers)
 
-        self.BtnOpenPrograms = QPushButton(self.groupBox_7)
-        self.BtnOpenPrograms.setObjectName(u"BtnOpenPrograms")
+        self.BtnTestCamera = QPushButton(self.groupBox_7)
+        self.BtnTestCamera.setObjectName(u"BtnTestCamera")
 
-        self.horizontalLayout_6.addWidget(self.BtnOpenPrograms)
+        self.verticalLayout_6.addWidget(self.BtnTestCamera)
+
+        self.BtnTestMicrophone = QPushButton(self.groupBox_7)
+        self.BtnTestMicrophone.setObjectName(u"BtnTestMicrophone")
+
+        self.verticalLayout_6.addWidget(self.BtnTestMicrophone)
+
+        self.BtnTestKeyboard = QPushButton(self.groupBox_7)
+        self.BtnTestKeyboard.setObjectName(u"BtnTestKeyboard")
+
+        self.verticalLayout_6.addWidget(self.BtnTestKeyboard)
+
+        self.BtnTestScreen = QPushButton(self.groupBox_7)
+        self.BtnTestScreen.setObjectName(u"BtnTestScreen")
+
+        self.verticalLayout_6.addWidget(self.BtnTestScreen)
+
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_6.addItem(self.verticalSpacer_4)
 
 
-        self.verticalLayout_21.addWidget(self.groupBox_7)
+        self.horizontalLayout_6.addWidget(self.groupBox_7)
 
         self.groupBox_8 = QGroupBox(self.tab_4)
         self.groupBox_8.setObjectName(u"groupBox_8")
         self.verticalLayout_22 = QVBoxLayout(self.groupBox_8)
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
-        self.AreaProrgrams = QScrollArea(self.groupBox_8)
-        self.AreaProrgrams.setObjectName(u"AreaProrgrams")
-        self.AreaProrgrams.setWidgetResizable(True)
-        self.scrollAreaWidgetContents = QWidget()
-        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 832, 324))
-        self.AreaProrgrams.setWidget(self.scrollAreaWidgetContents)
+        self.BtnStartCameraCapture = QPushButton(self.groupBox_8)
+        self.BtnStartCameraCapture.setObjectName(u"BtnStartCameraCapture")
 
-        self.verticalLayout_22.addWidget(self.AreaProrgrams)
+        self.verticalLayout_22.addWidget(self.BtnStartCameraCapture)
+
+        self.BtnStopCameraCapture = QPushButton(self.groupBox_8)
+        self.BtnStopCameraCapture.setObjectName(u"BtnStopCameraCapture")
+
+        self.verticalLayout_22.addWidget(self.BtnStopCameraCapture)
+
+        self.CameraLabel = QLabel(self.groupBox_8)
+        self.CameraLabel.setObjectName(u"CameraLabel")
+
+        self.verticalLayout_22.addWidget(self.CameraLabel)
+
+        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_22.addItem(self.verticalSpacer_5)
+
+        self.BtnRecordAudio = QPushButton(self.groupBox_8)
+        self.BtnRecordAudio.setObjectName(u"BtnRecordAudio")
+
+        self.verticalLayout_22.addWidget(self.BtnRecordAudio)
+
+        self.BtnPlayAudio = QPushButton(self.groupBox_8)
+        self.BtnPlayAudio.setObjectName(u"BtnPlayAudio")
+
+        self.verticalLayout_22.addWidget(self.BtnPlayAudio)
+
+        self.BtnStopAudio = QPushButton(self.groupBox_8)
+        self.BtnStopAudio.setObjectName(u"BtnStopAudio")
+        self.BtnStopAudio.setEnabled(True)
+
+        self.verticalLayout_22.addWidget(self.BtnStopAudio)
 
 
-        self.verticalLayout_21.addWidget(self.groupBox_8)
+        self.horizontalLayout_6.addWidget(self.groupBox_8)
 
         self.tabWidget.addTab(self.tab_4, "")
 
@@ -856,7 +920,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 896, 22))
+        self.menubar.setGeometry(QRect(0, 0, 940, 22))
         self.menuConfiguraci_n = QMenu(self.menubar)
         self.menuConfiguraci_n.setObjectName(u"menuConfiguraci_n")
         self.menuTools = QMenu(self.menubar)
@@ -876,7 +940,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(3)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -988,7 +1052,7 @@ class Ui_MainWindow(object):
         self.TextTouchscreenNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.TextHingesNote.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nota...", None))
         self.label_28.setText(QCoreApplication.translate("MainWindow", u"Detalles", None))
-        self.BtnSaveToGoogleSheets.setText(QCoreApplication.translate("MainWindow", u"Guardar test", None))
+        self.BtnSaveToGoogleSheets.setText(QCoreApplication.translate("MainWindow", u"Guardar reporte", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabReport), QCoreApplication.translate("MainWindow", u"Reporte", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Estado general", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"CPU", None))
@@ -997,10 +1061,13 @@ class Ui_MainWindow(object):
         self.LbPluggedIn.setText(QCoreApplication.translate("MainWindow", u"LbPluggedIn", None))
         self.label_36.setText(QCoreApplication.translate("MainWindow", u"Tiempo restante con carga total", None))
         self.LbBatteryRemain.setText(QCoreApplication.translate("MainWindow", u"LBBatteryRemain", None))
-        self.ChkBoxSaveAtEnd.setText(QCoreApplication.translate("MainWindow", u"\u00bfGuardar al terminar?", None))
         self.LBTimeElapsed.setText(QCoreApplication.translate("MainWindow", u"No iniciado", None))
         self.BtnStopBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Detener prueba de bater\u00eda", None))
         self.BtnStartBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
+        self.label_37.setText(QCoreApplication.translate("MainWindow", u"Revisado por:", None))
+        self.CboxBatCheckedBy.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona el t\u00e9cnico", None))
+        self.ChkBoxSaveAtEnd.setText(QCoreApplication.translate("MainWindow", u"\u00bfGuardar al terminar?", None))
+        self.BtnSaveBatteryRecord.setText(QCoreApplication.translate("MainWindow", u"Guardar prueba", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Bater\u00edas", None))
         ___qtablewidgetitem6 = self.TableBatteryInfo.horizontalHeaderItem(0)
         ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"1", None));
@@ -1029,15 +1096,23 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Cargador", None));
         ___qtablewidgetitem18 = self.TableBatteryLog.horizontalHeaderItem(3)
         ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"CPU(%)", None));
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Revisi\u00f3n de bater\u00eda", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabBatteryTest), QCoreApplication.translate("MainWindow", u"Revisi\u00f3n de bater\u00eda", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("MainWindow", u"Probar el equipo", None))
-        self.BtnTestKeyboard.setText(QCoreApplication.translate("MainWindow", u"Teclado", None))
-        self.BtnTestCamera.setText(QCoreApplication.translate("MainWindow", u"C\u00e1mara", None))
-        self.BtnTestSpeakers.setText(QCoreApplication.translate("MainWindow", u"Reproducir sonido", None))
-        self.BtnStopTestSpeakers.setText(QCoreApplication.translate("MainWindow", u"Detener Sonido", None))
-        self.BtnTestTouchscreen.setText(QCoreApplication.translate("MainWindow", u"Touchscreen", None))
         self.BtnOpenPrograms.setText(QCoreApplication.translate("MainWindow", u"Abrir programas", None))
+        self.BtnTestTouchscreen.setText(QCoreApplication.translate("MainWindow", u"Touchscreen", None))
+        self.BtnStopTestSpeakers.setText(QCoreApplication.translate("MainWindow", u"Detener Sonido", None))
+        self.BtnTestSpeakers.setText(QCoreApplication.translate("MainWindow", u"Reproducir sonido", None))
+        self.BtnTestCamera.setText(QCoreApplication.translate("MainWindow", u"Abrir c\u00e1mara", None))
+        self.BtnTestMicrophone.setText(QCoreApplication.translate("MainWindow", u"Abrir configuracion micro", None))
+        self.BtnTestKeyboard.setText(QCoreApplication.translate("MainWindow", u"Teclado", None))
+        self.BtnTestScreen.setText(QCoreApplication.translate("MainWindow", u"Pantalla", None))
         self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Programas", None))
+        self.BtnStartCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Probar c\u00e1mara", None))
+        self.BtnStopCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Detener", None))
+        self.CameraLabel.setText(QCoreApplication.translate("MainWindow", u"Camera", None))
+        self.BtnRecordAudio.setText(QCoreApplication.translate("MainWindow", u"Grabar microfono", None))
+        self.BtnPlayAudio.setText(QCoreApplication.translate("MainWindow", u"Reproducir grabaci\u00f3n", None))
+        self.BtnStopAudio.setText(QCoreApplication.translate("MainWindow", u"Detener audio", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Herramientas", None))
         self.menuConfiguraci_n.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))
         self.menuTools.setTitle(QCoreApplication.translate("MainWindow", u"Herramientas", None))

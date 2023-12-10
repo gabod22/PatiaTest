@@ -9,7 +9,6 @@ from modules.files_managment import read_yaml
 from modules.constants import dirname, config_file
 import asyncio
 
-
 import pickle
 import json
 from os import path
@@ -35,9 +34,10 @@ class Jobs(QObject):
         self.config = read_yaml(config_file)
         self.progress.emit('Comprobando conexion a internet.')
         self.online = isConnected()
-        
-        self.system = get_system_info(progress_callback=self.progress, on_error=self.error,show_dialog=None)
-        
+
+        self.system = get_system_info(
+            progress_callback=self.progress, on_error=self.error, show_dialog=None)
+
         self.systemData.emit(self.system)
         print(self.system)
         if self.online == False:
@@ -48,7 +48,8 @@ class Jobs(QObject):
                 self.config['WIFI']['SSID5G'], self.config['WIFI']['SSID5G'], self.config['WIFI']['PASS5G'])
             self.progress.emit('Contectando a internet')
             connect(self.config['WIFI']['SSID'], self.config['WIFI']['SSID'])
-            connect(self.config['WIFI']['SSID5G'], self.config['WIFI']['SSID5G'])
+            connect(self.config['WIFI']['SSID5G'],
+                    self.config['WIFI']['SSID5G'])
             sleep(2)
         self.online = isConnected()
         if self.online:
@@ -70,11 +71,12 @@ class Jobs(QObject):
                 print("Error al obtener la configuración: ", e)
                 self.progress.emit(e)
                 self.get_offline_config()
-                
+
             self.progress.emit('Obteniendo registro de la computadora')
             try:
-                (response,r) = asyncio.run(get_computer(serial_number=self.system["bios"]["SerialNumber"]))
-                
+                (response, r) = asyncio.run(get_computer(
+                    serial_number=self.system["bios"]["SerialNumber"]))
+
                 if response.status != 404:
                     r = json.loads(r)
                     self.thisComputer.emit(r['data'])
@@ -85,21 +87,20 @@ class Jobs(QObject):
                     self.showDialog.emit()
             except (TypeError, AttributeError) as e:
                 print(e)
-                self.progress.emit('No hay conexion con el servidor, se deshabilitará la opcion de reporte')
-            
-            
+                self.progress.emit(
+                    'No hay conexion con el servidor, se deshabilitará la opcion de reporte')
 
         else:
-            self.progress.emit('No hay internet, obteniendo configuración guardada.')
+            self.progress.emit(
+                'No hay internet, obteniendo configuración guardada.')
             self.get_offline_config()
-        
+
         if is_admin() and self.online:
             self.progress.emit('Sincronizando la hora')
             sync_date_time()
-        
 
         self.finished.emit()
-        
+
     def get_offline_config(self):
         try:
             with open(path.join(dirname, "config_files\config.pkl"), 'rb') as f:
@@ -108,10 +109,8 @@ class Jobs(QObject):
                 print('Cargando desde el archivo')
                 print(config)
         except Exception as e:
-            self.error.emit('No hay coneccion a internet y no se pudo cargar la información.')
+            self.error.emit(
+                'No hay coneccion a internet y no se pudo cargar la información.')
             print(e)
-        self.error.emit('No hay coneccion a internet, revise la conexión. Se cargó la información de respaldo.')
-
-
-
-    
+        self.error.emit(
+            'No hay coneccion a internet, revise la conexión. Se cargó la información de respaldo.')

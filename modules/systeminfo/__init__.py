@@ -1,5 +1,6 @@
 from ..helpers import convert_size, WMIDateStringToDate, wmiToDict
 from ..DiskInfoParser import DiskInfo
+from ..battery import get_battery_info
 import wmi
 
 import platform
@@ -10,9 +11,10 @@ import pythoncom
 import GPUtil
 
 
-def get_system_info(progress_callback, on_error,show_dialog):
+def get_system_info(progress_callback, on_error, show_dialog):
     pythoncom.CoInitialize()
     info = dict()
+    info['batteries'] = []
     w = wmi.WMI()
     MemoryType = {
         0: "Desconocido",
@@ -22,6 +24,7 @@ def get_system_info(progress_callback, on_error,show_dialog):
         22: "DDR2 FB-DIMM",
         24: "DDR3",
         26: "DDR4",
+        29: "Row of chips"
     }
     progress_callback.emit('Obteniendo info de la computadora')
 
@@ -36,6 +39,15 @@ def get_system_info(progress_callback, on_error,show_dialog):
     pl['version'] = uname_result.version
     pl['machine'] = uname_result.machine
     info['platform'] = pl
+
+    progress_callback.emit('Obteniendo info de las baterias')
+    try:
+        batteries = get_battery_info()
+        info['batteries'] = batteries
+    except Exception as e:
+        progress_callback.emit('Hubo un problema al cargar las baterias')
+        progress_callback.emit(e)
+        info['batteries'] = []
 
     progress_callback.emit('Obteniendo info de la BIOS')
     # BIOS
@@ -74,7 +86,7 @@ def get_system_info(progress_callback, on_error,show_dialog):
     info['swap_memory'] = dict(psutil.swap_memory()._asdict())
     memories = []
     for memory in w.Win32_PhysicalMemory():
-
+        print("tipo de memoria", memory.SMBIOSMemoryType)
         memories.append({
             "capacidad": convert_size(memory.Capacity),
             "Tipo": MemoryType[memory.SMBIOSMemoryType],
@@ -89,7 +101,6 @@ def get_system_info(progress_callback, on_error,show_dialog):
     root_path = 'C:/' if sys.platform == 'win32' else '/'
     info['disks'] = get_disks_info(w)
 
-    
     # total, used, free, percent
     info['disk_usage'] = dict(psutil.disk_usage(root_path)._asdict())
 
@@ -100,15 +111,19 @@ def get_system_info(progress_callback, on_error,show_dialog):
     progress_callback.emit('Terminado')
     return info
 
+
 def get_disks_info(w):
     disks = []
     for drive in w.query("SELECT * FROM Win32_DiskDrive"):
-        if(drive.InterfaceType != 'USB'):
+        if (drive.InterfaceType != 'USB'):
             disks.append(
-            [drive.Caption, drive.InterfaceType, convert_size(int(drive.Size)), drive.Status]
+                [drive.Caption, drive.InterfaceType,
+                    convert_size(int(drive.Size)), drive.Status]
             )
         print(disks)
     return disks
+
+
 def getGPUs():
     gpus = GPUtil.getGPUs()
     list_gpus = []

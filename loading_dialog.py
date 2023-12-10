@@ -1,13 +1,13 @@
 import re
 import pythoncom
-import asyncio
 from time import sleep
-import json
 
-from PySide6.QtWidgets import QDialog
-from PySide6.QtCore import QThreadPool, QThread
+from PySide6.QtWidgets import QDialog, QTableWidgetItem
+
+from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtGui import QCloseEvent
 from modules.helpers import add_data_to_table
+
 
 from Jobs.worker import Worker
 from Jobs.Jobs import Jobs
@@ -22,6 +22,7 @@ class LoadingDialog(QDialog):
 
     def __init__(self, parent):
         super().__init__(parent)
+        self.setWindowFlag(Qt.WindowStaysOnTopHint, True)
         self.parent = parent
         self.enable_register = False
         self.ui = Ui_LoadingDialog()
@@ -31,6 +32,7 @@ class LoadingDialog(QDialog):
         self.serial_number = ""
         self.system_info = None
         self.this_computer = None
+        self.battery_health = ""
 
         print("Multithreading with maximum %d threads" %
               self.threadpool.maxThreadCount())
@@ -54,7 +56,7 @@ class LoadingDialog(QDialog):
         worker.systemData.connect(self.set_system_info)
         worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
         worker.showDialog.connect(lambda: self.showRegisterComputerdialog())
-        worker.error.connect(showFailDialog)
+        worker.error.connect(lambda m: showFailDialog(self, m))
         worker.finished.connect(lambda: self.loading_finished())
 
         return thread
@@ -102,6 +104,36 @@ class LoadingDialog(QDialog):
         add_data_to_table(info['gpus'],  self.parent.ui.TableGPUs)
         self.serial_number = info["bios"]["SerialNumber"]
 
+        for idx, battery in enumerate(info['batteries']):
+            self.parent.ui.TableBatteryInfo.setItem(0, idx, QTableWidgetItem(
+                str(battery["Battery Name"])))
+            self.parent.ui.TableBatteryInfo.setItem(1, idx, QTableWidgetItem(
+                str(battery["Manufacture Name"])))
+            self.parent.ui.TableBatteryInfo.setItem(2, idx, QTableWidgetItem(
+                str(battery["Manufacture Date"])))
+            self.parent.ui.TableBatteryInfo.setItem(3, idx, QTableWidgetItem(
+                str(battery["Serial Number"])))
+            self.parent.ui.TableBatteryInfo.setItem(4, idx, QTableWidgetItem(
+                str(battery["Full Charged Capacity"])))
+            self.parent.ui.TableBatteryInfo.setItem(5, idx, QTableWidgetItem(
+                str(battery["Designed Capacity"])))
+            self.parent.ui.TableBatteryInfo.setItem(6, idx, QTableWidgetItem(
+                str(battery["Battery Health"])))
+            self.parent.ui.TableBatteryInfo.setItem(7, idx, QTableWidgetItem(
+                str(battery["Number of charge/discharge cycles"])))
+
+            if (info['batteries'][idx]["Voltage"] != ""):
+                if idx != len(info['batteries']) - 1:
+                    self.battery_health = self.battery_health + \
+                        info['batteries'][idx]["Battery Health"] + ", "
+                else:
+                    self.battery_health = self.battery_health + \
+                        info['batteries'][idx]["Battery Health"]
+            else:
+                self.battery_health = "Sin bateria"
+            self.parent.ui.TextBatteryHealth.setText(self.battery_health)
+            self.parent.ui.TextBatteryHealth_2.setText(self.battery_health)
+
     def showRegisterComputerdialog(self):
         print('Mostrando dialogo')
         register = RegisterComputerDialog(self)
@@ -135,8 +167,8 @@ class LoadingDialog(QDialog):
         if self.enable_register:
             self.parent.ui.tabReport.setEnabled(True)
         self.parent.show()
-        self.hide()
+        self.close()
 
     def closeEvent(self, event: QCloseEvent) -> None:
-        self.parent.close()
+        # self.parent.close()
         sleep(1)

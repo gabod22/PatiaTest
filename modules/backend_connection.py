@@ -24,6 +24,7 @@ async def get_config():
     except aiohttp.ClientConnectionError as e:
         print('Error al conectar con el servidor, revisar el servidor o la url')
 
+
 async def get_computer(serial_number):
     try:
         async with aiohttp.ClientSession(headers=headers) as session:
@@ -33,10 +34,11 @@ async def get_computer(serial_number):
                 print("Content-type:", response.headers['content-type'])
 
                 r = await response.text()
-                return response,r
+                return response, r
     except aiohttp.ClientConnectionError as e:
         print('Error al conectar con el servidor, revisar el servidor o la url')
-        
+
+
 async def save_computer(computer):
     try:
         async with aiohttp.ClientSession(headers=headers) as session:
@@ -46,15 +48,16 @@ async def save_computer(computer):
                 print("Content-type:", response.headers['content-type'])
 
                 r = await response.text()
-                return (response,r)
+                return (response, r)
     except aiohttp.ClientConnectionError as e:
         print('Error al conectar con el servidor, revisar el servidor o la url')
         return {'error': 'No se pudo conectar al servidor'}
 
-async def save_inspection(computer):
+
+async def save_inspection(inspection):
     try:
         async with aiohttp.ClientSession(headers=headers) as session:
-            async with session.post(URL + '/api/computers', data=computer) as response:
+            async with session.post(URL + '/api/computers', data=inspection) as response:
 
                 print("Status:", response.status)
                 print("Content-type:", response.headers['content-type'])
@@ -62,5 +65,5 @@ async def save_inspection(computer):
                 r = await response.text()
                 return response
     except aiohttp.ClientConnectionError as e:
-        raise Exception("No se puede conectar el servidor, el servidor no responde o la url está mal")
-
+        raise Exception(
+            "No se puede conectar el servidor, el servidor no responde o la url está mal")
