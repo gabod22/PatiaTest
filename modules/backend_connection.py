@@ -19,7 +19,7 @@ async def get_config():
 
                 r = await response.text()
                 res = json.loads(r)
-                print(type(res))
+                # print(type(res))
                 return res
     except aiohttp.ClientConnectionError as e:
         print('Error al conectar con el servidor, revisar el servidor o la url')
@@ -30,8 +30,8 @@ async def get_computer(serial_number):
         async with aiohttp.ClientSession(headers=headers) as session:
             async with session.get(URL + '/api/computer/' + serial_number) as response:
 
-                print("Status:", response.status)
-                print("Content-type:", response.headers['content-type'])
+                # print("Status:", response.status)
+                # print("Content-type:", response.headers['content-type'])
 
                 r = await response.text()
                 return response, r
@@ -44,8 +44,8 @@ async def save_computer(computer):
         async with aiohttp.ClientSession(headers=headers) as session:
             async with session.post(URL + '/api/computers', data=computer) as response:
 
-                print("Status:", response.status)
-                print("Content-type:", response.headers['content-type'])
+                # print("Status:", response.status)
+                # print("Content-type:", response.headers['content-type'])
 
                 r = await response.text()
                 return (response, r)
@@ -59,8 +59,8 @@ async def save_inspection(inspection):
         async with aiohttp.ClientSession(headers=headers) as session:
             async with session.post(URL + '/api/computers', data=inspection) as response:
 
-                print("Status:", response.status)
-                print("Content-type:", response.headers['content-type'])
+                # print("Status:", response.status)
+                # print("Content-type:", response.headers['content-type'])
 
                 r = await response.text()
                 return response

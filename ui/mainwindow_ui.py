@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -322,7 +322,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 876, 445))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 240, 726))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
@@ -894,6 +894,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_22.addItem(self.verticalSpacer_5)
 
+        self.LbRecordAudio = QLabel(self.groupBox_8)
+        self.LbRecordAudio.setObjectName(u"LbRecordAudio")
+
+        self.verticalLayout_22.addWidget(self.LbRecordAudio)
+
         self.BtnRecordAudio = QPushButton(self.groupBox_8)
         self.BtnRecordAudio.setObjectName(u"BtnRecordAudio")
 
@@ -1110,6 +1115,7 @@ class Ui_MainWindow(object):
         self.BtnStartCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Probar c\u00e1mara", None))
         self.BtnStopCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Detener", None))
         self.CameraLabel.setText(QCoreApplication.translate("MainWindow", u"Camera", None))
+        self.LbRecordAudio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.BtnRecordAudio.setText(QCoreApplication.translate("MainWindow", u"Grabar microfono", None))
         self.BtnPlayAudio.setText(QCoreApplication.translate("MainWindow", u"Reproducir grabaci\u00f3n", None))
         self.BtnStopAudio.setText(QCoreApplication.translate("MainWindow", u"Detener audio", None))

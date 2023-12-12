@@ -9,11 +9,11 @@ from ..constants import dirname
 def get_battery_info():
     program = path.join(dirname, 'programs/battery_info.exe')
     subprocess.run(
-        [program, '/scomma', 'battery.csv'], shell=True)
+        [program, '/scomma',  path.join(dirname, 'battery.csv')], shell=True)
     result_list = []
     data = []
 
-    filename = "./battery.csv"
+    filename = path.join(dirname, 'battery.csv')
     with open(filename, mode='r') as file:
         reader = csv.reader(file)
         header = next(reader)
@@ -27,7 +27,7 @@ def get_battery_info():
             values = row[battery]
             battery_dict[key] = values
         result_list.append(battery_dict)
-        print('Termine el ', battery)
+        # print('Termine el ', battery)
     return result_list
 
 

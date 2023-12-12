@@ -24,7 +24,8 @@ def get_system_info(progress_callback, on_error, show_dialog):
         22: "DDR2 FB-DIMM",
         24: "DDR3",
         26: "DDR4",
-        29: "Row of chips"
+        29: "Row of chips",
+        30: "Row of chips"
     }
     progress_callback.emit('Obteniendo info de la computadora')
 
@@ -120,7 +121,7 @@ def get_disks_info(w):
                 [drive.Caption, drive.InterfaceType,
                     convert_size(int(drive.Size)), drive.Status]
             )
-        print(disks)
+        # print(disks)
     return disks
 
 

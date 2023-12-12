@@ -80,7 +80,6 @@ class MainWindow(QMainWindow):
 
         # initial state
         self.ui.BtnStopTestSpeakers.hide()
-        self.ui.BtnStopAudio.hide()
 
         self.asingMenuButtonsFunctions()
         self.asingAllButtonsFunctions()
@@ -285,7 +284,6 @@ class MainWindow(QMainWindow):
         #     lambda: self.start_jobs_thread())
         # self.ui.BtnCmd.clicked.connect(lambda: self.executeCommand())
         self.ui.BtnTestMicrophone.clicked.connect(open_record_config)
-
         self.ui.BtnRecordAudio.clicked.connect(self.thread_record_audio)
         self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
         self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
@@ -305,14 +303,13 @@ class MainWindow(QMainWindow):
             open_program(program)
 
     def play_recorded_audio(self):
-        play_recorded_audio_test()
-        self.ui.BtnPlayAudio.hide()
-        self.ui.BtnStopAudio.show()
+        if path.exists(path.join(dirname, 'output.wav')):
+            play_recorded_audio_test()
+        else:
+            showFailDialog(self, 'No hay ninguna grabación')
 
     def stop_recorded_audio(self):
         stop_recorded_audio_test()
-        self.ui.BtnPlayAudio.show()
-        self.ui.BtnStopAudio.hide()
 
     def record_audio(self, progress_callback, on_error, show_dialog):
         CHUNK = 1024
@@ -325,6 +322,7 @@ class MainWindow(QMainWindow):
         seconds = 5
         # progress_callback('Inicando la grabacion')
         print('inicializando la grabacion')
+        self.ui.LbRecordAudio.setText('Grabando...')
         try:
             recorder = p.open(format=FORMAT, channels=CHANNELS,
                               rate=RATE, input=True, frames_per_buffer=CHUNK)
@@ -333,6 +331,7 @@ class MainWindow(QMainWindow):
                 frames.append(data)
 
             print('Grabacion detenida')
+            self.ui.LbRecordAudio.setText('')
         except Exception as e:
             print(e)
         finally:
@@ -341,7 +340,7 @@ class MainWindow(QMainWindow):
             p.terminate()
 
         try:
-            wf = wave.open('output.wav', 'wb')
+            wf = wave.open(path.join(dirname, 'output.wav'), 'wb')
             wf.setnchannels(CHANNELS)
             wf.setsampwidth(p.get_sample_size(FORMAT))
             wf.setframerate(RATE)
@@ -366,6 +365,7 @@ class MainWindow(QMainWindow):
 
 
 #!SECTION
+
 
     def __get_thread_camera_capure(self):
         thread = QThread()
@@ -528,6 +528,8 @@ class MainWindow(QMainWindow):
         self.stop_battery_test_mode()
         self.stop_monitor_thread()
         self.stop_feed()
+        os.remove(path.join(dirname, 'output.wav'))
+        os.remove(path.join(dirname, 'battery.csv'))
         sleep(1)
 
 

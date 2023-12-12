@@ -62,7 +62,7 @@ class Jobs(QObject):
                     raise Exception('No se obtuvo la configuración')
                 else:
                     self.configData.emit(config)
-                    print(config)
+                    # print(config)
                     self.progress.emit('Configuración obtenida.')
                     self.progress.emit('Guardando configuración')
                     with open(path.join(dirname, "config_files\config.pkl"), 'wb') as f:
@@ -107,7 +107,7 @@ class Jobs(QObject):
                 config = pickle.load(f)
                 self.configData.emit(config)
                 print('Cargando desde el archivo')
-                print(config)
+                # print(config)
         except Exception as e:
             self.error.emit(
                 'No hay coneccion a internet y no se pudo cargar la información.')

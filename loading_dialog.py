@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QDialog, QTableWidgetItem
 
 from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtGui import QCloseEvent
+from modules.battery import is_battery_installed
 from modules.helpers import add_data_to_table
 
 
@@ -56,8 +57,8 @@ class LoadingDialog(QDialog):
         worker.systemData.connect(self.set_system_info)
         worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
         worker.showDialog.connect(lambda: self.showRegisterComputerdialog())
-        worker.error.connect(lambda m: showFailDialog(self, m))
         worker.finished.connect(lambda: self.loading_finished())
+        # worker.error.connect(lambda m: showFailDialog(self, m))
 
         return thread
 
@@ -86,8 +87,14 @@ class LoadingDialog(QDialog):
 
     def set_system_info(self, info):
         self.system_info = info
-        cpu_model = re.search(
-            "i\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
+        if (info['cpu']['vendor_id_raw'] == 'GenuineIntel'):
+            try:
+                cpu_model = re.search(
+                    "[A-z]\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
+            except:
+                cpu_model = info["cpu"]["brand_raw"]
+        else:
+            cpu_model = info["cpu"]["brand_raw"]
         ram = str(convert_size(info["virtual_memory"]
                   ["total"])) + " " + info["memories"][0]["Tipo"]
         self.parent.systeminfo = info
@@ -104,35 +111,38 @@ class LoadingDialog(QDialog):
         add_data_to_table(info['gpus'],  self.parent.ui.TableGPUs)
         self.serial_number = info["bios"]["SerialNumber"]
 
-        for idx, battery in enumerate(info['batteries']):
-            self.parent.ui.TableBatteryInfo.setItem(0, idx, QTableWidgetItem(
-                str(battery["Battery Name"])))
-            self.parent.ui.TableBatteryInfo.setItem(1, idx, QTableWidgetItem(
-                str(battery["Manufacture Name"])))
-            self.parent.ui.TableBatteryInfo.setItem(2, idx, QTableWidgetItem(
-                str(battery["Manufacture Date"])))
-            self.parent.ui.TableBatteryInfo.setItem(3, idx, QTableWidgetItem(
-                str(battery["Serial Number"])))
-            self.parent.ui.TableBatteryInfo.setItem(4, idx, QTableWidgetItem(
-                str(battery["Full Charged Capacity"])))
-            self.parent.ui.TableBatteryInfo.setItem(5, idx, QTableWidgetItem(
-                str(battery["Designed Capacity"])))
-            self.parent.ui.TableBatteryInfo.setItem(6, idx, QTableWidgetItem(
-                str(battery["Battery Health"])))
-            self.parent.ui.TableBatteryInfo.setItem(7, idx, QTableWidgetItem(
-                str(battery["Number of charge/discharge cycles"])))
+        if (is_battery_installed()):
 
-            if (info['batteries'][idx]["Voltage"] != ""):
-                if idx != len(info['batteries']) - 1:
-                    self.battery_health = self.battery_health + \
-                        info['batteries'][idx]["Battery Health"] + ", "
-                else:
-                    self.battery_health = self.battery_health + \
-                        info['batteries'][idx]["Battery Health"]
-            else:
-                self.battery_health = "Sin bateria"
-            self.parent.ui.TextBatteryHealth.setText(self.battery_health)
-            self.parent.ui.TextBatteryHealth_2.setText(self.battery_health)
+            for idx, battery in enumerate(info['batteries']):
+                self.parent.ui.TableBatteryInfo.setItem(0, idx, QTableWidgetItem(
+                    str(battery["Battery Name"])))
+                self.parent.ui.TableBatteryInfo.setItem(1, idx, QTableWidgetItem(
+                    str(battery["Manufacture Name"])))
+                self.parent.ui.TableBatteryInfo.setItem(2, idx, QTableWidgetItem(
+                    str(battery["Manufacture Date"])))
+                self.parent.ui.TableBatteryInfo.setItem(3, idx, QTableWidgetItem(
+                    str(battery["Serial Number"])))
+                self.parent.ui.TableBatteryInfo.setItem(4, idx, QTableWidgetItem(
+                    str(battery["Full Charged Capacity"])))
+                self.parent.ui.TableBatteryInfo.setItem(5, idx, QTableWidgetItem(
+                    str(battery["Designed Capacity"])))
+                self.parent.ui.TableBatteryInfo.setItem(6, idx, QTableWidgetItem(
+                    str(battery["Battery Health"])))
+                self.parent.ui.TableBatteryInfo.setItem(7, idx, QTableWidgetItem(
+                    str(battery["Number of charge/discharge cycles"])))
+
+                if (info['batteries'][idx]["Voltage"] != ""):
+                    if idx != len(info['batteries']) - 1:
+                        self.battery_health = self.battery_health + \
+                            info['batteries'][idx]["Battery Health"] + ", "
+                    else:
+                        self.battery_health = self.battery_health + \
+                            info['batteries'][idx]["Battery Health"]
+        else:
+            self.battery_health = "Sin batería"
+
+        self.parent.ui.TextBatteryHealth.setText(self.battery_health)
+        self.parent.ui.TextBatteryHealth_2.setText(self.battery_health)
 
     def showRegisterComputerdialog(self):
         print('Mostrando dialogo')
@@ -147,11 +157,11 @@ class LoadingDialog(QDialog):
         print('Mostrando form')
         register = RegisterFormDialog(self)
         result = register.exec_()
-        print(result)
+        # print(result)
         if result:
             print("Guardando info")
             self.enable_register = True
-            print(self.this_computer)
+            # print(self.this_computer)
             self.parent.ui.TextPixelId.setText(
                 self.this_computer['internal_id'])
             self.loading_finished()
