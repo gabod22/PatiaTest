@@ -5,7 +5,7 @@ a = Analysis(
     ['PatiaTest.py'],
     pathex=[],
     binaries=[],
-    datas=[('config_files/*', 'config_files'), ('programs/*', 'programs'), ('assets/*', 'assets')],
+    datas=[('config_files/*', 'config_files'), ('programs/*', 'programs'), ('assets/*', 'assets'), ('.env', '.')],
     hiddenimports=['pywintypes'],
     hookspath=[],
     hooksconfig={},

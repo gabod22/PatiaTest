@@ -426,8 +426,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>240</width>
-                <height>726</height>
+                <width>876</width>
+                <height>445</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1562,7 +1562,7 @@
            <item>
             <widget class="QLabel" name="LbRecordAudio">
              <property name="text">
-              <string>TextLabel</string>
+              <string/>
              </property>
             </widget>
            </item>

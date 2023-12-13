@@ -8,6 +8,7 @@ from modules.backend_connection import get_config, get_computer
 from modules.files_managment import read_yaml
 from modules.constants import dirname, config_file
 import asyncio
+import os
 
 import pickle
 import json
@@ -39,7 +40,7 @@ class Jobs(QObject):
             progress_callback=self.progress, on_error=self.error, show_dialog=None)
 
         self.systemData.emit(self.system)
-        print(self.system)
+
         if self.online == False:
             self.progress.emit('No hay conexión a internet.')
             createNewConnection(
@@ -53,43 +54,53 @@ class Jobs(QObject):
             sleep(2)
         self.online = isConnected()
         if self.online:
-            self.progress.emit('Internet conectado.')
-            self.progress.emit('Obteniendo configuración del servidor.')
-            try:
-                config = asyncio.run(get_config())
-                if config == None:
-                    print('No se pudo obtener la configuración')
-                    raise Exception('No se obtuvo la configuración')
-                else:
-                    self.configData.emit(config)
-                    # print(config)
-                    self.progress.emit('Configuración obtenida.')
-                    self.progress.emit('Guardando configuración')
-                    with open(path.join(dirname, "config_files\config.pkl"), 'wb') as f:
-                        pickle.dump(config, f)
-            except Exception as e:
-                print("Error al obtener la configuración: ", e)
-                self.progress.emit(e)
-                self.get_offline_config()
+            if os.getenv('SERVER_ENABLED', 'False') == 'True':
+                self.progress.emit('Internet conectado.')
+                self.progress.emit('Obteniendo configuración del servidor.')
+                try:
+                    config = asyncio.run(get_config())
+                    if config == None:
+                        print('No se pudo obtener la configuración')
+                        raise Exception('No se obtuvo la configuración')
+                    else:
+                        self.configData.emit(config)
+                        # print(config)
+                        self.progress.emit('Configuración obtenida.')
+                        self.progress.emit('Guardando configuración')
+                        with open(path.join(dirname, "config_files\config.pkl"), 'wb') as f:
+                            pickle.dump(config, f)
+                except Exception as e:
+                    print("Error al obtener la configuración: ", e)
+                    self.progress.emit(e)
+                    self.get_offline_config()
 
-            self.progress.emit('Obteniendo registro de la computadora')
-            try:
-                (response, r) = asyncio.run(get_computer(
-                    serial_number=self.system["bios"]["SerialNumber"]))
+                if os.getenv('REPORT_ENABLED', 'False') == 'True':
+                    self.progress.emit('Obteniendo registro de la computadora')
 
-                if response.status != 404:
-                    r = json.loads(r)
-                    self.thisComputer.emit(r['data'])
-                    self.progress.emit('La computadora ya está registrada')
-                    self.enable_register = True
+                    try:
+                        (response, r) = asyncio.run(get_computer(
+                            serial_number=self.system["bios"]["SerialNumber"]))
+
+                        if response.status != 404:
+                            r = json.loads(r)
+                            self.thisComputer.emit(r['data'])
+                            self.progress.emit(
+                                'La computadora ya está registrada')
+                            self.enable_register = True
+                        else:
+                            self.progress.emit(
+                                'No hay registro de la computadora')
+                            self.showDialog.emit()
+                    except (TypeError, AttributeError) as e:
+                        print(e)
+                        self.progress.emit(
+                            'No hay conexion con el servidor, se deshabilitará la opcion de reporte')
                 else:
-                    self.progress.emit('No hay registro de la computadora')
-                    self.showDialog.emit()
-            except (TypeError, AttributeError) as e:
-                print(e)
+                    self.progress.emit('No esta habilitado el reporte')
+            else:
                 self.progress.emit(
-                    'No hay conexion con el servidor, se deshabilitará la opcion de reporte')
-
+                    'No está habilitada la conexion con el servidor')
+                self.get_offline_config()
         else:
             self.progress.emit(
                 'No hay internet, obteniendo configuración guardada.')

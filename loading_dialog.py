@@ -1,22 +1,20 @@
+from Dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
+from ui.loading_dialog_ui import Ui_LoadingDialog
+from modules.helpers import convert_size
+from Jobs.Jobs import Jobs
+from modules.helpers import add_data_to_table
+from modules.battery import is_battery_installed
+from PySide6.QtCore import QThreadPool, QThread, Qt
+from PySide6.QtWidgets import QDialog, QTableWidgetItem
 import re
 import pythoncom
 from time import sleep
-
-from PySide6.QtWidgets import QDialog, QTableWidgetItem
-
-from PySide6.QtCore import QThreadPool, QThread, Qt
-from PySide6.QtGui import QCloseEvent
-from modules.battery import is_battery_installed
-from modules.helpers import add_data_to_table
+import os
 
 
-from Jobs.worker import Worker
-from Jobs.Jobs import Jobs
-from modules.helpers import convert_size
-from ui.loading_dialog_ui import Ui_LoadingDialog
+# from Jobs.worker import Worker
 
-from Dialogs import showSuccessDialog, showFailDialog
-from Dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
+# from Dialogs import showSuccessDialog, showFailDialog
 
 
 class LoadingDialog(QDialog):
@@ -179,6 +177,5 @@ class LoadingDialog(QDialog):
         self.parent.show()
         self.close()
 
-    def closeEvent(self, event: QCloseEvent) -> None:
-        # self.parent.close()
-        sleep(1)
+    # def closeEvent(self, event: QCloseEvent) -> None:
+    #     # self.parent.close()

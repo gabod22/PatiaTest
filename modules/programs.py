@@ -18,8 +18,8 @@ def get_all_programs():
     program_list = list()
     for program in programs:
         p = dict()
-        print(os.path.join(
-            dirname, 'programs') + "/" + program)
+        # print(os.path.join(
+        #     dirname, 'programs') + "/" + program)
         # icon = extract_icon(os.path.join(
         #     dirname, 'programs') + "/" + program, IconSize.LARGE)
 

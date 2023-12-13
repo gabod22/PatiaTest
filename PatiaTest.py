@@ -25,7 +25,6 @@ from config_dialog import ConfigDialog
 
 from Dialogs import showFailDialog
 
-from modules.gspread import *
 from function import *
 from modules.battery import is_battery_installed
 from modules.files_managment import *
@@ -40,6 +39,11 @@ import pyaudio
 import wave
 import struct
 from loading_dialog import LoadingDialog
+from dotenv import load_dotenv
+extDataDir = os.getcwd()
+if getattr(sys, 'frozen', False):
+    extDataDir = sys._MEIPASS
+load_dotenv(dotenv_path=os.path.join(extDataDir, '.env'))
 
 
 class MainWindow(QMainWindow):
@@ -67,8 +71,6 @@ class MainWindow(QMainWindow):
         self.configData = {}
         self.systeminfo = None
 
-        self.ui.tabReport.setEnabled(False)
-
         self.threadpool = QThreadPool()
 
         # MenuBar
@@ -80,6 +82,7 @@ class MainWindow(QMainWindow):
 
         # initial state
         self.ui.BtnStopTestSpeakers.hide()
+        self.ui.tabReport.setEnabled(False)
 
         self.asingMenuButtonsFunctions()
         self.asingAllButtonsFunctions()
@@ -150,68 +153,77 @@ class MainWindow(QMainWindow):
         write_yaml("c:/patiatest_info.yaml", info)
 
     def setAllInitialValues(self):
-        try:
-            dataSaved = read_yaml("c:/patiatest_info.yaml")
-            self.ui.TextPixelId.setText(dataSaved['PIXELID'])
-            self.ui.CboxAesthetics.setCurrentIndex(dataSaved['AESTHETIC'])
-            self.ui.CboxEthernet.setCurrentIndex(dataSaved['BATTERY'])
-            self.ui.CboxEthernet.setCurrentIndex(dataSaved['ETHERNET'])
-            self.ui.CboxPlug.setCurrentIndex(dataSaved['SUPPLY_PLUG'])
-            self.ui.CboxUSB.setCurrentIndex(dataSaved['USB'])
-            self.ui.CboxScreen.setCurrentIndex(dataSaved['SCREEN'])
-            self.ui.CboxSpikers.setCurrentIndex(dataSaved['SPICKERS'])
-            self.ui.CboxKeyboard.setCurrentIndex(dataSaved['KEYBOARD'])
-            self.ui.CboxCamera.setCurrentIndex(dataSaved['CAMERA'])
-            self.ui.CboxMicro.setCurrentIndex(dataSaved['MICROPHONE'])
-            self.ui.CboxConnectivity.setCurrentIndex(dataSaved['CONNECTIVITY'])
-            self.ui.CboxTouchpad.setCurrentIndex(dataSaved['TOUCHPAD'])
-            self.ui.CboxTouchscreen.setCurrentIndex(dataSaved['TOUCHSCREEN'])
-            self.ui.CboxHinges.setCurrentIndex(dataSaved['HINGES'])
+        if path.exists('c:/patiatest_info.yaml'):
+            try:
+                dataSaved = read_yaml("c:/patiatest_info.yaml")
+                self.ui.TextPixelId.setText(dataSaved['PIXELID'])
+                self.ui.CboxAesthetics.setCurrentIndex(dataSaved['AESTHETIC'])
+                self.ui.CboxEthernet.setCurrentIndex(dataSaved['BATTERY'])
+                self.ui.CboxEthernet.setCurrentIndex(dataSaved['ETHERNET'])
+                self.ui.CboxPlug.setCurrentIndex(dataSaved['SUPPLY_PLUG'])
+                self.ui.CboxUSB.setCurrentIndex(dataSaved['USB'])
+                self.ui.CboxScreen.setCurrentIndex(dataSaved['SCREEN'])
+                self.ui.CboxSpikers.setCurrentIndex(dataSaved['SPICKERS'])
+                self.ui.CboxKeyboard.setCurrentIndex(dataSaved['KEYBOARD'])
+                self.ui.CboxCamera.setCurrentIndex(dataSaved['CAMERA'])
+                self.ui.CboxMicro.setCurrentIndex(dataSaved['MICROPHONE'])
+                self.ui.CboxConnectivity.setCurrentIndex(
+                    dataSaved['CONNECTIVITY'])
+                self.ui.CboxTouchpad.setCurrentIndex(dataSaved['TOUCHPAD'])
+                self.ui.CboxTouchscreen.setCurrentIndex(
+                    dataSaved['TOUCHSCREEN'])
+                self.ui.CboxHinges.setCurrentIndex(dataSaved['HINGES'])
 
-            self.ui.TextBatteryNote.setText(dataSaved['BATTERY_NOTE'])
-            self.ui.TextBatteryDuration.setText(dataSaved['BATTERY_DURATION'])
-            self.ui.TextEthernetNote.setText(dataSaved['ETHERNET_NOTE'])
-            self.ui.TextPlugNote.setText(dataSaved['SUPPLY_PLUG_NOTE'])
-            self.ui.TextUSBNote.setText(dataSaved['USB_NOTE'])
-            self.ui.TextScreenNote.setText(dataSaved['SCREEN_NOTE'])
-            self.ui.TextSpikersNote.setText(dataSaved['SPICKERS_NOTE'])
-            self.ui.TextKeyboardNote.setText(dataSaved['KEYBOARD_NOTE'])
-            self.ui.TextCameraNote.setText(dataSaved['CAMERA_NOTE'])
-            self.ui.TextMicroNote.setText(dataSaved['MICROPHONE_NOTE'])
-            self.ui.TextConnectivityNote.setText(dataSaved['MICROPHONE_NOTE'])
-            self.ui.TextTouchpadNote.setText(dataSaved['CONNECTIVITY_NOTE'])
-            self.ui.TextTouchscreenNote.setText(dataSaved['TOUCHSCREEN_NOTE'])
-            self.ui.TextHingesNote.setText(dataSaved['HINGES_NOTE'])
-            self.ui.PlainTextDetails.setPlainText(dataSaved['DETAILS'])
+                self.ui.TextBatteryNote.setText(dataSaved['BATTERY_NOTE'])
+                self.ui.TextBatteryDuration.setText(
+                    dataSaved['BATTERY_DURATION'])
+                self.ui.TextEthernetNote.setText(dataSaved['ETHERNET_NOTE'])
+                self.ui.TextPlugNote.setText(dataSaved['SUPPLY_PLUG_NOTE'])
+                self.ui.TextUSBNote.setText(dataSaved['USB_NOTE'])
+                self.ui.TextScreenNote.setText(dataSaved['SCREEN_NOTE'])
+                self.ui.TextSpikersNote.setText(dataSaved['SPICKERS_NOTE'])
+                self.ui.TextKeyboardNote.setText(dataSaved['KEYBOARD_NOTE'])
+                self.ui.TextCameraNote.setText(dataSaved['CAMERA_NOTE'])
+                self.ui.TextMicroNote.setText(dataSaved['MICROPHONE_NOTE'])
+                self.ui.TextConnectivityNote.setText(
+                    dataSaved['MICROPHONE_NOTE'])
+                self.ui.TextTouchpadNote.setText(
+                    dataSaved['CONNECTIVITY_NOTE'])
+                self.ui.TextTouchscreenNote.setText(
+                    dataSaved['TOUCHSCREEN_NOTE'])
+                self.ui.TextHingesNote.setText(dataSaved['HINGES_NOTE'])
+                self.ui.PlainTextDetails.setPlainText(dataSaved['DETAILS'])
 
-        except Exception as e:
-            print("No hay archivo por defecto", e)
-            self.ui.CboxEthernet.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['BATTERY'])
-            self.ui.CboxEthernet.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['ETHERNET'])
-            self.ui.CboxPlug.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['SUPPLY_PLUG'])
-            self.ui.CboxUSB.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['USB'])
-            self.ui.CboxScreen.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['SCREEN'])
-            self.ui.CboxSpikers.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['SPICKERS'])
-            self.ui.CboxKeyboard.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['KEYBOARD'])
-            self.ui.CboxCamera.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['CAMERA'])
-            self.ui.CboxMicro.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['MICROPHONE'])
-            self.ui.CboxConnectivity.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['CONNECTIVITY'])
-            self.ui.CboxTouchpad.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['TOUCHPAD'])
-            self.ui.CboxTouchscreen.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['TOUCHSCREEN'])
-            self.ui.CboxHinges.setCurrentIndex(
-                self.config['DEFAULT_VALUES']['HINGES'])
+            except Exception as e:
+                print("No hay archivo por defecto", e)
+                self.ui.CboxEthernet.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['BATTERY'])
+                self.ui.CboxEthernet.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['ETHERNET'])
+                self.ui.CboxPlug.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['SUPPLY_PLUG'])
+                self.ui.CboxUSB.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['USB'])
+                self.ui.CboxScreen.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['SCREEN'])
+                self.ui.CboxSpikers.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['SPICKERS'])
+                self.ui.CboxKeyboard.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['KEYBOARD'])
+                self.ui.CboxCamera.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['CAMERA'])
+                self.ui.CboxMicro.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['MICROPHONE'])
+                self.ui.CboxConnectivity.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['CONNECTIVITY'])
+                self.ui.CboxTouchpad.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['TOUCHPAD'])
+                self.ui.CboxTouchscreen.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['TOUCHSCREEN'])
+                self.ui.CboxHinges.setCurrentIndex(
+                    self.config['DEFAULT_VALUES']['HINGES'])
+        else:
+            print("No hay archivo de informacion guarado...")
 
     def open_config_dialog(self):
         if self.config_dialog is None:
@@ -359,9 +371,9 @@ class MainWindow(QMainWindow):
 
 # SECTION - Save inspectión
 
-    async def start_thread_save_inspection(self):
-        inspection = dict()
-        inspection['comptuer_id'] = self.systeminfo['']
+    # async def start_thread_save_inspection(self):
+    #     inspection = dict()
+    #     inspection['comptuer_id'] = self.systeminfo['']
 
 
 #!SECTION
@@ -415,7 +427,7 @@ class MainWindow(QMainWindow):
 
     def set_new_img(self, Image):
         print("it received the signal")
-        print(Image)
+        # print(Image)
         self.ui.CameraLabel.setPixmap(QPixmap.fromImage(Image))
 
     # def start_camera_capture_tread(self):
@@ -456,7 +468,7 @@ class MainWindow(QMainWindow):
             rowPosition, 2, QTableWidgetItem(str(plugged)))
         self.ui.TableBatteryLog.setItem(rowPosition, 3, QTableWidgetItem(
             str(self.ui.BarCPUPercentage.value())))
-        print(str(timestamp), str(percent), str(plugged))
+        # print(str(timestamp), str(percent), str(plugged))
 
     def open_battery_test_mode(self):
         open_program('power_max.exe')
@@ -499,7 +511,7 @@ class MainWindow(QMainWindow):
         thread.worker = worker
 
         thread.started.connect(worker.run)
-        worker.finished.connect(thread.quit)
+        worker.finished.connect(lambda: thread.quit())
 
         worker.cpuPercent.connect(self.ui.BarCPUPercentage.setValue)
         worker.cpuPercent.connect(self.ui.BarCPUPercentage_2.setValue)
@@ -525,12 +537,15 @@ class MainWindow(QMainWindow):
 #!SECTION
 
     def closeEvent(self, event: QCloseEvent) -> None:
+        self.hide()
         self.stop_battery_test_mode()
         self.stop_monitor_thread()
         self.stop_feed()
-        os.remove(path.join(dirname, 'output.wav'))
-        os.remove(path.join(dirname, 'battery.csv'))
-        sleep(1)
+        if path.exists(path.join(dirname, 'output.wav')):
+            os.remove(path.join(dirname, 'output.wav'))
+        if path.exists(path.join(dirname, 'battery.csv')):
+            os.remove(path.join(dirname, 'battery.csv'))
+        sleep(2)
 
 
 if __name__ == "__main__":

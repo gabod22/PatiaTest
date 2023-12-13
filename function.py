@@ -70,7 +70,7 @@ def stop_speaker_test_sound():
 
 def play_recorded_audio_test():
     audio = os.path.join(dirname, 'output.wav')
-    print(audio)
+    # print(audio)
     winsound.PlaySound(audio, winsound.SND_ASYNC)
 
 

@@ -29,10 +29,8 @@ class WorkerSignals(QObject):
     error = Signal(tuple)
     result = Signal(object)
     progress = Signal(str)
-    onError = Signal(tuple) 
+    onError = Signal(tuple)
     showDialog = Signal()
-
-
 
 
 class Worker(QRunnable):
@@ -78,7 +76,7 @@ class Worker(QRunnable):
             exctype, value = sys.exc_info()[:2]
             self.signals.error.emit((exctype, value, traceback.format_exc()))
         else:
-            
-            self.signals.result.emit(result)  # Return the result of the processing
+            # Return the result of the processing
+            self.signals.result.emit(result)
         finally:
             self.signals.finished.emit()  # Done
