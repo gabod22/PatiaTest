@@ -100,7 +100,12 @@ def get_system_info(progress_callback, on_error, show_dialog):
     # Disk
     info['disk_partitions'] = psutil.disk_partitions()
     root_path = 'C:/' if sys.platform == 'win32' else '/'
-    info['disks'] = get_disks_info(w)
+
+    try:
+        info['disks'] = DiskInfo()
+    except Exception as e:
+        info['disks'] = {}
+        print(e)
 
     # total, used, free, percent
     info['disk_usage'] = dict(psutil.disk_usage(root_path)._asdict())
@@ -111,18 +116,6 @@ def get_system_info(progress_callback, on_error, show_dialog):
 
     progress_callback.emit('Terminado')
     return info
-
-
-def get_disks_info(w):
-    disks = []
-    for drive in w.query("SELECT * FROM Win32_DiskDrive"):
-        if (drive.InterfaceType != 'USB'):
-            disks.append(
-                [drive.Caption, drive.InterfaceType,
-                    convert_size(int(drive.Size)), drive.Status]
-            )
-        # print(disks)
-    return disks
 
 
 def getGPUs():

@@ -88,8 +88,6 @@ class MainWindow(QMainWindow):
         self.asingAllButtonsFunctions()
         self.setAllInitialValues()
 
-        self.start_monitor_thread()
-
         self.ui.BtnStartBatteryTest.clicked.connect(
             lambda: self.open_battery_test_mode())
         self.ui.BtnStopBatteryTest.clicked.connect(
@@ -101,6 +99,7 @@ class MainWindow(QMainWindow):
         self.pix = QPixmap.fromImage(qim)
         self.ui.CameraLabel.setPixmap(self.pix)
         self.start_loading_dialog()
+        self.start_monitor_thread()
 
     def start_loading_dialog(self):
         self.loading_dialog = LoadingDialog(self)

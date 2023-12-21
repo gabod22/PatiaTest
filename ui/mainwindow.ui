@@ -22,290 +22,315 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
         <string>Información del equipo</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_19">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QGroupBox" name="groupBox_2">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>5000</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="title">
-             <string>Info del pc</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout">
-             <item>
-              <layout class="QFormLayout" name="formLayout_2">
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string>Modelo</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QLineEdit" name="TextModel">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(222, 222, 222);</string>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>No. Servicio</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLineEdit" name="TextServiceNumber">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(222, 222, 222);</string>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_6">
-                 <property name="text">
-                  <string>Salud de batería</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="TextBatteryHealth">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(222, 222, 222);</string>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_7">
-                 <property name="text">
-                  <string>Procesador</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QLineEdit" name="TextProcessorName">
-                 <property name="autoFillBackground">
-                  <bool>false</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(222, 222, 222);</string>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_34">
-                 <property name="text">
-                  <string>RAM</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="QLineEdit" name="TextTotalRAM">
-                 <property name="autoFillBackground">
-                  <bool>false</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(222, 222, 222);</string>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>BIOS</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="1">
-                <widget class="QLineEdit" name="TextBiosVersion">
-                 <property name="autoFillBackground">
-                  <bool>false</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(222, 222, 222);</string>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_22">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>5000</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Info del pc</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QFormLayout" name="formLayout_2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>CPU</string>
+                <string>Modelo</string>
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QProgressBar" name="BarCPUPercentage">
-               <property name="value">
-                <number>24</number>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="TextModel">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(222, 222, 222);</string>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QLabel" name="label_24">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>No. Servicio</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="TextServiceNumber">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(222, 222, 222);</string>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Salud de batería</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="TextBatteryHealth">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(222, 222, 222);</string>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Procesador</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="TextProcessorName">
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(222, 222, 222);</string>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_34">
                <property name="text">
                 <string>RAM</string>
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QProgressBar" name="BarRAMPercentage">
-               <property name="value">
-                <number>24</number>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="TextTotalRAM">
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(222, 222, 222);</string>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QLabel" name="label_29">
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_4">
                <property name="text">
-                <string>Batería</string>
+                <string>BIOS</string>
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QProgressBar" name="BarBatteryPercentage">
-               <property name="value">
-                <number>24</number>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="TextBiosVersion">
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(222, 222, 222);</string>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
-             </item>
-             <item>
-              <widget class="Line" name="line_5">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
-           </widget>
-          </item>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_22">
+             <property name="text">
+              <string>CPU</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="BarCPUPercentage">
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_24">
+             <property name="text">
+              <string>RAM</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="BarRAMPercentage">
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_29">
+             <property name="text">
+              <string>Batería</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="BarBatteryPercentage">
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_17">
+           <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_8">
-              <item>
-               <widget class="QLabel" name="label_27">
-                <property name="text">
-                 <string>Unidades de almacenamiento</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QTableWidget" name="TableStorage">
-                <property name="autoScrollMargin">
-                 <number>16</number>
-                </property>
-                <property name="rowCount">
-                 <number>2</number>
-                </property>
-                <row/>
-                <row/>
-                <column>
-                 <property name="text">
-                  <string>Nombre</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Interfaz</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Capacidad</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Status</string>
-                 </property>
-                </column>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QLabel" name="label_27">
+              <property name="text">
+               <string>Unidades de almacenamiento</string>
+              </property>
+             </widget>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_12">
-              <item>
-               <widget class="QLabel" name="label_41">
-                <property name="text">
-                 <string>GPUs</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QTableWidget" name="TableGPUs">
-                <property name="autoScrollMargin">
-                 <number>16</number>
-                </property>
-                <property name="rowCount">
-                 <number>2</number>
-                </property>
-                <row/>
-                <row/>
-                <column>
-                 <property name="text">
-                  <string>Nombre</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Capacidad</string>
-                 </property>
-                </column>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QTableWidget" name="TableStorage">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="autoScrollMargin">
+               <number>16</number>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="columnCount">
+               <number>5</number>
+              </property>
+              <row>
+               <property name="text">
+                <string>Modelo</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>Capacidad</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>Salud</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>Interfaz</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>N° de lecturas</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>N° de escrituras</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>N° de encendidos</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>Horas de encendido</string>
+               </property>
+              </row>
+              <column/>
+              <column/>
+              <column/>
+              <column/>
+              <column/>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <item>
+             <widget class="QLabel" name="label_41">
+              <property name="text">
+               <string>GPUs</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="TableGPUs">
+              <property name="autoScrollMargin">
+               <number>16</number>
+              </property>
+              <property name="rowCount">
+               <number>2</number>
+              </property>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Nombre</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Capacidad</string>
+               </property>
+              </column>
+             </widget>
             </item>
            </layout>
           </item>

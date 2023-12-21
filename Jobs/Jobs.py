@@ -9,6 +9,7 @@ from modules.files_managment import read_yaml
 from modules.constants import dirname, config_file
 import asyncio
 import os
+from modules.DiskInfoParser import DiskInfo
 
 import pickle
 import json
@@ -40,7 +41,7 @@ class Jobs(QObject):
             progress_callback=self.progress, on_error=self.error, show_dialog=None)
 
         self.systemData.emit(self.system)
-
+        
         if self.online == False:
             self.progress.emit('No hay conexión a internet.')
             createNewConnection(

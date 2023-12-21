@@ -102,8 +102,26 @@ class LoadingDialog(QDialog):
         self.parent.ui.TextModel.setText(info["computer_system"]["Model"])
         self.parent.ui.TextServiceNumber.setText(info["bios"]["SerialNumber"])
         # Add all Disks to table
-        self.parent.ui.TableStorage.setRowCount(len(info['disks']))
-        add_data_to_table(info['disks'],  self.parent.ui.TableStorage)
+        # print(info['disks']['disks'])
+
+        for idx, disk in enumerate(info['disks']['disks']):
+            print(disk)
+            self.parent.ui.TableStorage.setItem(
+                0, idx, QTableWidgetItem(str(disk['Model'] if 'Model' in disk else "")))
+            self.parent.ui.TableStorage.setItem(
+                1, idx, QTableWidgetItem(str(disk['Disk Size'] if 'Disk Size' in disk else "")))
+            self.parent.ui.TableStorage.setItem(
+                2, idx, QTableWidgetItem(str(disk['Health Status'] if 'Health Status' in disk else "")))
+            self.parent.ui.TableStorage.setItem(
+                3, idx, QTableWidgetItem(str(disk['Interface'] if 'Interface' in disk else "")))
+            self.parent.ui.TableStorage.setItem(
+                4, idx, QTableWidgetItem(str(disk['Host Reads'] if 'Host Reads' in disk else "")))
+            self.parent.ui.TableStorage.setItem(
+                5, idx, QTableWidgetItem(str(disk['Host Writes'] if 'Host Writes' in disk else "")))
+            self.parent.ui.TableStorage.setItem(
+                6, idx, QTableWidgetItem(str(disk['Power On Count'] if 'Power On Count' in disk else "")))
+            self.parent.ui.TableStorage.setItem(
+                7, idx, QTableWidgetItem(str(disk['Power On Hours'] if 'Power On Hours' in disk else "")))
         # Add all gpus to table
         self.parent.ui.TableGPUs.setRowCount(len(info['gpus']))
         add_data_to_table(info['gpus'],  self.parent.ui.TableGPUs)
