@@ -43,7 +43,7 @@ def DiskInfo():
         input_data = f.read()
 
     # parse data
-    obj = {"controllers_disks": {}, "disks": []}
+    obj = {}
     curmode = ReadMode.start
     curdiskname = None
     curdiskidx = None
@@ -81,20 +81,20 @@ def DiskInfo():
             curmode = ReadMode.smartreadthreshold
             continue
 
-        if curmode == ReadMode.controllermap:
-            if line.startswith(" + "):
-                curcontroller = line[len(" + "):]
-                obj["controllers_disks"][curcontroller] = []
-            if line.startswith("   - "):
-                obj["controllers_disks"][curcontroller].append(
-                    line[len("   - "):])
-            continue
+        # if curmode == ReadMode.controllermap:
+        #     if line.startswith(" + "):
+        #         curcontroller = line[len(" + "):]
+        #         obj["controllers_disks"][curcontroller] = []
+        #     if line.startswith("   - "):
+        #         obj["controllers_disks"][curcontroller].append(
+        #             line[len("   - "):])
+        #     continue
 
         if curmode == ReadMode.disklist:
             result = re.search("^ \((\d+)\) (.*) : (.*) \[.*$", line)
             if result:
                 idx, name, size = result.groups()
-                obj['disks'].append(
+                obj.append(
                     {"DiskNum": idx, "Model": name, "Disk Size": size})
             elif line.startswith("-----------------"):
                 curmode = ReadMode.drivedata
@@ -110,7 +110,7 @@ def DiskInfo():
             splitstrip = [x.strip() for x in line.split(" : ")]
             if len(splitstrip) > 1:
                 attribute, value = splitstrip
-                obj['disks'][int(curdiskidx)-1][attribute] = value
+                obj[int(curdiskidx)-1][attribute] = value
             continue
 
         # if curmode == ReadMode.smartdata:
@@ -121,10 +121,10 @@ def DiskInfo():
         #         smartobj = {"ID": _id, "Cur": cur, "Wor": wor, "Thr": thr,
         #                     "RawValues": rawvalues, "Attribute Name": attributename}
 
-        #         if "S.M.A.R.T." not in obj['disks'][int(curdiskidx)-1]:
-        #             obj['disks'][int(curdiskidx)-1]["S.M.A.R.T."] = []
+        #         if "S.M.A.R.T." not in obj[int(curdiskidx)-1]:
+        #             obj[int(curdiskidx)-1]["S.M.A.R.T."] = []
 
-        #         obj['disks'][int(curdiskidx)-1]["S.M.A.R.T."].append(smartobj)
+        #         obj[int(curdiskidx)-1]["S.M.A.R.T."].append(smartobj)
         #     continue
 
         # if curmode == ReadMode.identifydata:
@@ -136,10 +136,10 @@ def DiskInfo():
         #     hexdata = "".join(line.split(" ")[1:])
 
         #     # initialize on disk object if needed
-        #     if "IDENTIFY_DEVICE" not in obj['disks'][int(curdiskidx)-1]:
-        #         obj['disks'][int(curdiskidx)-1]["IDENTIFY_DEVICE"] = ""
+        #     if "IDENTIFY_DEVICE" not in obj[int(curdiskidx)-1]:
+        #         obj[int(curdiskidx)-1]["IDENTIFY_DEVICE"] = ""
 
-        #     obj['disks'][int(curdiskidx)-1]["IDENTIFY_DEVICE"] += hexdata
+        #     obj[int(curdiskidx)-1]["IDENTIFY_DEVICE"] += hexdata
         #     continue
 
         # if curmode == ReadMode.smartreaddata:
@@ -151,10 +151,10 @@ def DiskInfo():
         #     hexdata = "".join(line.split(" ")[1:])
 
         #     # initialize on disk object if needed
-        #     if "SMART_READ_DATA" not in obj['disks'][int(curdiskidx)-1]:
-        #         obj['disks'][int(curdiskidx)-1]["SMART_READ_DATA"] = ""
+        #     if "SMART_READ_DATA" not in obj[int(curdiskidx)-1]:
+        #         obj[int(curdiskidx)-1]["SMART_READ_DATA"] = ""
 
-        #     obj['disks'][int(curdiskidx)-1]["SMART_READ_DATA"] += hexdata
+        #     obj[int(curdiskidx)-1]["SMART_READ_DATA"] += hexdata
         #     continue
 
         # if curmode == ReadMode.smartreadthreshold:
@@ -166,10 +166,10 @@ def DiskInfo():
         #     hexdata = "".join(line.split(" ")[1:])
 
         #     # initialize on disk object if needed
-        #     if "SMART_READ_THRESHOLD" not in obj['disks'][int(curdiskidx)-1]:
-        #         obj['disks'][int(curdiskidx)-1]["SMART_READ_THRESHOLD"] = ""
+        #     if "SMART_READ_THRESHOLD" not in obj[int(curdiskidx)-1]:
+        #         obj[int(curdiskidx)-1]["SMART_READ_THRESHOLD"] = ""
 
-        #     obj['disks'][int(curdiskidx)-1]["SMART_READ_THRESHOLD"] += hexdata
+        #     obj[int(curdiskidx)-1]["SMART_READ_THRESHOLD"] += hexdata
         #     continue
 
     return obj
