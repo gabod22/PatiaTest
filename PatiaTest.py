@@ -1,5 +1,6 @@
-from chunk import Chunk
+# -*- coding: latin-1 -*-
 
+from chunk import Chunk
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize
@@ -45,6 +46,16 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        """
+            Dialogos iniciales
+        """
+        self.config_dialog = None
+        self.loading_dialog = None
+
+        """
+            Agrega el icono a la ventana
+        """
         icon = QIcon()
         icon.addFile(os.path.join(dirname, "assets/logo_min.ico"),
                      QSize(), QIcon.Normal, QIcon.Off)
@@ -57,34 +68,26 @@ class MainWindow(QMainWindow):
         self.__thread_battery = QThread()
         self.__thread_CameraCapture = QThread()
 
+        """
+            Configuración inicial de la captura de video
+        """
         self.video_size = QSize(320, 240)
         self.ui.CameraLabel.setFixedSize(self.video_size)
         self.ui.BtnStopCameraCapture.setVisible(False)
 
-        self.config_dialog = None
-        self.loading_dialog = None
-
         self.config = read_yaml(config_file)
-        self.configData = {}
-        self.systeminfo = None
-
-        self.threadpool = QThreadPool()
 
         # initial state
+        self.configData = {}
+        self.systeminfo = None
+        self.threadpool = QThreadPool()
         self.ui.BtnStopTestSpeakers.hide()
         self.ui.tabReport.setEnabled(False)
         self.ui.tabBatteryTest.setEnabled(False)
 
-        self.asingMenuButtonsFunctions()
-        self.asingAllButtonsFunctions()
-        self.setAllInitialValues()
-
-        self.ui.BtnStartBatteryTest.clicked.connect(
-            lambda: self.open_battery_test_mode())
-        self.ui.BtnStopBatteryTest.clicked.connect(
-            lambda: self.stop_battery_test_mode())
-        self.ui.BtnSaveToGoogleSheets.clicked.connect(
-            lambda: self.start_thread_save_inspection())
+        self.asing_menu_buttons_functions()
+        self.asing_all_buttons_functions()
+        self.set_all_initial_values()
 
         qim = ImageQt(path.join(dirname + "/assets/no_camera.jpg"))
         self.pix = QPixmap.fromImage(qim)
@@ -96,7 +99,32 @@ class MainWindow(QMainWindow):
         self.loading_dialog = LoadingDialog(self)
         self.loading_dialog.show()
 
-    def asingMenuButtonsFunctions(self):
+    def asing_all_buttons_functions(self):
+        self.ui.BtnOpenPrograms.clicked.connect(lambda: self.open_all_tests())
+        self.ui.BtnTestSpeakers.clicked.connect(lambda: self.playSound())
+        self.ui.BtnStopTestSpeakers.clicked.connect(lambda: self.stopSound())
+        self.ui.BtnTestKeyboard.clicked.connect(
+            lambda: open_program('keyboard_test.exe'))
+        self.ui.BtnTestScreen.clicked.connect(
+            lambda: open_program('DPT.exe'))
+        self.ui.BtnTestTouchscreen.clicked.connect(
+            lambda: open_program('touch_test.exe'))
+        self.ui.BtnTestCamera.clicked.connect(
+            lambda: run_powershell_command('start microsoft.windows.camera:'))
+
+        self.ui.BtnStopCameraCapture.clicked.connect(
+            self.stop_feed)
+        self.ui.BtnStartCameraCapture.clicked.connect(
+            self.start_feed)
+        # self.ui.BtnConnectToWifi.clicked.connect(
+        #     lambda: self.start_jobs_thread())
+        # self.ui.BtnCmd.clicked.connect(lambda: self.executeCommand())
+        self.ui.BtnTestMicrophone.clicked.connect(open_record_config)
+        self.ui.BtnRecordAudio.clicked.connect(self.thread_record_audio)
+        self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
+        self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
+
+    def asing_menu_buttons_functions(self):
         # Config Menu
         self.ui.actionConfig.triggered.connect(
             lambda: self.open_config_dialog())
@@ -106,43 +134,14 @@ class MainWindow(QMainWindow):
         self.ui.actionReconectar_servidor.triggered.connect(
             lambda: self.start_loading_dialog())
 
-    def save_local(self):
-        info = {}
-        info['PIXELID'] = self.ui.TextPixelId.text()
-        info['AESTHETIC'] = self.ui.CboxAesthetics.currentIndex()
-        info['BATTERY'] = self.ui.CboxBattery.currentIndex()
-        info['ETHERNET'] = self.ui.CboxEthernet.currentIndex()
-        info['SUPPLY_PLUG'] = self.ui.CboxPlug.currentIndex()
-        info['USB'] = self.ui.CboxUSB.currentIndex()
-        info['SCREEN'] = self.ui.CboxScreen.currentIndex()
-        info['SPICKERS'] = self.ui.CboxSpikers.currentIndex()
-        info['KEYBOARD'] = self.ui.CboxKeyboard.currentIndex()
-        info['CAMERA'] = self.ui.CboxCamera.currentIndex()
-        info['CONNECTIVITY'] = self.ui.CboxConnectivity.currentIndex()
-        info['MICROPHONE'] = self.ui.CboxMicro.currentIndex()
-        info['TOUCHPAD'] = self.ui.CboxTouchpad.currentIndex()
-        info['TOUCHSCREEN'] = self.ui.CboxTouchscreen.currentIndex()
-        info['HINGES'] = self.ui.CboxHinges.currentIndex()
+        self.ui.BtnStartBatteryTest.clicked.connect(
+            lambda: self.open_battery_test_mode())
+        self.ui.BtnStopBatteryTest.clicked.connect(
+            lambda: self.stop_battery_test_mode())
+        self.ui.BtnSaveToGoogleSheets.clicked.connect(
+            lambda: self.start_thread_save_inspection())
 
-        info['BATTERY_DURATION'] = self.ui.TextBatteryDuration.text()
-        info['BATTERY_NOTE'] = self.ui.TextBatteryNote.text()
-        info['ETHERNET_NOTE'] = self.ui.TextEthernetNote.text()
-        info['SUPPLY_PLUG_NOTE'] = self.ui.TextPlugNote.text()
-        info['USB_NOTE'] = self.ui.TextUSBNote.text()
-        info['SCREEN_NOTE'] = self.ui.TextScreenNote.text()
-        info['SPICKERS_NOTE'] = self.ui.TextSpikersNote.text()
-        info['KEYBOARD_NOTE'] = self.ui.TextKeyboardNote.text()
-        info['CAMERA_NOTE'] = self.ui.TextCameraNote.text()
-        info['CONNECTIVITY_NOTE'] = self.ui.TextCameraNote.text()
-        info['MICROPHONE_NOTE'] = self.ui.TextMicroNote.text()
-        info['TOUCHPAD_NOTE'] = self.ui.TextTouchpadNote.text()
-        info['TOUCHSCREEN_NOTE'] = self.ui.TextTouchscreenNote.text()
-        info['HINGES_NOTE'] = self.ui.TextHingesNote.text()
-        info['DETAILS'] = self.ui.PlainTextDetails.toPlainText()
-        # print(info)
-        write_yaml("c:/patiatest_info.yaml", info)
-
-    def setAllInitialValues(self):
+    def set_all_initial_values(self):
         if path.exists('c:/patiatest_info.yaml'):
             try:
                 dataSaved = read_yaml("c:/patiatest_info.yaml")
@@ -227,7 +226,7 @@ class MainWindow(QMainWindow):
         self.ui.CboxCheckedBy.setCurrentIndex(self.config['DEFAULT_EMPLOYEE'])
         self.config_dialog = None
 
-    def setOptions(self):
+    def set_options(self):
         self.ui.CboxAesthetics.clear()
         self.ui.CboxCheckedBy.clear()
         self.ui.CboxBattery.clear()
@@ -264,30 +263,41 @@ class MainWindow(QMainWindow):
             self.ui.CboxHinges.addItem(status['slug'])
             self.ui.CboxMicro.addItem(status['slug'])
 
-    def asingAllButtonsFunctions(self):
-        self.ui.BtnOpenPrograms.clicked.connect(lambda: self.open_all_tests())
-        self.ui.BtnTestSpeakers.clicked.connect(lambda: self.playSound())
-        self.ui.BtnStopTestSpeakers.clicked.connect(lambda: self.stopSound())
-        self.ui.BtnTestKeyboard.clicked.connect(
-            lambda: open_program('keyboard_test.exe'))
-        self.ui.BtnTestScreen.clicked.connect(
-            lambda: open_program('DPT.exe'))
-        self.ui.BtnTestTouchscreen.clicked.connect(
-            lambda: open_program('touch_test.exe'))
-        self.ui.BtnTestCamera.clicked.connect(
-            lambda: run_powershell_command('start microsoft.windows.camera:'))
+    def save_local(self):
+        info = {}
+        info['PIXELID'] = self.ui.TextPixelId.text()
+        info['AESTHETIC'] = self.ui.CboxAesthetics.currentIndex()
+        info['BATTERY'] = self.ui.CboxBattery.currentIndex()
+        info['ETHERNET'] = self.ui.CboxEthernet.currentIndex()
+        info['SUPPLY_PLUG'] = self.ui.CboxPlug.currentIndex()
+        info['USB'] = self.ui.CboxUSB.currentIndex()
+        info['SCREEN'] = self.ui.CboxScreen.currentIndex()
+        info['SPICKERS'] = self.ui.CboxSpikers.currentIndex()
+        info['KEYBOARD'] = self.ui.CboxKeyboard.currentIndex()
+        info['CAMERA'] = self.ui.CboxCamera.currentIndex()
+        info['CONNECTIVITY'] = self.ui.CboxConnectivity.currentIndex()
+        info['MICROPHONE'] = self.ui.CboxMicro.currentIndex()
+        info['TOUCHPAD'] = self.ui.CboxTouchpad.currentIndex()
+        info['TOUCHSCREEN'] = self.ui.CboxTouchscreen.currentIndex()
+        info['HINGES'] = self.ui.CboxHinges.currentIndex()
 
-        self.ui.BtnStopCameraCapture.clicked.connect(
-            self.stop_feed)
-        self.ui.BtnStartCameraCapture.clicked.connect(
-            self.start_feed)
-        # self.ui.BtnConnectToWifi.clicked.connect(
-        #     lambda: self.start_jobs_thread())
-        # self.ui.BtnCmd.clicked.connect(lambda: self.executeCommand())
-        self.ui.BtnTestMicrophone.clicked.connect(open_record_config)
-        self.ui.BtnRecordAudio.clicked.connect(self.thread_record_audio)
-        self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
-        self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
+        info['BATTERY_DURATION'] = self.ui.TextBatteryDuration.text()
+        info['BATTERY_NOTE'] = self.ui.TextBatteryNote.text()
+        info['ETHERNET_NOTE'] = self.ui.TextEthernetNote.text()
+        info['SUPPLY_PLUG_NOTE'] = self.ui.TextPlugNote.text()
+        info['USB_NOTE'] = self.ui.TextUSBNote.text()
+        info['SCREEN_NOTE'] = self.ui.TextScreenNote.text()
+        info['SPICKERS_NOTE'] = self.ui.TextSpikersNote.text()
+        info['KEYBOARD_NOTE'] = self.ui.TextKeyboardNote.text()
+        info['CAMERA_NOTE'] = self.ui.TextCameraNote.text()
+        info['CONNECTIVITY_NOTE'] = self.ui.TextCameraNote.text()
+        info['MICROPHONE_NOTE'] = self.ui.TextMicroNote.text()
+        info['TOUCHPAD_NOTE'] = self.ui.TextTouchpadNote.text()
+        info['TOUCHSCREEN_NOTE'] = self.ui.TextTouchscreenNote.text()
+        info['HINGES_NOTE'] = self.ui.TextHingesNote.text()
+        info['DETAILS'] = self.ui.PlainTextDetails.toPlainText()
+        # print(info)
+        write_yaml("c:/patiatest_info.yaml", info)
 
 # SECTION - Tests
 
@@ -361,14 +371,7 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print(e)
 
-
-# SECTION - Save inspectión
-
-    # async def start_thread_save_inspection(self):
-    #     inspection = dict()
-    #     inspection['comptuer_id'] = self.systeminfo['']
-
-# SECTION - Camera Capture
+# SECTION - Camera capture
 
     def __get_thread_camera_capure(self):
         thread = QThread()
@@ -419,9 +422,7 @@ class MainWindow(QMainWindow):
     def set_new_img(self, Image):
         self.ui.CameraLabel.setPixmap(QPixmap.fromImage(Image))
 
-
 # SECTION - Battery Test Thread
-
 
     def __get_thread_battery_test(self):
         thread = QThread()
@@ -481,9 +482,7 @@ class MainWindow(QMainWindow):
         self.ui.LBTimeElapsed.setText(time)
         self.ui.TextBatteryDuration.setText(time)
 
-
 # SECTION Monitor Thread
-
 
     def __get_thread_monitor(self):
         thread = QThread()
@@ -523,6 +522,10 @@ class MainWindow(QMainWindow):
             self.stop_battery_test_mode()
         self.stop_monitor_thread()
         self.stop_feed()
+
+        """ Elimina los archivos creados
+        """
+
         if path.exists(path.join(dirname, 'output.wav')):
             os.remove(path.join(dirname, 'output.wav'))
         if path.exists(path.join(dirname, 'battery.csv')):

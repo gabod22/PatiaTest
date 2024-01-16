@@ -2,8 +2,6 @@ from ..helpers import convert_size, WMIDateStringToDate, wmiToDict
 from ..DiskInfoParser import DiskInfo
 from ..battery import get_battery_info
 import wmi
-import multiprocessing as mp
-import platform
 import cpuinfo
 import psutil
 import pythoncom

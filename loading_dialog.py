@@ -1,20 +1,15 @@
-from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
-from ui.loading_dialog_ui import Ui_LoadingDialog
-from modules.helpers import convert_size
-from Jobs.Jobs import Jobs
-from modules.helpers import add_data_to_table
-from modules.battery import is_battery_installed
+import pythoncom
 from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtWidgets import QDialog, QTableWidgetItem
-import re
-import pythoncom
-from time import sleep
-import os
-from function import open_program
-
-from functools import partial
-
+from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
+from ui.loading_dialog_ui import Ui_LoadingDialog
+from Jobs.Jobs import Jobs
+from modules.helpers import convert_size
+from modules.helpers import add_data_to_table
+from modules.battery import is_battery_installed
 from modules.programs import get_all_programs
+from function import open_program
+from functools import partial
 
 
 # from Jobs.worker import Worker
@@ -31,10 +26,10 @@ class LoadingDialog(QDialog):
         self.enable_register = False
         self.ui = Ui_LoadingDialog()
         self.ui.setupUi(self)
+        self.system_info = None
         self.__thread_jobs = QThread()
         self.threadpool = QThreadPool()
         self.serial_number = ""
-        self.system_info = None
         self.this_computer = None
         self.battery_health = ""
 
@@ -75,7 +70,7 @@ class LoadingDialog(QDialog):
     def setConfigData(self, data):
 
         self.parent.configData = data
-        self.parent.setOptions()
+        self.parent.set_options()
         # print("imprimiendo configuracion", data)
 
         # print(self.configData)
@@ -98,14 +93,14 @@ class LoadingDialog(QDialog):
 
     def set_system_info(self, info):
         self.system_info = info
-        if (info['cpu']['vendor_id_raw'] == 'GenuineIntel'):
-            try:
-                cpu_model = re.search(
-                    "[A-z]\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
-            except:
-                cpu_model = info["cpu"]["brand_raw"]
-        else:
-            cpu_model = info["cpu"]["brand_raw"]
+        # if (info['cpu']['vendor_id_raw'] == 'GenuineIntel'):
+        #     try:
+        #         cpu_model = re.search(
+        #             "[A-z]\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
+        #     except:
+        #         cpu_model = info["cpu"]["brand_raw"]
+        # else:
+        cpu_model = info["cpu"]["brand_raw"]
         ram = str(convert_size(info["virtual_memory"]
                   ["total"])) + " " + info["memories"][0]["Tipo"]
         self.parent.systeminfo = info

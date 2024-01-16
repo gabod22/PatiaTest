@@ -2,7 +2,6 @@
 
 import os
 
-import sys
 import winsound
 import wmi
 import GPUtil
@@ -37,30 +36,9 @@ def get_gpu_percent():
     return 0
 
 
-# Get Disks information
-def get_disks_info():
-    disks = []
-    for drive in c.query("SELECT * FROM Win32_DiskDrive"):
-        if (drive.InterfaceType != 'USB'):
-            disks.append(
-                [drive.Caption, drive.InterfaceType,
-                    convert_size(int(drive.Size)), drive.Status]
-            )
-    return disks
-
-
-def get_disks():
-    text = ""
-    for drive in c.query("SELECT * FROM Win32_DiskDrive"):
-        if (drive.InterfaceType != 'USB'):
-            text = text + 'm: %s, t: %s, i: %s, s: %s;' % (drive.Caption, convert_size(
-                int(drive.Size)), drive.InterfaceType, drive.Status)
-    return text
-
-
 # Sound tests
 def play_speaker_test_sound():
-    soundtest = os.path.join(dirname, 'assets\soundtest.wav')
+    soundtest = os.path.join(dirname, 'assets/soundtest.wav')
     winsound.PlaySound(soundtest, winsound.SND_ASYNC)
 
 
