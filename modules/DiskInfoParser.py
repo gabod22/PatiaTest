@@ -3,7 +3,8 @@ import enum
 import re
 import json
 import sys
-from os import path
+from os import path, getenv
+
 from .constants import dirname
 
 
@@ -22,9 +23,12 @@ class ReadMode(enum.Enum):
 # print("Running DiskInfo.exe")
 def DiskInfo():
     print('Obteniendo info de los discos')
+    dev = getenv("DEV_MODE")
+    diskinfopath = "programs/diskinfo/" if dev else "programs/"
+
     try:
         status = subprocess.call(
-            path.join(dirname, "programs/DiskInfo.exe /CopyExit"))
+            path.join(dirname, diskinfopath + "DiskInfo.exe /CopyExit"))
     except WindowsError as e:
         if "Error 740" in str(e):
             print(
@@ -39,11 +43,11 @@ def DiskInfo():
     # read data
     input_data = None
 
-    with open(path.join(dirname, "programs/DiskInfo.txt"), 'r', encoding='utf-8') as f:
+    with open(path.join(dirname, diskinfopath + "DiskInfo.txt"), 'r', encoding='utf-8') as f:
         input_data = f.read()
 
     # parse data
-    obj = {}
+    obj = []
     curmode = ReadMode.start
     curdiskname = None
     curdiskidx = None

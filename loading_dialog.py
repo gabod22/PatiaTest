@@ -1,4 +1,4 @@
-from Dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
+from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from ui.loading_dialog_ui import Ui_LoadingDialog
 from modules.helpers import convert_size
 from Jobs.Jobs import Jobs
@@ -10,6 +10,11 @@ import re
 import pythoncom
 from time import sleep
 import os
+from function import open_program
+
+from functools import partial
+
+from modules.programs import get_all_programs
 
 
 # from Jobs.worker import Worker
@@ -39,6 +44,13 @@ class LoadingDialog(QDialog):
         # self.start_get_system_info_thread()
         self.start_jobs_thread()
 
+        # MenuBar
+        for program in get_all_programs():
+            # pixmap = QPixmap(program['icon'])
+            # icon = QIcon(pixmap)
+            self.parent.ui.menuTools.addAction(
+                program["name"], partial(open_program, program["name"]))
+
     # SECTION - Jobs Thread
     def __get_thread_jobs(self):
         thread = QThread()
@@ -67,6 +79,7 @@ class LoadingDialog(QDialog):
         # print("imprimiendo configuracion", data)
 
         # print(self.configData)
+
     def setThisComputerData(self, data):
         self.enable_register = True
         self.parent.ui.TextPixelId.setText(str(data['internal_id']))
@@ -105,7 +118,6 @@ class LoadingDialog(QDialog):
         # print(info['disks']['disks'])
         if 'disks' in info:
             for idx, disk in enumerate(info['disks']):
-                print(disk)
                 self.parent.ui.TableStorage.setItem(
                     0, idx, QTableWidgetItem(str(disk['Model'] if 'Model' in disk else "")))
                 self.parent.ui.TableStorage.setItem(
@@ -192,6 +204,8 @@ class LoadingDialog(QDialog):
     def loading_finished(self):
         if self.enable_register:
             self.parent.ui.tabReport.setEnabled(True)
+        if is_battery_installed():
+            self.parent.ui.tabBatteryTest.setEnabled(True)
         self.parent.show()
         self.close()
 

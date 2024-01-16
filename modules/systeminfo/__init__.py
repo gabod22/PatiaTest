@@ -2,53 +2,43 @@ from ..helpers import convert_size, WMIDateStringToDate, wmiToDict
 from ..DiskInfoParser import DiskInfo
 from ..battery import get_battery_info
 import wmi
-
+import multiprocessing as mp
 import platform
 import cpuinfo
 import psutil
-import sys
 import pythoncom
 import GPUtil
+MemoryType = {
+    0: "Desconocido",
+    1: "Otro",
+    20: "DDR",
+    21: "DDR2",
+    22: "DDR2 FB-DIMM",
+    24: "DDR3",
+    26: "DDR4",
+    29: "Row of chips",
+    30: "Row of chips"
+}
 
 
 def get_system_info(progress_callback, on_error, show_dialog):
     pythoncom.CoInitialize()
     info = dict()
-    info['batteries'] = []
     w = wmi.WMI()
-    MemoryType = {
-        0: "Desconocido",
-        1: "Otro",
-        20: "DDR",
-        21: "DDR2",
-        22: "DDR2 FB-DIMM",
-        24: "DDR3",
-        26: "DDR4",
-        29: "Row of chips",
-        30: "Row of chips"
-    }
+
     progress_callback.emit('Obteniendo info de la computadora')
 
     # INFO
     info['computer_system'] = dict(wmiToDict(w.Win32_ComputerSystem()[0]))
     # Platform
-    uname_result = platform.uname()
-    pl = dict()
-    pl['system'] = uname_result.system
-    pl['node'] = uname_result.node
-    pl['release'] = uname_result.release
-    pl['version'] = uname_result.version
-    pl['machine'] = uname_result.machine
-    info['platform'] = pl
-
-    progress_callback.emit('Obteniendo info de las baterias')
-    try:
-        batteries = get_battery_info()
-        info['batteries'] = batteries
-    except Exception as e:
-        progress_callback.emit('Hubo un problema al cargar las baterias')
-        progress_callback.emit(e)
-        info['batteries'] = []
+    # uname_result = platform.uname()
+    # pl = dict()
+    # pl['system'] = uname_result.system
+    # pl['node'] = uname_result.node
+    # pl['release'] = uname_result.release
+    # pl['version'] = uname_result.version
+    # pl['machine'] = uname_result.machine
+    # info['platform'] = pl
 
     progress_callback.emit('Obteniendo info de la BIOS')
     # BIOS
@@ -70,55 +60,38 @@ def get_system_info(progress_callback, on_error, show_dialog):
     }
 
     info['bios'] = bios
-    progress_callback.emit('Obteniendo info del CPU')
+
     # CPU
-    cpu = dict(cpuinfo.get_cpu_info())
-    cpu['processor'] = uname_result.processor
-    cpu.pop('flags')
-    # cpu['cpu-times'] = psutil.cpu_times()
-    cpu['pyhsical-core-count'] = psutil.cpu_count(False)
-    cpu['logical-core-count'] = psutil.cpu_count(True)
+    cpu = getCpu(progress_callback)
     # cpu['stats'] = psutil.cpu_stats()
     info['cpu'] = cpu
 
-    progress_callback.emit('Obteniendo info de la memoria ram')
     # Memory
-    info['virtual_memory'] = dict(psutil.virtual_memory()._asdict())
-    info['swap_memory'] = dict(psutil.swap_memory()._asdict())
-    memories = []
-    for memory in w.Win32_PhysicalMemory():
-        print("tipo de memoria", memory.SMBIOSMemoryType)
-        memories.append({
-            "capacidad": convert_size(memory.Capacity),
-            "Tipo": MemoryType[memory.SMBIOSMemoryType],
-            "Frecuencia": memory.Speed,
-            "Fabricante": memory.Manufacturer
-        })
-
+    memories = getMemory(progress_callback, wmi=w)
     info['memories'] = memories
-    progress_callback.emit('Obteniendo info del disco')
-    # Disk
-    info['disk_partitions'] = psutil.disk_partitions()
-    root_path = 'C:/' if sys.platform == 'win32' else '/'
+    info['virtual_memory'] = dict(psutil.virtual_memory()._asdict())
+    # info['swap_memory'] = dict(psutil.swap_memory()._asdict())
 
-    try:
-        info['disks'] = DiskInfo()
-    except Exception as e:
-        info['disks'] = {}
-        print(e)
+    # Disk
+    # info['disk_partitions'] = psutil.disk_partitions()
+    # root_path = 'C:/' if sys.platform == 'win32' else '/'
 
     # total, used, free, percent
-    info['disk_usage'] = dict(psutil.disk_usage(root_path)._asdict())
+    # info['disk_usage'] = dict(psutil.disk_usage(root_path)._asdict())
+    gpus = getGPUs(progress_callback)
+    disks = getDisks(progress_callback)
+    batteries = getBatteryInfo(progress_callback)
 
-    progress_callback.emit('Obteniendo info de las GPUs')
-
-    info['gpus'] = getGPUs()
-
+    info['gpus'] = gpus
+    info['disks'] = disks
+    info['batteries'] = batteries
     progress_callback.emit('Terminado')
+
     return info
 
 
-def getGPUs():
+def getGPUs(progress_callback):
+    progress_callback.emit('Obteniendo info de las GPUs')
     gpus = GPUtil.getGPUs()
     list_gpus = []
     for gpu in gpus:
@@ -139,3 +112,62 @@ def getGPUs():
         gpu_uuid = gpu.uuid
         list_gpus.append([gpu_name, str(gpu_total_memory)+" GB"])
     return list_gpus
+
+
+def getBatteryInfo(progress_callback):
+    progress_callback.emit('Obteniendo info de las baterias')
+    try:
+        batteries = get_battery_info()
+    except Exception as e:
+        progress_callback.emit('Hubo un problema al cargar las baterias')
+        progress_callback.emit(e)
+        batteries = []
+    finally:
+        return batteries
+
+
+def getDisks(progress_callback):
+    progress_callback.emit('Obteniendo info de las unidades de almacenamiento')
+    try:
+        disks = DiskInfo()
+    except Exception as e:
+        disks = {}
+        print(e)
+    finally:
+        return disks
+
+
+def getMemory(progress_callback, wmi):
+    progress_callback.emit('Obteniendo info de la memoria ram')
+    memories = []
+    try:
+        for memory in wmi.Win32_PhysicalMemory():
+            print("tipo de memoria", memory.SMBIOSMemoryType)
+            memories.append({
+                "capacidad": convert_size(memory.Capacity),
+                "Tipo": MemoryType[memory.SMBIOSMemoryType],
+                "Frecuencia": memory.Speed,
+                "Fabricante": memory.Manufacturer
+            })
+    except Exception as e:
+        print(e)
+        progress_callback.emit("No se pudo obtener la info de la memoria RAM")
+        memories = []
+    finally:
+        return memories
+
+
+def getCpu(progress_callback):
+    progress_callback.emit('Obteniendo info del CPU')
+    try:
+        cpu = dict(cpuinfo.get_cpu_info())
+        # cpu['processor'] = uname_result.processor
+        # cpu.pop('flags')
+        # cpu['cpu-times'] = psutil.cpu_times()
+        # cpu['pyhsical-core-count'] = psutil.cpu_count(False)
+        # cpu['logical-core-count'] = psutil.cpu_count(True)
+
+    except:
+        cpu = {}
+    finally:
+        return cpu

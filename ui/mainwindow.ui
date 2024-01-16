@@ -15,14 +15,14 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../../../.designer/assets/logo_min.ico</normaloff>../../../../../.designer/assets/logo_min.ico</iconset>
+    <normaloff>../assets/logo_min.ico</normaloff>../assets/logo_min.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -451,8 +451,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>876</width>
-                <height>445</height>
+                <width>859</width>
+                <height>454</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1142,7 +1142,7 @@
              </property>
              <property name="icon">
               <iconset theme="document-save">
-               <normaloff>../../../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
+               <normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
              </property>
             </widget>
            </item>

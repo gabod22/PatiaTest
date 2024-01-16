@@ -1,15 +1,13 @@
 from chunk import Chunk
-from concurrent.futures import thread
+
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize
 from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
 from PIL.ImageQt import ImageQt
-from numpy import rec
 from ui.mainwindow_ui import Ui_MainWindow
 from os import path
 
-from functools import partial
 from datetime import datetime
 
 from Jobs.worker import Worker
@@ -23,21 +21,16 @@ from Jobs.Monitor import Monitor
 from Jobs.CameraCapture import CameraCapture
 from config_dialog import ConfigDialog
 
-from Dialogs import showFailDialog
+from dialogs import showFailDialog
 
 from function import *
-from modules.battery import is_battery_installed
 from modules.files_managment import *
 from modules.powerManager import set_configuration_to_current_scheme, set_brightness, set_default_configuration
-from modules.battery import get_battery_info
 from modules.constants import config_file, dirname
 
-from modules.programs import get_all_programs
 
-from cpu_load_generator import load_single_core, load_all_cores, from_profile
 import pyaudio
 import wave
-import struct
 from loading_dialog import LoadingDialog
 from dotenv import load_dotenv
 extDataDir = os.getcwd()
@@ -52,6 +45,10 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        icon = QIcon()
+        icon.addFile(os.path.join(dirname, "assets/logo_min.ico"),
+                     QSize(), QIcon.Normal, QIcon.Off)
+        self.setWindowIcon(icon)
 
         """
             Crea una instancia de los Threads que se utilizan
@@ -73,16 +70,10 @@ class MainWindow(QMainWindow):
 
         self.threadpool = QThreadPool()
 
-        # MenuBar
-        for program in get_all_programs():
-            # pixmap = QPixmap(program['icon'])
-            # icon = QIcon(pixmap)
-            self.ui.menuTools.addAction(
-                program["name"], partial(open_program, program["name"]))
-
         # initial state
         self.ui.BtnStopTestSpeakers.hide()
         self.ui.tabReport.setEnabled(False)
+        self.ui.tabBatteryTest.setEnabled(False)
 
         self.asingMenuButtonsFunctions()
         self.asingAllButtonsFunctions()
@@ -273,7 +264,6 @@ class MainWindow(QMainWindow):
             self.ui.CboxHinges.addItem(status['slug'])
             self.ui.CboxMicro.addItem(status['slug'])
 
-# SECTION - Tests
     def asingAllButtonsFunctions(self):
         self.ui.BtnOpenPrograms.clicked.connect(lambda: self.open_all_tests())
         self.ui.BtnTestSpeakers.clicked.connect(lambda: self.playSound())
@@ -299,6 +289,8 @@ class MainWindow(QMainWindow):
         self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
         self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
 
+# SECTION - Tests
+
     def playSound(self):
         play_speaker_test_sound()
         self.ui.BtnTestSpeakers.hide()
@@ -312,6 +304,15 @@ class MainWindow(QMainWindow):
     def open_all_tests(self):
         for program in self.config['SELECTED_PROGRAMS']:
             open_program(program)
+
+# SECTION - Recod Audio
+
+    def thread_record_audio(self):
+        worker = Worker(self.record_audio)
+        # worker.signals.result.connect(self.printDiksInfo)
+        # worker.signals.finished.connect(self.DiskInfoDone)
+        worker.signals.progress.connect(self.statusBar().showMessage)
+        self.threadpool.start(worker)
 
     def play_recorded_audio(self):
         if path.exists(path.join(dirname, 'output.wav')):
@@ -360,13 +361,6 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print(e)
 
-    def thread_record_audio(self):
-
-        worker = Worker(self.record_audio)
-        # worker.signals.result.connect(self.printDiksInfo)
-        # worker.signals.finished.connect(self.DiskInfoDone)
-        worker.signals.progress.connect(self.statusBar().showMessage)
-        self.threadpool.start(worker)
 
 # SECTION - Save inspectión
 
@@ -374,9 +368,7 @@ class MainWindow(QMainWindow):
     #     inspection = dict()
     #     inspection['comptuer_id'] = self.systeminfo['']
 
-
-#!SECTION
-
+# SECTION - Camera Capture
 
     def __get_thread_camera_capure(self):
         thread = QThread()
@@ -425,20 +417,11 @@ class MainWindow(QMainWindow):
         self.ui.CameraLabel.setPixmap(self.pix)
 
     def set_new_img(self, Image):
-        print("it received the signal")
-        # print(Image)
         self.ui.CameraLabel.setPixmap(QPixmap.fromImage(Image))
 
-    # def start_camera_capture_tread(self):
-    #     if not self.__thread_CameraCapture.isRunning():
-    #         self.__thread_CameraCapture = self.__get_thread_camera_capure()
-    #         self.__thread_CameraCapture.start()
-
-    # def __get_stress_cpu(self):
-    #     thread = QThread()
-    #     worker =
 
 # SECTION - Battery Test Thread
+
 
     def __get_thread_battery_test(self):
         thread = QThread()
@@ -497,9 +480,10 @@ class MainWindow(QMainWindow):
     def set_time_elapsed(self, time):
         self.ui.LBTimeElapsed.setText(time)
         self.ui.TextBatteryDuration.setText(time)
-#!SECTION
+
 
 # SECTION Monitor Thread
+
 
     def __get_thread_monitor(self):
         thread = QThread()
@@ -533,11 +517,10 @@ class MainWindow(QMainWindow):
             self.__thread_monitor.worker.stop()
             self.__thread_monitor.quit()
 
-#!SECTION
-
     def closeEvent(self, event: QCloseEvent) -> None:
         self.hide()
-        self.stop_battery_test_mode()
+        if self.__thread_battery.isRunning():
+            self.stop_battery_test_mode()
         self.stop_monitor_thread()
         self.stop_feed()
         if path.exists(path.join(dirname, 'output.wav')):
@@ -548,7 +531,7 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == "__main__":
-    freeze_support()
+    # freeze_support()
     app = QApplication(sys.argv)
 
     mainwindow = MainWindow()
