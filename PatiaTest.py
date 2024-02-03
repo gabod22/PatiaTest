@@ -22,7 +22,7 @@ from Jobs.Monitor import Monitor
 from Jobs.CameraCapture import CameraCapture
 from config_dialog import ConfigDialog
 
-from dialogs import showFailDialog
+from Dialogs import showFailDialog
 
 from function import *
 from modules.files_managment import *

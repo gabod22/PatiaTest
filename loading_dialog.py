@@ -1,7 +1,7 @@
 import pythoncom
 from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtWidgets import QDialog, QTableWidgetItem
-from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
+from Dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from ui.loading_dialog_ui import Ui_LoadingDialog
 from Jobs.Jobs import Jobs
 from modules.helpers import convert_size

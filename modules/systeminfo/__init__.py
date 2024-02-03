@@ -15,7 +15,8 @@ MemoryType = {
     24: "DDR3",
     26: "DDR4",
     29: "Row of chips",
-    30: "Row of chips"
+    30: "Row of chips",
+    34: "DDR5"
 }
 
 
@@ -90,25 +91,30 @@ def get_system_info(progress_callback, on_error, show_dialog):
 
 def getGPUs(progress_callback):
     progress_callback.emit('Obteniendo info de las GPUs')
-    gpus = GPUtil.getGPUs()
+    try:
+        gpus = GPUtil.getGPUs()
+    except Exception as e:
+        print(e)
+        gpus = None
     list_gpus = []
-    for gpu in gpus:
-        # get the GPU id
-        gpu_id = gpu.id
-        # name of GPU
-        gpu_name = gpu.name
-        # get % percentage of GPU usage of that GPU
-        gpu_load = f"{gpu.load*100}%"
-        # get free memory in MB format
-        gpu_free_memory = f"{gpu.memoryFree}MB"
-        # get used memory
-        gpu_used_memory = f"{gpu.memoryUsed}MB"
-        # get total memory
-        gpu_total_memory = (gpu.memoryTotal / 1024)
-        # get GPU temperature in Celsius
-        gpu_temperature = f"{gpu.temperature} C"
-        gpu_uuid = gpu.uuid
-        list_gpus.append([gpu_name, str(gpu_total_memory)+" GB"])
+    if gpus != None:
+        for gpu in gpus:
+            # get the GPU id
+            gpu_id = gpu.id
+            # name of GPU
+            gpu_name = gpu.name
+            # get % percentage of GPU usage of that GPU
+            gpu_load = f"{gpu.load*100}%"
+            # get free memory in MB format
+            gpu_free_memory = f"{gpu.memoryFree}MB"
+            # get used memory
+            gpu_used_memory = f"{gpu.memoryUsed}MB"
+            # get total memory
+            gpu_total_memory = (gpu.memoryTotal / 1024)
+            # get GPU temperature in Celsius
+            gpu_temperature = f"{gpu.temperature} C"
+            gpu_uuid = gpu.uuid
+            list_gpus.append([gpu_name, str(gpu_total_memory)+" GB"])
     return list_gpus
 
 
@@ -140,10 +146,13 @@ def getMemory(progress_callback, wmi):
     memories = []
     try:
         for memory in wmi.Win32_PhysicalMemory():
-            print("tipo de memoria", memory.SMBIOSMemoryType)
+            memoryType = "Desconocido"
+            if type(MemoryType[memory.SMBIOSMemoryType]) == str:
+                print("tipo de memoria", memory.SMBIOSMemoryType)
+                memoryType = MemoryType[memory.SMBIOSMemoryType]
             memories.append({
                 "capacidad": convert_size(memory.Capacity),
-                "Tipo": MemoryType[memory.SMBIOSMemoryType],
+                "Tipo": memoryType,
                 "Frecuencia": memory.Speed,
                 "Fabricante": memory.Manufacturer
             })
