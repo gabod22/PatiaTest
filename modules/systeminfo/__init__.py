@@ -1,11 +1,12 @@
-from ..helpers import convert_size, WMIDateStringToDate, wmiToDict
+from ..helpers import convert_size, WMIDateStringToDate, wmiToDict, get_registry_value
 from ..DiskInfoParser import DiskInfo
 from ..battery import get_battery_info
 import wmi
 import cpuinfo
 import psutil
 import pythoncom
-import GPUtil
+from ..gpuz import get_gpuz_info
+
 MemoryType = {
     0: "Desconocido",
     1: "Otro",
@@ -38,6 +39,8 @@ def get_system_info(progress_callback, on_error, show_dialog):
     # pl['version'] = uname_result.version
     # pl['machine'] = uname_result.machine
     # info['platform'] = pl
+    progress_callback.emit('Obteniendo version de windows')
+    info['winver'] = os_version()
 
     progress_callback.emit('Obteniendo info de la BIOS')
     # BIOS
@@ -91,31 +94,19 @@ def get_system_info(progress_callback, on_error, show_dialog):
 
 def getGPUs(progress_callback):
     progress_callback.emit('Obteniendo info de las GPUs')
+    # try:
+    #     amd_cards = ADLManager.getInstance().getDevices()
+    #     for gpu in amd_cards:
+    #         print(gpus.adapterName)
+    # except Exception as e:
+    #     print(e)
+
     try:
-        gpus = GPUtil.getGPUs()
+        gpus = get_gpuz_info()
     except Exception as e:
         print(e)
         gpus = None
-    list_gpus = []
-    if gpus != None:
-        for gpu in gpus:
-            # get the GPU id
-            gpu_id = gpu.id
-            # name of GPU
-            gpu_name = gpu.name
-            # get % percentage of GPU usage of that GPU
-            gpu_load = f"{gpu.load*100}%"
-            # get free memory in MB format
-            gpu_free_memory = f"{gpu.memoryFree}MB"
-            # get used memory
-            gpu_used_memory = f"{gpu.memoryUsed}MB"
-            # get total memory
-            gpu_total_memory = (gpu.memoryTotal / 1024)
-            # get GPU temperature in Celsius
-            gpu_temperature = f"{gpu.temperature} C"
-            gpu_uuid = gpu.uuid
-            list_gpus.append([gpu_name, str(gpu_total_memory)+" GB"])
-    return list_gpus
+    return gpus
 
 
 def getBatteryInfo(progress_callback):
@@ -178,3 +169,15 @@ def getCpu(progress_callback):
         cpu = {}
     finally:
         return cpu
+
+
+def os_version():
+    def get(key):
+        return get_registry_value(
+            "HKEY_LOCAL_MACHINE",
+            "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
+            key)
+    os = get("ProductName")
+    # sp = get("CSDVersion")
+    build = get("DisplayVersion")
+    return "%s (build %s)" % (os, build)

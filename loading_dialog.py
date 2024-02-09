@@ -104,6 +104,7 @@ class LoadingDialog(QDialog):
         ram = str(convert_size(info["virtual_memory"]
                   ["total"])) + " " + info["memories"][0]["Tipo"]
         self.parent.systeminfo = info
+        self.parent.ui.TextWinver.setText(info['winver'])
         self.parent.ui.TextBiosVersion.setText(info["bios"]["Version"])
         self.parent.ui.TextTotalRAM.setText(ram)
         self.parent.ui.TextProcessorName.setText(cpu_model)

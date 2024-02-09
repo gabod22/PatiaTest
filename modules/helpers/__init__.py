@@ -13,12 +13,14 @@ def add_data_to_table(array, table):
         for column in range(len(array[row])):
             table.setItem(row, column, QTableWidgetItem(
                 str(array[row][column])))
+
+
 def p2f(x: str):
     return float(x.strip('%'))/100
 
+
 def wmiToDict(wmi_object):
     return dict((attr, getattr(wmi_object, attr)) for attr in wmi_object.__dict__['_properties'])
-
 
 
 def open_program(program):
@@ -81,7 +83,8 @@ def is_admin():
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:
         return False
-    
+
+
 def isConnected():
     try:
         # connect to the host -- tells us if the host is actually
@@ -110,3 +113,11 @@ def WMIDateStringToDate(dtmDate):
             dtmDate[8] + dtmDate[9] + ":" + dtmDate[10] + \
             dtmDate[11] + ':' + dtmDate[12] + dtmDate[13]
     return strDateTime
+
+
+def get_registry_value(key, subkey, value):
+    import winreg
+    key = getattr(winreg, key)
+    handle = winreg.OpenKey(key, subkey)
+    (value, type) = winreg.QueryValueEx(handle, value)
+    return value

@@ -24,8 +24,9 @@ class ReadMode(enum.Enum):
 def DiskInfo():
     print('Obteniendo info de los discos')
     dev = getenv("DEV_MODE")
-    diskinfopath = "programs/diskinfo/" if dev else "programs/"
-
+    print(dev)
+    diskinfopath = "programs/diskinfo/" if not dev else "programs/"
+    print(diskinfopath)
     try:
         status = subprocess.call(
             path.join(dirname, diskinfopath + "DiskInfo.exe /CopyExit"))

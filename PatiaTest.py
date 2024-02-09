@@ -467,7 +467,8 @@ class MainWindow(QMainWindow):
         self.ui.BtnStopBatteryTest.setEnabled(False)
         self.ui.BtnStartBatteryTest.setEnabled(True)
         set_brightness('50')
-        set_default_configuration()
+        if self.ui.ChkRestoreEnergyConfig.isChecked():
+            set_default_configuration()
         kill_process_by_name('power_max.exe')
         if self.__thread_battery.isRunning():
             self.__thread_battery.worker.stop()
@@ -530,6 +531,8 @@ class MainWindow(QMainWindow):
             os.remove(path.join(dirname, 'output.wav'))
         if path.exists(path.join(dirname, 'battery.csv')):
             os.remove(path.join(dirname, 'battery.csv'))
+        if path.exists(path.join(dirname, 'programs/gpuz.xml')):
+            os.remove(path.join(dirname, 'programs/gpuz.xml'))
         sleep(2)
 
 
