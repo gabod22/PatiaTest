@@ -5,7 +5,7 @@ import json
 import sys
 from os import path, getenv
 
-from .constants import dirname
+from .constants import dirname, programs_path
 
 
 class ReadMode(enum.Enum):
@@ -23,13 +23,16 @@ class ReadMode(enum.Enum):
 # print("Running DiskInfo.exe")
 def DiskInfo():
     print('Obteniendo info de los discos')
-    dev = getenv("DEV_MODE")
-    print(dev)
-    diskinfopath = "programs/diskinfo/" if not dev else "programs/"
-    print(diskinfopath)
+    if not getattr(sys, 'frozen', False):
+        command = "diskinfo/DiskInfo.exe"
+        diskinfo_file = "diskinfo/DiskInfo.txt"
+    else:
+        command = 'DiskInfo.exe'
+        diskinfo_file = "DiskInfo.txt"
     try:
+        print(path.join(programs_path, command + " /CopyExit"))
         status = subprocess.call(
-            path.join(dirname, diskinfopath + "DiskInfo.exe /CopyExit"))
+            path.join(programs_path, command + " /CopyExit"))
     except WindowsError as e:
         if "Error 740" in str(e):
             print(
@@ -44,7 +47,7 @@ def DiskInfo():
     # read data
     input_data = None
 
-    with open(path.join(dirname, diskinfopath + "DiskInfo.txt"), 'r', encoding='utf-8') as f:
+    with open(path.join(programs_path, diskinfo_file), 'r', encoding='utf-8') as f:
         input_data = f.read()
 
     # parse data

@@ -34,6 +34,8 @@ import pyaudio
 import wave
 from loading_dialog import LoadingDialog
 from dotenv import load_dotenv
+
+
 extDataDir = os.getcwd()
 if getattr(sys, 'frozen', False):
     extDataDir = sys._MEIPASS

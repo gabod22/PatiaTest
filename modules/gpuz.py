@@ -3,6 +3,7 @@ from os import path
 from time import sleep
 import sys
 import xmltodict
+from .constants import programs_path
 
 
 def kill_process_by_name(name):
@@ -10,20 +11,15 @@ def kill_process_by_name(name):
 
 
 def get_gpuz_info():
-    if getattr(sys, 'frozen', False):
-        dirname = path.dirname(sys.executable) + "/_internal/programs/"
-        xmlfile = path.dirname(sys.executable) + "/gpuz.xml"
-    elif __file__:
-        dirname = path.dirname(__file__) + "/../programs/"
-        xmlfile = path.dirname(__file__) + "/../programs/gpuz.xml"
+    xmlfile = path.join(programs_path, "gpuz.xml")
 
     gpus = []
-    print('Obteniendo info de los discos')
+    print('Obteniendo info de las GPUs')
     # dev = getenv("DEV_MODE")
     gpuz_command = "gpuz.exe"
 
     try:
-        command = path.join(dirname, gpuz_command +
+        command = path.join(programs_path, gpuz_command +
                             " /minimized /dump gpuz.xml")
         print(command)
         status = subprocess.call(command)

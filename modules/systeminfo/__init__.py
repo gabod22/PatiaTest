@@ -105,7 +105,7 @@ def getGPUs(progress_callback):
         gpus = get_gpuz_info()
     except Exception as e:
         print(e)
-        gpus = None
+        gpus = []
     return gpus
 
 
@@ -138,9 +138,10 @@ def getMemory(progress_callback, wmi):
     try:
         for memory in wmi.Win32_PhysicalMemory():
             memoryType = "Desconocido"
-            if type(MemoryType[memory.SMBIOSMemoryType]) == str:
-                print("tipo de memoria", memory.SMBIOSMemoryType)
+            if memory.SMBIOSMemoryType in MemoryType:
                 memoryType = MemoryType[memory.SMBIOSMemoryType]
+            else:
+                print("tipo de memoria", memory.SMBIOSMemoryType)
             memories.append({
                 "capacidad": convert_size(memory.Capacity),
                 "Tipo": memoryType,
