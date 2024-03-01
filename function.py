@@ -22,11 +22,11 @@ freeze_support()
 
 
 def sync_date_time():
-    run_powershell_command('net stop w32time')
-    run_powershell_command('w32tm /unregister')
-    run_powershell_command('w32tm /register')
-    run_powershell_command('net start w32time')
-    run_powershell_command('w32tm /resync')
+    run_powershell_command("net stop w32time")
+    run_powershell_command("w32tm /unregister")
+    run_powershell_command("w32tm /register")
+    run_powershell_command("net start w32time")
+    run_powershell_command("w32tm /resync")
 
 
 def get_gpu_percent():
@@ -38,7 +38,7 @@ def get_gpu_percent():
 
 # Sound tests
 def play_speaker_test_sound():
-    soundtest = os.path.join(dirname, 'assets/soundtest.wav')
+    soundtest = os.path.join(dirname, "assets/soundtest.wav")
     winsound.PlaySound(soundtest, winsound.SND_ASYNC)
 
 
@@ -46,8 +46,18 @@ def stop_speaker_test_sound():
     winsound.PlaySound(None, winsound.SND_PURGE)
 
 
+def play_cansado_sound():
+    soundtest = os.path.join(dirname, "assets/estoy-cansado-jefe.wav")
+    winsound.PlaySound(soundtest, winsound.SND_ASYNC)
+
+
+def play_lologro_sound():
+    soundtest = os.path.join(dirname, "assets/lo-logro-senor.wav")
+    winsound.PlaySound(soundtest, winsound.SND_ASYNC)
+
+
 def play_recorded_audio_test():
-    audio = os.path.join(dirname, 'output.wav')
+    audio = os.path.join(dirname, "output.wav")
     # print(audio)
     winsound.PlaySound(audio, winsound.SND_ASYNC)
 
@@ -57,4 +67,4 @@ def stop_recorded_audio_test():
 
 
 def open_record_config():
-    os.popen('rundll32.exe Shell32.dll,Control_RunDLL Mmsys.cpl,,1')
+    os.popen("rundll32.exe Shell32.dll,Control_RunDLL Mmsys.cpl,,1")
