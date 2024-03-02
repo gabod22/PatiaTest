@@ -104,6 +104,8 @@ class MainWindow(QMainWindow):
         self.ui.CameraLabel.setPixmap(self.pix)
         self.start_loading_dialog()
         self.start_monitor_thread()
+        set_configuration_to_current_scheme()
+        set_brightness("100")
 
     def start_loading_dialog(self):
         self.loading_dialog = LoadingDialog(self)
@@ -458,6 +460,7 @@ class MainWindow(QMainWindow):
         thread.started.connect(worker.run)
         worker.timeElapsed.connect(self.set_time_elapsed)
         worker.battery.connect(self.add_entry_to_battey_log)
+        worker.error.connect(lambda error, message: showFailDialog(self, message))
 
         worker.finished.connect(lambda: self.end_battery_test())
 

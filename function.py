@@ -47,6 +47,16 @@ def stop_speaker_test_sound():
     winsound.PlaySound(None, winsound.SND_PURGE)
 
 
+def play_cansado_sound():
+    soundtest = os.path.join(dirname, "assets/estoy-cansado-jefe.wav")
+    winsound.PlaySound(soundtest, winsound.SND_ASYNC)
+
+
+def play_lologro_sound():
+    soundtest = os.path.join(dirname, "assets/lo-logro-senor.wav")
+    winsound.PlaySound(soundtest, winsound.SND_ASYNC)
+
+
 def play_recorded_audio_test():
     audio = os.path.join(dirname, "output.wav")
     # print(audio)
