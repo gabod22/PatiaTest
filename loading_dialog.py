@@ -1,7 +1,7 @@
 import pythoncom
 from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtWidgets import QDialog, QTableWidgetItem
-from Dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
+from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from ui.loading_dialog_ui import Ui_LoadingDialog
 from Jobs.Jobs import Jobs
 from modules.helpers import convert_size
@@ -33,8 +33,9 @@ class LoadingDialog(QDialog):
         self.this_computer = None
         self.battery_health = ""
 
-        print("Multithreading with maximum %d threads" %
-              self.threadpool.maxThreadCount())
+        print(
+            "Multithreading with maximum %d threads" % self.threadpool.maxThreadCount()
+        )
 
         # self.start_get_system_info_thread()
         self.start_jobs_thread()
@@ -44,7 +45,8 @@ class LoadingDialog(QDialog):
             # pixmap = QPixmap(program['icon'])
             # icon = QIcon(pixmap)
             self.parent.ui.menuTools.addAction(
-                program["name"], partial(open_program, program["name"]))
+                program["name"], partial(open_program, program["name"])
+            )
 
     # SECTION - Jobs Thread
     def __get_thread_jobs(self):
@@ -77,7 +79,7 @@ class LoadingDialog(QDialog):
 
     def setThisComputerData(self, data):
         self.enable_register = True
-        self.parent.ui.TextPixelId.setText(str(data['internal_id']))
+        self.parent.ui.TextPixelId.setText(str(data["internal_id"]))
 
     def start_jobs_thread(self):
         if not self.__thread_jobs.isRunning():
@@ -101,10 +103,13 @@ class LoadingDialog(QDialog):
         #         cpu_model = info["cpu"]["brand_raw"]
         # else:
         cpu_model = info["cpu"]["brand_raw"]
-        ram = str(convert_size(info["virtual_memory"]
-                  ["total"])) + " " + info["memories"][0]["Tipo"]
+        ram = (
+            str(convert_size(info["virtual_memory"]["total"]))
+            + " "
+            + info["memories"][0]["Tipo"]
+        )
         self.parent.systeminfo = info
-        self.parent.ui.TextWinver.setText(info['winver'])
+        self.parent.ui.TextWinver.setText(info["winver"])
         self.parent.ui.TextBiosVersion.setText(info["bios"]["Version"])
         self.parent.ui.TextTotalRAM.setText(ram)
         self.parent.ui.TextProcessorName.setText(cpu_model)
@@ -112,56 +117,109 @@ class LoadingDialog(QDialog):
         self.parent.ui.TextServiceNumber.setText(info["bios"]["SerialNumber"])
         # Add all Disks to table
         # print(info['disks']['disks'])
-        if 'disks' in info:
-            for idx, disk in enumerate(info['disks']):
+        if "disks" in info:
+            for idx, disk in enumerate(info["disks"]):
                 self.parent.ui.TableStorage.setItem(
-                    0, idx, QTableWidgetItem(str(disk['Model'] if 'Model' in disk else "")))
+                    0,
+                    idx,
+                    QTableWidgetItem(str(disk["Model"] if "Model" in disk else "")),
+                )
                 self.parent.ui.TableStorage.setItem(
-                    1, idx, QTableWidgetItem(str(disk['Disk Size'] if 'Disk Size' in disk else "")))
+                    1,
+                    idx,
+                    QTableWidgetItem(
+                        str(disk["Disk Size"] if "Disk Size" in disk else "")
+                    ),
+                )
                 self.parent.ui.TableStorage.setItem(
-                    2, idx, QTableWidgetItem(str(disk['Health Status'] if 'Health Status' in disk else "")))
+                    2,
+                    idx,
+                    QTableWidgetItem(
+                        str(disk["Health Status"] if "Health Status" in disk else "")
+                    ),
+                )
                 self.parent.ui.TableStorage.setItem(
-                    3, idx, QTableWidgetItem(str(disk['Interface'] if 'Interface' in disk else "")))
+                    3,
+                    idx,
+                    QTableWidgetItem(
+                        str(disk["Interface"] if "Interface" in disk else "")
+                    ),
+                )
                 self.parent.ui.TableStorage.setItem(
-                    4, idx, QTableWidgetItem(str(disk['Host Reads'] if 'Host Reads' in disk else "")))
+                    4,
+                    idx,
+                    QTableWidgetItem(
+                        str(disk["Host Reads"] if "Host Reads" in disk else "")
+                    ),
+                )
                 self.parent.ui.TableStorage.setItem(
-                    5, idx, QTableWidgetItem(str(disk['Host Writes'] if 'Host Writes' in disk else "")))
+                    5,
+                    idx,
+                    QTableWidgetItem(
+                        str(disk["Host Writes"] if "Host Writes" in disk else "")
+                    ),
+                )
                 self.parent.ui.TableStorage.setItem(
-                    6, idx, QTableWidgetItem(str(disk['Power On Count'] if 'Power On Count' in disk else "")))
+                    6,
+                    idx,
+                    QTableWidgetItem(
+                        str(disk["Power On Count"] if "Power On Count" in disk else "")
+                    ),
+                )
                 self.parent.ui.TableStorage.setItem(
-                    7, idx, QTableWidgetItem(str(disk['Power On Hours'] if 'Power On Hours' in disk else "")))
+                    7,
+                    idx,
+                    QTableWidgetItem(
+                        str(disk["Power On Hours"] if "Power On Hours" in disk else "")
+                    ),
+                )
         # Add all gpus to table
-        self.parent.ui.TableGPUs.setRowCount(len(info['gpus']))
-        add_data_to_table(info['gpus'],  self.parent.ui.TableGPUs)
+        self.parent.ui.TableGPUs.setRowCount(len(info["gpus"]))
+        add_data_to_table(info["gpus"], self.parent.ui.TableGPUs)
         self.serial_number = info["bios"]["SerialNumber"]
 
-        if (is_battery_installed()):
+        if is_battery_installed():
 
-            for idx, battery in enumerate(info['batteries']):
-                self.parent.ui.TableBatteryInfo.setItem(0, idx, QTableWidgetItem(
-                    str(battery["Battery Name"])))
-                self.parent.ui.TableBatteryInfo.setItem(1, idx, QTableWidgetItem(
-                    str(battery["Manufacture Name"])))
-                self.parent.ui.TableBatteryInfo.setItem(2, idx, QTableWidgetItem(
-                    str(battery["Manufacture Date"])))
-                self.parent.ui.TableBatteryInfo.setItem(3, idx, QTableWidgetItem(
-                    str(battery["Serial Number"])))
-                self.parent.ui.TableBatteryInfo.setItem(4, idx, QTableWidgetItem(
-                    str(battery["Full Charged Capacity"])))
-                self.parent.ui.TableBatteryInfo.setItem(5, idx, QTableWidgetItem(
-                    str(battery["Designed Capacity"])))
-                self.parent.ui.TableBatteryInfo.setItem(6, idx, QTableWidgetItem(
-                    str(battery["Battery Health"])))
-                self.parent.ui.TableBatteryInfo.setItem(7, idx, QTableWidgetItem(
-                    str(battery["Number of charge/discharge cycles"])))
+            for idx, battery in enumerate(info["batteries"]):
+                self.parent.ui.TableBatteryInfo.setItem(
+                    0, idx, QTableWidgetItem(str(battery["Battery Name"]))
+                )
+                self.parent.ui.TableBatteryInfo.setItem(
+                    1, idx, QTableWidgetItem(str(battery["Manufacture Name"]))
+                )
+                self.parent.ui.TableBatteryInfo.setItem(
+                    2, idx, QTableWidgetItem(str(battery["Manufacture Date"]))
+                )
+                self.parent.ui.TableBatteryInfo.setItem(
+                    3, idx, QTableWidgetItem(str(battery["Serial Number"]))
+                )
+                self.parent.ui.TableBatteryInfo.setItem(
+                    4, idx, QTableWidgetItem(str(battery["Full Charged Capacity"]))
+                )
+                self.parent.ui.TableBatteryInfo.setItem(
+                    5, idx, QTableWidgetItem(str(battery["Designed Capacity"]))
+                )
+                self.parent.ui.TableBatteryInfo.setItem(
+                    6, idx, QTableWidgetItem(str(battery["Battery Health"]))
+                )
+                self.parent.ui.TableBatteryInfo.setItem(
+                    7,
+                    idx,
+                    QTableWidgetItem(str(battery["Number of charge/discharge cycles"])),
+                )
 
-                if (info['batteries'][idx]["Voltage"] != ""):
-                    if idx != len(info['batteries']) - 1:
-                        self.battery_health = self.battery_health + \
-                            info['batteries'][idx]["Battery Health"] + ", "
+                if info["batteries"][idx]["Voltage"] != "":
+                    if idx != len(info["batteries"]) - 1:
+                        self.battery_health = (
+                            self.battery_health
+                            + info["batteries"][idx]["Battery Health"]
+                            + ", "
+                        )
                     else:
-                        self.battery_health = self.battery_health + \
-                            info['batteries'][idx]["Battery Health"]
+                        self.battery_health = (
+                            self.battery_health
+                            + info["batteries"][idx]["Battery Health"]
+                        )
         else:
             self.battery_health = "Sin batería"
 
@@ -169,7 +227,7 @@ class LoadingDialog(QDialog):
         self.parent.ui.TextBatteryHealth_2.setText(self.battery_health)
 
     def showRegisterComputerdialog(self):
-        print('Mostrando dialogo')
+        print("Mostrando dialogo")
         register = RegisterComputerDialog(self)
         result = register.exec_()
         if result:
@@ -178,7 +236,7 @@ class LoadingDialog(QDialog):
             self.loading_finished()
 
     def showRegisterFormDialog(self):
-        print('Mostrando form')
+        print("Mostrando form")
         register = RegisterFormDialog(self)
         result = register.exec_()
         # print(result)
@@ -186,8 +244,7 @@ class LoadingDialog(QDialog):
             print("Guardando info")
             self.enable_register = True
             # print(self.this_computer)
-            self.parent.ui.TextPixelId.setText(
-                self.this_computer['internal_id'])
+            self.parent.ui.TextPixelId.setText(self.this_computer["internal_id"])
             self.loading_finished()
         self.loading_finished()
 
@@ -195,7 +252,7 @@ class LoadingDialog(QDialog):
         print("se ha registrado")
 
     def get_computer_done(self):
-        print('asdasdads')
+        print("asdasdads")
 
     def loading_finished(self):
         if self.enable_register:
