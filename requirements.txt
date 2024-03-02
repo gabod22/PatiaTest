@@ -13,3 +13,4 @@ pywin32
 pyaudio
 cpu_load_generator
 python-dotenv
+xmltodict

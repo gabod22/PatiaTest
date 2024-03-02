@@ -30,6 +30,11 @@ def get_battery_info():
         # print('Termine el ', battery)
     return result_list
 
+def wmi_get_battery_info():
+    w = wmi.WMI()
+    for battery in w.query('select * from Win32_Battery'):
+        print battery.EstimatedChargeRemaining
+
 
 # todo get health info
 
