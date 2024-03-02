@@ -25,7 +25,7 @@ class BatteryTest(QObject):
         self._stopped = False
         self.WAIT_TIME = 1  # seconds
         self.WRITE_TIME = 60  # seconds
-        self.STOP_TIME = 7200
+        self.STOP_TIME = 7200  # 2hr
         self.HOURS_CONVERSION_CONSTANT = 3600 / self.WAIT_TIME
         self.seconds_elapsed = 0
         self.battery_percet_accepted = 30
@@ -36,7 +36,7 @@ class BatteryTest(QObject):
 
         try:
             with open("c:/battery_test.txt", "a") as f:
-                f.write("Inicio de prueba de batería el ", +date_time)
+                f.write("Inicio de prueba de batería el " + date_time)
                 f.write("\n")
                 f.close()
         except Exception as e:
@@ -46,14 +46,14 @@ class BatteryTest(QObject):
             battery = psutil.sensors_battery()
             if battery == None or battery.percent < 10:
                 self._stopped = True
-                if (
-                    battery.percent <= self.battery_percet_accepted
-                    and self.seconds_elapsed < self.STOP_TIME
-                ):
-                    play_cansado_sound()
-                    self.error.emit(
-                        "No alcanzó el rendimiento minimo deseado de 2:00 horas y con un remanente minimo de 30%",
-                    )
+            if (
+                battery.percent <= self.battery_percet_accepted
+                and self.seconds_elapsed < self.STOP_TIME
+            ):
+                play_cansado_sound()
+                self.error.emit(
+                    "No alcanzó el rendimiento minimo deseado de 2:00 horas y con un remanente minimo de 30%",
+                )
                 self._stopped = True
             self.timeElapsed.emit(secs2hours(self.seconds_elapsed))
             print(secs2hours(self.seconds_elapsed))
@@ -88,7 +88,7 @@ class BatteryTest(QObject):
             with open("c:/battery_test.txt", "a") as f:
 
                 f.write(
-                    f"El equipo duró {1} y con un remanente de ".format(
+                    f"El equipo duró {1} y con un remanente de {2}%".format(
                         secs2hours(self.seconds_elapsed), battery.percent
                     )
                 )
