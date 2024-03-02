@@ -7,14 +7,13 @@ from ..constants import dirname
 
 
 def get_battery_info():
-    program = path.join(dirname, 'programs/battery_info.exe')
-    subprocess.run(
-        [program, '/scomma',  path.join(dirname, 'battery.csv')], shell=True)
+    program = path.join(dirname, "programs/battery_info.exe")
+    subprocess.run([program, "/scomma", path.join(dirname, "battery.csv")], shell=True)
     result_list = []
     data = []
 
-    filename = path.join(dirname, 'battery.csv')
-    with open(filename, mode='r') as file:
+    filename = path.join(dirname, "battery.csv")
+    with open(filename, mode="r") as file:
         reader = csv.reader(file)
         header = next(reader)
         for row in reader:
@@ -30,13 +29,15 @@ def get_battery_info():
         # print('Termine el ', battery)
     return result_list
 
-def wmi_get_battery_info():
-    w = wmi.WMI()
-    for battery in w.query('select * from Win32_Battery'):
-        print battery.EstimatedChargeRemaining
+
+# def wmi_get_battery_info():
+#     w = wmi.WMI()
+#     for battery in w.query('select * from Win32_Battery'):
+#         print battery.EstimatedChargeRemaining
 
 
 # todo get health info
+
 
 def is_battery_installed():
     return psutil.sensors_battery() != None
