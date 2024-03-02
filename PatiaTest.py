@@ -22,7 +22,7 @@ from Jobs.Monitor import Monitor
 from Jobs.CameraCapture import CameraCapture
 from config_dialog import ConfigDialog
 
-from dialogs import showFailDialog
+from dialogs import showFailDialog, showSuccessDialog
 
 from function import *
 from modules.files_managment import *
@@ -460,8 +460,8 @@ class MainWindow(QMainWindow):
         thread.started.connect(worker.run)
         worker.timeElapsed.connect(self.set_time_elapsed)
         worker.battery.connect(self.add_entry_to_battey_log)
-        worker.error.connect(lambda error, message: showFailDialog(self, message))
-
+        worker.error.connect(lambda message: showFailDialog(self, message))
+        worker.aproved.connect(lambda message: showSuccessDialog(self, message))
         worker.finished.connect(lambda: self.end_battery_test())
 
         return thread
@@ -483,9 +483,9 @@ class MainWindow(QMainWindow):
         # print(str(timestamp), str(percent), str(plugged))
 
     def open_battery_test_mode(self):
-        open_program("power_max.exe")
-        set_configuration_to_current_scheme()
-        set_brightness("100")
+        # open_program("power_max.exe")
+        # set_configuration_to_current_scheme()
+        # set_brightness("100")
         self.ui.BtnStopBatteryTest.setEnabled(True)
         self.ui.BtnStartBatteryTest.setEnabled(False)
         if not self.__thread_battery.isRunning():
@@ -495,10 +495,10 @@ class MainWindow(QMainWindow):
     def stop_battery_test_mode(self):
         self.ui.BtnStopBatteryTest.setEnabled(False)
         self.ui.BtnStartBatteryTest.setEnabled(True)
-        set_brightness("50")
-        if self.ui.ChkRestoreEnergyConfig.isChecked():
-            set_default_configuration()
-        kill_process_by_name("power_max.exe")
+        # set_brightness("50")
+        # if self.ui.ChkRestoreEnergyConfig.isChecked():
+        #     set_default_configuration()
+        # kill_process_by_name("power_max.exe")
         if self.__thread_battery.isRunning():
             self.__thread_battery.worker.stop()
             self.__thread_battery.quit()
