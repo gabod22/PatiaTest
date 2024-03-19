@@ -462,6 +462,7 @@ class MainWindow(QMainWindow):
         worker.battery.connect(self.add_entry_to_battey_log)
         worker.error.connect(lambda message: showFailDialog(self, message))
         worker.aproved.connect(lambda message: showSuccessDialog(self, message))
+        worker.sound.connect(lambda x: play_lologro_sound() if x == 'success' else play_cansado_sound())
         worker.finished.connect(lambda: self.end_battery_test())
 
         return thread

@@ -14,6 +14,7 @@ PERCENT = 100
 class BatteryTest(QObject):
 
     full_charged_remaining_time = Signal(str)
+    sound = Signal(str)
     timeElapsed = Signal(str)
     battery = Signal(str, str)
     error = Signal(str)
@@ -25,7 +26,7 @@ class BatteryTest(QObject):
         self._stopped = False
         self.WAIT_TIME = 1  # seconds
         self.WRITE_TIME = 60  # seconds
-        self.STOP_TIME = 7200  # 2hr
+        self.STOP_TIME = 10  # 2hr 7200
         self.HOURS_CONVERSION_CONSTANT = 3600 / self.WAIT_TIME
         self.seconds_elapsed = 0
         self.battery_percet_accepted = 30
@@ -33,7 +34,6 @@ class BatteryTest(QObject):
     def run(self):
         now = datetime.now()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-
         try:
             with open("c:/battery_test.txt", "a") as f:
                 f.write("Inicio de prueba de batería el " + date_time)
@@ -44,13 +44,14 @@ class BatteryTest(QObject):
 
         while not self._stopped and self.seconds_elapsed <= self.STOP_TIME:
             battery = psutil.sensors_battery()
-            if battery == None or battery.percent < 10:
+            if battery == None :
                 self._stopped = True
             if (
                 battery.percent <= self.battery_percet_accepted
-                and self.seconds_elapsed < self.STOP_TIME
+                and self.seconds_elapsed <= self.STOP_TIME
             ):
-                play_cansado_sound()
+                self.sound.emit("fail")
+                sleep(5)
                 self.error.emit(
                     "No alcanzó el rendimiento minimo deseado de 2:00 horas y con un remanente minimo de 30%",
                 )
@@ -77,18 +78,18 @@ class BatteryTest(QObject):
             self.seconds_elapsed += 1
 
         if self._stopped == False:
+            self.sound.emit("success")
             self.aproved.emit(
                 "La prueba fue exitosa, duró más de 2 horas y tuvo un remanente de "
                 + str(battery.percent)
                 + "%"
             )
-            play_lologro_sound()
 
         try:
             with open("c:/battery_test.txt", "a") as f:
 
                 f.write(
-                    f"El equipo duró {1} y con un remanente de {2}%".format(
+                    "El equipo duró {} y con un remanente de {}%".format(
                         secs2hours(self.seconds_elapsed), battery.percent
                     )
                 )
