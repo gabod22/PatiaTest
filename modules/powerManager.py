@@ -16,6 +16,12 @@ def set_default_configuration():
     os.popen('powercfg /change monitor-timeout-dc 5')
     os.popen('powercfg /change standby-timeout-ac 30')
     os.popen('powercfg /change standby-timeout-dc 15')
+    
+def set_showroom_configuration():
+    os.popen('powercfg /change monitor-timeout-ac 0')
+    os.popen('powercfg /change monitor-timeout-dc 5')
+    os.popen('powercfg /change standby-timeout-ac 0')
+    os.popen('powercfg /change standby-timeout-dc 10')
 
 
 def set_brightness(level):

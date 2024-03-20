@@ -30,6 +30,7 @@ from modules.powerManager import (
     set_configuration_to_current_scheme,
     set_brightness,
     set_default_configuration,
+    set_showroom_configuration
 )
 from modules.constants import config_file, dirname
 
@@ -104,7 +105,7 @@ class MainWindow(QMainWindow):
         self.ui.CameraLabel.setPixmap(self.pix)
         self.start_loading_dialog()
         self.start_monitor_thread()
-        set_configuration_to_current_scheme()
+        set_showroom_configuration()
         set_brightness("100")
 
     def start_loading_dialog(self):
@@ -485,8 +486,8 @@ class MainWindow(QMainWindow):
 
     def open_battery_test_mode(self):
         # open_program("power_max.exe")
-        # set_configuration_to_current_scheme()
-        # set_brightness("100")
+        set_configuration_to_current_scheme()
+        set_brightness("100")
         self.ui.BtnStopBatteryTest.setEnabled(True)
         self.ui.BtnStartBatteryTest.setEnabled(False)
         if not self.__thread_battery.isRunning():
@@ -500,6 +501,7 @@ class MainWindow(QMainWindow):
         # if self.ui.ChkRestoreEnergyConfig.isChecked():
         #     set_default_configuration()
         # kill_process_by_name("power_max.exe")
+        set_showroom_configuration()
         if self.__thread_battery.isRunning():
             self.__thread_battery.worker.stop()
             self.__thread_battery.quit()
@@ -553,6 +555,7 @@ class MainWindow(QMainWindow):
             self.stop_battery_test_mode()
         self.stop_monitor_thread()
         self.stop_feed()
+        set_showroom_configuration()
 
         """ Elimina los archivos creados
         """
