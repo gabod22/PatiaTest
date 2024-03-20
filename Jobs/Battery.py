@@ -26,7 +26,7 @@ class BatteryTest(QObject):
         self._stopped = False
         self.WAIT_TIME = 1  # seconds
         self.WRITE_TIME = 60  # seconds
-        self.STOP_TIME = 10  # 2hr 7200
+        self.STOP_TIME =  7200 # 2hr 7200
         self.HOURS_CONVERSION_CONSTANT = 3600 / self.WAIT_TIME
         self.seconds_elapsed = 0
         self.battery_percet_accepted = 30
