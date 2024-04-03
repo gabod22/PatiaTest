@@ -8,7 +8,7 @@ import ctypes
 from PySide6.QtWidgets import QTableWidgetItem
 
 
-def add_data_to_table(array, table):
+def add_data_to_table(array:list, table):
     for row in range(len(array)):
         for column in range(len(array[row])):
             table.setItem(row, column, QTableWidgetItem(

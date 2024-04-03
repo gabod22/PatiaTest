@@ -1,11 +1,11 @@
 from ..helpers import convert_size, WMIDateStringToDate, wmiToDict, get_registry_value
-from ..DiskInfoParser import DiskInfo
+
 from ..battery import get_battery_info
 import wmi
 import cpuinfo
 import psutil
 import pythoncom
-from ..gpuz import get_gpuz_info
+
 
 MemoryType = {
     0: "Desconocido",
@@ -80,33 +80,19 @@ def get_system_info(progress_callback, on_error, show_dialog):
 
     # total, used, free, percent
     # info['disk_usage'] = dict(psutil.disk_usage(root_path)._asdict())
-    gpus = getGPUs(progress_callback)
-    disks = getDisks(progress_callback)
+    # gpus = getGPUs(progress_callback)
+    # disks = getDisks(progress_callback)
     batteries = getBatteryInfo(progress_callback)
 
-    info['gpus'] = gpus
-    info['disks'] = disks
+    # info['gpus'] = gpus
+    # info['disks'] = disks
     info['batteries'] = batteries
     progress_callback.emit('Terminado')
 
     return info
 
 
-def getGPUs(progress_callback):
-    progress_callback.emit('Obteniendo info de las GPUs')
-    # try:
-    #     amd_cards = ADLManager.getInstance().getDevices()
-    #     for gpu in amd_cards:
-    #         print(gpus.adapterName)
-    # except Exception as e:
-    #     print(e)
 
-    try:
-        gpus = get_gpuz_info()
-    except Exception as e:
-        print(e)
-        gpus = []
-    return gpus
 
 
 def getBatteryInfo(progress_callback):
@@ -121,15 +107,7 @@ def getBatteryInfo(progress_callback):
         return batteries
 
 
-def getDisks(progress_callback):
-    progress_callback.emit('Obteniendo info de las unidades de almacenamiento')
-    try:
-        disks = DiskInfo()
-    except Exception as e:
-        disks = {}
-        print(e)
-    finally:
-        return disks
+
 
 
 def getMemory(progress_callback, wmi):
