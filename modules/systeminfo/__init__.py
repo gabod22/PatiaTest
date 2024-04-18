@@ -5,6 +5,7 @@ import wmi
 import cpuinfo
 import psutil
 import pythoncom
+import platform
 from ..gpuz import get_gpuz_info
 
 MemoryType = {
@@ -172,13 +173,21 @@ def getCpu(progress_callback):
         return cpu
 
 
-def os_version():
-    def get(key):
-        return get_registry_value(
-            "HKEY_LOCAL_MACHINE",
-            "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
-            key)
-    os = get("ProductName")
-    # sp = get("CSDVersion")
-    build = get("DisplayVersion")
-    return "%s (build %s)" % (os, build)
+def os_version(progress_callback):
+    try:
+        def get(key):
+            return get_registry_value(
+                "HKEY_LOCAL_MACHINE",
+                "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
+                key)
+        os = get("ProductName")
+        # sp = get("CSDVersion")
+        build = get("DisplayVersion")
+        return "%s (build %s)" % (os, build)
+    except Exception as e:
+        print("Error al obtener la información del sistema operativo desde el registro: ", e)
+        progress_callback('No se pudo obtener la build del sistema')
+        platform.platform()
+        os = platform.system() + " " + platform.release()
+
+        return "%s (build %s)" % (os, "Unknow")
