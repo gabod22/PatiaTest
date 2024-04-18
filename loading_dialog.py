@@ -3,12 +3,20 @@ from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtWidgets import QDialog, QTableWidgetItem
 from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from ui.loading_dialog_ui import Ui_LoadingDialog
+
 from Jobs.Jobs import Jobs
+from Jobs.GetPrograms import GetProgramsJob
+from Jobs.DiskInfo import DiskInfoJob
+from Jobs.Gpuz import GpuzJob
+
+from functools import partial
+from function import open_program
+
 from modules.helpers import convert_size
 from modules.helpers import add_data_to_table
 from modules.battery import is_battery_installed
-from modules.programs import get_all_programs
-from function import open_program
+
+
 from functools import partial
 
 
@@ -28,6 +36,9 @@ class LoadingDialog(QDialog):
         self.ui.setupUi(self)
         self.system_info = None
         self.__thread_jobs = QThread()
+        self.__thread_gpuz = QThread()
+        self.__thread_getprograms = QThread()
+        self.__thread_diskinfo = QThread()
         self.threadpool = QThreadPool()
         self.serial_number = ""
         self.this_computer = None
@@ -39,14 +50,10 @@ class LoadingDialog(QDialog):
 
         # self.start_get_system_info_thread()
         self.start_jobs_thread()
+        self.start_getprograms_thread()
+        self.start_thread_gpuz()
+        self.start_thread_diskinfo()
 
-        # MenuBar
-        for program in get_all_programs():
-            # pixmap = QPixmap(program['icon'])
-            # icon = QIcon(pixmap)
-            self.parent.ui.menuTools.addAction(
-                program["name"], partial(open_program, program["name"])
-            )
 
     # SECTION - Jobs Thread
     def __get_thread_jobs(self):
@@ -68,19 +75,7 @@ class LoadingDialog(QDialog):
         # worker.error.connect(lambda m: showFailDialog(self, m))
 
         return thread
-
-    def setConfigData(self, data):
-
-        self.parent.configData = data
-        self.parent.set_options()
-        # print("imprimiendo configuracion", data)
-
-        # print(self.configData)
-
-    def setThisComputerData(self, data):
-        self.enable_register = True
-        self.parent.ui.TextPixelId.setText(str(data["internal_id"]))
-
+    
     def start_jobs_thread(self):
         if not self.__thread_jobs.isRunning():
             self.__thread_jobs = self.__get_thread_jobs()
@@ -90,35 +85,74 @@ class LoadingDialog(QDialog):
         if self.__thread_jobs.isRunning():
             self.__thread_jobs.worker.stop()
             self.__thread_jobs.quit()
+    
+    def __get_thread_getprograms(self):
+        thread = QThread()
+        worker = GetProgramsJob()
+        worker.moveToThread(thread)
+        thread.worker = worker
+        thread.started.connect(worker.run)
+        worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
+        worker.finished.connect(self.set_programs_to_menu)
+        
+        return thread
+    
+    def set_programs_to_menu(self, programs):
+        for program in programs:
+            self.parent.ui.menuTools.addAction(
+                program["name"], partial(open_program, program["name"])
+            )
+    
+    def start_getprograms_thread(self):
+        if not self.__thread_getprograms.isRunning():
+            self.__thread_getprograms = self.__get_thread_getprograms()
+            self.__thread_getprograms.start()
 
-    # SECTION - Get system info
+    def stop_getprograms_thread(self):
+        if self.__thread_getprograms.isRunning():
+            self.__thread_getprograms.worker.stop()
+            self.__thread_getprograms.quit()
+    
+    def __get_thread_gpuz(self):
+        thread = QThread()
+        worker = GpuzJob()
+        worker.moveToThread(thread)
+        thread.worker = worker
+        thread.started.connect(worker.run)
+        worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
+        worker.finished.connect(self.set_gpu_info)
+        
+        return thread
+    
+    def set_gpu_info(self, gpus):
+        print(gpus)
+        self.parent.ui.TableGPUs.setRowCount(len(gpus))
+        add_data_to_table(gpus, self.parent.ui.TableGPUs)
+    
+    def start_thread_gpuz(self):
+        if not self.__thread_gpuz.isRunning():
+            self.__thread_gpuz = self.__get_thread_gpuz()
+            self.__thread_gpuz.start()
 
-    def set_system_info(self, info):
-        self.system_info = info
-        # if (info['cpu']['vendor_id_raw'] == 'GenuineIntel'):
-        #     try:
-        #         cpu_model = re.search(
-        #             "[A-z]\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
-        #     except:
-        #         cpu_model = info["cpu"]["brand_raw"]
-        # else:
-        cpu_model = info["cpu"]["brand_raw"]
-        ram = (
-            str(convert_size(info["virtual_memory"]["total"]))
-            + " "
-            + info["memories"][0]["Tipo"]
-        )
-        self.parent.systeminfo = info
-        self.parent.ui.TextWinver.setText(info["winver"])
-        self.parent.ui.TextBiosVersion.setText(info["bios"]["Version"])
-        self.parent.ui.TextTotalRAM.setText(ram)
-        self.parent.ui.TextProcessorName.setText(cpu_model)
-        self.parent.ui.TextModel.setText(info["computer_system"]["Model"])
-        self.parent.ui.TextServiceNumber.setText(info["bios"]["SerialNumber"])
-        # Add all Disks to table
-        # print(info['disks']['disks'])
-        if "disks" in info:
-            for idx, disk in enumerate(info["disks"]):
+    def stop_thread_gpuz(self):
+        if self.__thread_gpuz.isRunning():
+            self.__thread_gpuz.worker.stop()
+            self.__thread_gpuz.quit()
+            
+    def __get_thread_diskinfo(self):
+        thread = QThread()
+        worker = DiskInfoJob()
+        worker.moveToThread(thread)
+        thread.worker = worker
+        thread.started.connect(worker.run)
+        worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
+        worker.finished.connect(self.set_diskinfo)
+        
+        return thread
+    
+    def set_diskinfo(self, disks):
+        if disks:
+            for idx, disk in enumerate(disks):
                 self.parent.ui.TableStorage.setItem(
                     0,
                     idx,
@@ -173,9 +207,60 @@ class LoadingDialog(QDialog):
                         str(disk["Power On Hours"] if "Power On Hours" in disk else "")
                     ),
                 )
+    
+    def start_thread_diskinfo(self):
+        if not self.__thread_diskinfo.isRunning():
+            self.__thread_diskinfo = self.__get_thread_diskinfo()
+            self.__thread_diskinfo.start()
+
+    def stop_thread_diskinfo(self):
+        if self.__thread_diskinfo.isRunning():
+            self.__thread_diskinfo.worker.stop()
+            self.__thread_diskinfo.quit()
+
+    def setConfigData(self, data):
+
+        self.parent.configData = data
+        self.parent.set_options()
+        # print("imprimiendo configuracion", data)
+
+        # print(self.configData)
+
+    def setThisComputerData(self, data):
+        self.enable_register = True
+        self.parent.ui.TextPixelId.setText(str(data["internal_id"]))
+
+    
+
+    # SECTION - Get system info
+
+    def set_system_info(self, info):
+        self.system_info = info
+        # if (info['cpu']['vendor_id_raw'] == 'GenuineIntel'):
+        #     try:
+        #         cpu_model = re.search(
+        #             "[A-z]\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
+        #     except:
+        #         cpu_model = info["cpu"]["brand_raw"]
+        # else:
+        cpu_model = info["cpu"]["brand_raw"]
+        ram = (
+            str(convert_size(info["virtual_memory"]["total"]))
+            + " "
+            + info["memories"][0]["Tipo"]
+        )
+        self.parent.systeminfo = info
+        self.parent.ui.TextWinver.setText(info["winver"])
+        self.parent.ui.TextBiosVersion.setText(info["bios"]["Version"])
+        self.parent.ui.TextTotalRAM.setText(ram)
+        self.parent.ui.TextProcessorName.setText(cpu_model)
+        self.parent.ui.TextModel.setText(info["computer_system"]["Model"])
+        self.parent.ui.TextServiceNumber.setText(info["bios"]["SerialNumber"])
+        # Add all Disks to table
+        # print(info['disks']['disks'])
+        
         # Add all gpus to table
-        self.parent.ui.TableGPUs.setRowCount(len(info["gpus"]))
-        add_data_to_table(info["gpus"], self.parent.ui.TableGPUs)
+        
         self.serial_number = info["bios"]["SerialNumber"]
 
         if is_battery_installed():
