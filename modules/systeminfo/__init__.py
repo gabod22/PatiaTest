@@ -41,7 +41,7 @@ def get_system_info(progress_callback, on_error, show_dialog):
     # pl['machine'] = uname_result.machine
     # info['platform'] = pl
     progress_callback.emit('Obteniendo version de windows')
-    info['winver'] = os_version()
+    info['winver'] = os_version(progress_callback)
 
     progress_callback.emit('Obteniendo info de la BIOS')
     # BIOS
@@ -164,7 +164,7 @@ def os_version(progress_callback):
         return "%s (build %s)" % (os, build)
     except Exception as e:
         print("Error al obtener la información del sistema operativo desde el registro: ", e)
-        progress_callback('No se pudo obtener la build del sistema')
+        progress_callback.emit('No se pudo obtener la build del sistema')
         platform.platform()
         os = platform.system() + " " + platform.release()
 
