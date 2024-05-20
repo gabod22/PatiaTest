@@ -19,9 +19,8 @@ def get_gpuz_info():
     gpuz_command = "gpuz.exe"
 
     try:
-        command = path.join(
-            programs_path, gpuz_command + " /minimized /dump " + xmlfile
-        )
+        command = f'"{path.join(
+            programs_path, gpuz_command)}" /minimized /dump "{xmlfile}"'
         print(command)
         status = subprocess.call(command)
         print(status)

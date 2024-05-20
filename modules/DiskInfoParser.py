@@ -30,9 +30,8 @@ def DiskInfo():
         command = 'DiskInfo.exe'
         diskinfo_file = "DiskInfo.txt"
     try:
-        print(path.join(programs_path, command + " /CopyExit"))
-        status = subprocess.call(
-            path.join(programs_path, command + " /CopyExit"))
+        print(f'"{path.join(programs_path, command)}" /CopyExit')
+        status = subprocess.call(f'"{path.join(programs_path, command)}" /CopyExit')
     except WindowsError as e:
         if "Error 740" in str(e):
             print(
