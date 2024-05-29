@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.1
+## Created by: Qt User Interface Compiler version 6.6.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -44,8 +44,8 @@ class Ui_MainWindow(object):
         self.actionReconectar_servidor.setObjectName(u"actionReconectar_servidor")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.horizontalLayout_4 = QHBoxLayout(self.centralwidget)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.verticalLayout_10 = QVBoxLayout(self.centralwidget)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tab_3 = QWidget()
@@ -195,7 +195,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.ChkRestoreEnergyConfig)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_3)
 
@@ -332,7 +332,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addLayout(self.verticalLayout_20)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
@@ -623,7 +623,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer)
 
@@ -650,7 +650,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon1 = QIcon.fromTheme(iconThemeName)
         else:
-            icon1.addFile(u"../../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
+            icon1.addFile(u"../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
 
         self.BtnSaveToGoogleSheets.setIcon(icon1)
 
@@ -717,7 +717,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.LbBatteryRemain)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_2)
 
@@ -741,7 +741,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.BtnStartBatteryTest)
 
-        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_6)
 
@@ -890,7 +890,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addWidget(self.BtnTestScreen)
 
-        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_6.addItem(self.verticalSpacer_4)
 
@@ -916,7 +916,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_22.addWidget(self.CameraLabel)
 
-        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_22.addItem(self.verticalSpacer_5)
 
@@ -945,8 +945,18 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.addWidget(self.groupBox_8)
 
         self.tabWidget.addTab(self.tab_4, "")
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.horizontalLayout_7 = QHBoxLayout(self.tab)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.LBQrCode = QLabel(self.tab)
+        self.LBQrCode.setObjectName(u"LBQrCode")
 
-        self.horizontalLayout_4.addWidget(self.tabWidget)
+        self.horizontalLayout_7.addWidget(self.LBQrCode)
+
+        self.tabWidget.addTab(self.tab, "")
+
+        self.verticalLayout_10.addWidget(self.tabWidget)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -971,7 +981,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(4)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -1160,6 +1170,8 @@ class Ui_MainWindow(object):
         self.BtnPlayAudio.setText(QCoreApplication.translate("MainWindow", u"Reproducir grabaci\u00f3n", None))
         self.BtnStopAudio.setText(QCoreApplication.translate("MainWindow", u"Detener audio", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Herramientas", None))
+        self.LBQrCode.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"C\u00f3digo QR", None))
         self.menuConfiguraci_n.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))
         self.menuTools.setTitle(QCoreApplication.translate("MainWindow", u"Herramientas", None))
     # retranslateUi

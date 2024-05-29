@@ -18,11 +18,11 @@
     <normaloff>../assets/logo_min.ico</normaloff>../assets/logo_min.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_4">
+   <layout class="QVBoxLayout" name="verticalLayout_10">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -1176,7 +1176,7 @@
              </property>
              <property name="icon">
               <iconset theme="document-save">
-               <normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../../PatiaTest_v1/PatiaTestUI_bak</iconset>
+               <normaloff>../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../PatiaTest_v1/PatiaTestUI_bak</iconset>
              </property>
             </widget>
            </item>
@@ -1650,6 +1650,20 @@
             </widget>
            </item>
           </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Código QR</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QLabel" name="LBQrCode">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
          </widget>
         </item>
        </layout>

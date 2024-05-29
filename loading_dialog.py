@@ -16,6 +16,8 @@ from modules.helpers import convert_size
 from modules.helpers import add_data_to_table
 from modules.battery import is_battery_installed
 
+import qrcode
+
 
 from functools import partial
 
@@ -340,6 +342,12 @@ class LoadingDialog(QDialog):
         print("asdasdads")
 
     def loading_finished(self):
+        qrcode_data = {
+            "serial": self.serial_number,
+            "model": self.system_info["cpu"]["brand_raw"]
+        }
+        
+        
         if self.enable_register:
             self.parent.ui.tabReport.setEnabled(True)
         if is_battery_installed():
