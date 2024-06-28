@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.2
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(997, 744)
         icon = QIcon()
-        icon.addFile(u"../assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"C:/Users/brian/.designer/assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -62,7 +62,8 @@ class Ui_MainWindow(object):
         self.formLayout_2.setObjectName(u"formLayout_2")
         self.TextWinver = QLineEdit(self.groupBox_2)
         self.TextWinver.setObjectName(u"TextWinver")
-        self.TextWinver.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextWinver.setStyleSheet(u"background-color: rgb(222, 222, 222);\n"
+"color:rgb(0,0,0)")
         self.TextWinver.setReadOnly(True)
 
         self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.TextWinver)
@@ -74,7 +75,8 @@ class Ui_MainWindow(object):
 
         self.TextModel = QLineEdit(self.groupBox_2)
         self.TextModel.setObjectName(u"TextModel")
-        self.TextModel.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextModel.setStyleSheet(u"background-color: rgb(222, 222, 222);\n"
+"color:rgb(0,0,0)")
         self.TextModel.setReadOnly(True)
 
         self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.TextModel)
@@ -86,7 +88,9 @@ class Ui_MainWindow(object):
 
         self.TextServiceNumber = QLineEdit(self.groupBox_2)
         self.TextServiceNumber.setObjectName(u"TextServiceNumber")
-        self.TextServiceNumber.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextServiceNumber.setStyleSheet(u"background-color: rgb(222, 222, 222);\n"
+"color: rgb(0,0,0)\n"
+"")
         self.TextServiceNumber.setReadOnly(True)
 
         self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.TextServiceNumber)
@@ -98,7 +102,9 @@ class Ui_MainWindow(object):
 
         self.TextBatteryHealth = QLineEdit(self.groupBox_2)
         self.TextBatteryHealth.setObjectName(u"TextBatteryHealth")
-        self.TextBatteryHealth.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextBatteryHealth.setStyleSheet(u"background-color: rgb(222, 222, 222);\n"
+"color: rgb(0,0,0)\n"
+"")
         self.TextBatteryHealth.setReadOnly(True)
 
         self.formLayout_2.setWidget(3, QFormLayout.FieldRole, self.TextBatteryHealth)
@@ -108,14 +114,6 @@ class Ui_MainWindow(object):
 
         self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.label_7)
 
-        self.TextProcessorName = QLineEdit(self.groupBox_2)
-        self.TextProcessorName.setObjectName(u"TextProcessorName")
-        self.TextProcessorName.setAutoFillBackground(False)
-        self.TextProcessorName.setStyleSheet(u"background-color: rgb(222, 222, 222);")
-        self.TextProcessorName.setReadOnly(True)
-
-        self.formLayout_2.setWidget(4, QFormLayout.FieldRole, self.TextProcessorName)
-
         self.label_34 = QLabel(self.groupBox_2)
         self.label_34.setObjectName(u"label_34")
 
@@ -124,7 +122,9 @@ class Ui_MainWindow(object):
         self.TextTotalRAM = QLineEdit(self.groupBox_2)
         self.TextTotalRAM.setObjectName(u"TextTotalRAM")
         self.TextTotalRAM.setAutoFillBackground(False)
-        self.TextTotalRAM.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextTotalRAM.setStyleSheet(u"background-color: rgb(222, 222, 222);\n"
+"color: rgb(0,0,0)\n"
+"")
         self.TextTotalRAM.setReadOnly(True)
 
         self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.TextTotalRAM)
@@ -137,7 +137,9 @@ class Ui_MainWindow(object):
         self.TextBiosVersion = QLineEdit(self.groupBox_2)
         self.TextBiosVersion.setObjectName(u"TextBiosVersion")
         self.TextBiosVersion.setAutoFillBackground(False)
-        self.TextBiosVersion.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.TextBiosVersion.setStyleSheet(u"background-color: rgb(222, 222, 222);\n"
+"color: rgb(0,0,0)\n"
+"")
         self.TextBiosVersion.setReadOnly(True)
 
         self.formLayout_2.setWidget(6, QFormLayout.FieldRole, self.TextBiosVersion)
@@ -146,6 +148,16 @@ class Ui_MainWindow(object):
         self.label_5.setObjectName(u"label_5")
 
         self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_5)
+
+        self.TextProcessorName = QLineEdit(self.groupBox_2)
+        self.TextProcessorName.setObjectName(u"TextProcessorName")
+        self.TextProcessorName.setAutoFillBackground(False)
+        self.TextProcessorName.setStyleSheet(u"background-color: rgb(222, 222, 222);\n"
+"color: rgb(0,0,0)\n"
+"")
+        self.TextProcessorName.setReadOnly(True)
+
+        self.formLayout_2.setWidget(4, QFormLayout.FieldRole, self.TextProcessorName)
 
 
         self.verticalLayout.addLayout(self.formLayout_2)
@@ -185,8 +197,8 @@ class Ui_MainWindow(object):
 
         self.line_5 = QFrame(self.groupBox_2)
         self.line_5.setObjectName(u"line_5")
-        self.line_5.setFrameShape(QFrame.HLine)
-        self.line_5.setFrameShadow(QFrame.Sunken)
+        self.line_5.setFrameShape(QFrame.Shape.HLine)
+        self.line_5.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_5)
 
@@ -235,7 +247,7 @@ class Ui_MainWindow(object):
         self.TableStorage.setObjectName(u"TableStorage")
         self.TableStorage.setEnabled(True)
         self.TableStorage.setAutoScrollMargin(16)
-        self.TableStorage.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.TableStorage.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.TableStorage.setColumnCount(5)
 
         self.verticalLayout_8.addWidget(self.TableStorage)
@@ -348,15 +360,15 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 916, 454))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 921, 454))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
-        self.formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
-        self.formLayout.setRowWrapPolicy(QFormLayout.WrapLongRows)
+        self.formLayout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        self.formLayout.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.TextBatteryHealth_2 = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextBatteryHealth_2.setObjectName(u"TextBatteryHealth_2")
         self.TextBatteryHealth_2.setMaximumSize(QSize(300, 16777215))
@@ -650,7 +662,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon1 = QIcon.fromTheme(iconThemeName)
         else:
-            icon1.addFile(u"../../PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
+            icon1.addFile(u"C:/Users/brian/PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
 
         self.BtnSaveToGoogleSheets.setIcon(icon1)
 
@@ -730,16 +742,28 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.LBTimeElapsed)
 
+        self.CbxBetteryTestType = QComboBox(self.groupBox_3)
+        self.CbxBetteryTestType.addItem("")
+        self.CbxBetteryTestType.addItem("")
+        self.CbxBetteryTestType.setObjectName(u"CbxBetteryTestType")
+
+        self.verticalLayout_7.addWidget(self.CbxBetteryTestType)
+
+        self.TxtBatteryTestTime = QLineEdit(self.groupBox_3)
+        self.TxtBatteryTestTime.setObjectName(u"TxtBatteryTestTime")
+
+        self.verticalLayout_7.addWidget(self.TxtBatteryTestTime)
+
         self.BtnStopBatteryTest = QPushButton(self.groupBox_3)
         self.BtnStopBatteryTest.setObjectName(u"BtnStopBatteryTest")
         self.BtnStopBatteryTest.setEnabled(False)
 
         self.verticalLayout_7.addWidget(self.BtnStopBatteryTest)
 
-        self.BtnStartBatteryTest = QPushButton(self.groupBox_3)
-        self.BtnStartBatteryTest.setObjectName(u"BtnStartBatteryTest")
+        self.BtnStartBatteryIntensiveTest = QPushButton(self.groupBox_3)
+        self.BtnStartBatteryIntensiveTest.setObjectName(u"BtnStartBatteryIntensiveTest")
 
-        self.verticalLayout_7.addWidget(self.BtnStartBatteryTest)
+        self.verticalLayout_7.addWidget(self.BtnStartBatteryIntensiveTest)
 
         self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -806,7 +830,7 @@ class Ui_MainWindow(object):
         self.TableBatteryInfo.setObjectName(u"TableBatteryInfo")
         self.TableBatteryInfo.setEnabled(True)
         self.TableBatteryInfo.setAutoScrollMargin(16)
-        self.TableBatteryInfo.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.TableBatteryInfo.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.TableBatteryInfo.setColumnCount(5)
 
         self.verticalLayout_5.addWidget(self.TableBatteryInfo)
@@ -830,7 +854,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem24 = QTableWidgetItem()
         self.TableBatteryLog.setHorizontalHeaderItem(3, __qtablewidgetitem24)
         self.TableBatteryLog.setObjectName(u"TableBatteryLog")
-        self.TableBatteryLog.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.TableBatteryLog.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
 
         self.verticalLayout_4.addWidget(self.TableBatteryLog)
 
@@ -947,12 +971,13 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.tab_4, "")
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
-        self.horizontalLayout_7 = QHBoxLayout(self.tab)
-        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.verticalLayout_11 = QVBoxLayout(self.tab)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
         self.LBQrCode = QLabel(self.tab)
         self.LBQrCode.setObjectName(u"LBQrCode")
+        self.LBQrCode.setScaledContents(False)
 
-        self.horizontalLayout_7.addWidget(self.LBQrCode)
+        self.verticalLayout_11.addWidget(self.LBQrCode)
 
         self.tabWidget.addTab(self.tab, "")
 
@@ -961,7 +986,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 997, 22))
+        self.menubar.setGeometry(QRect(0, 0, 997, 33))
         self.menuConfiguraci_n = QMenu(self.menubar)
         self.menuConfiguraci_n.setObjectName(u"menuConfiguraci_n")
         self.menuTools = QMenu(self.menubar)
@@ -981,7 +1006,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(4)
+        self.tabWidget.setCurrentIndex(2)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -1117,8 +1142,11 @@ class Ui_MainWindow(object):
         self.label_36.setText(QCoreApplication.translate("MainWindow", u"Tiempo restante con carga total", None))
         self.LbBatteryRemain.setText(QCoreApplication.translate("MainWindow", u"LBBatteryRemain", None))
         self.LBTimeElapsed.setText(QCoreApplication.translate("MainWindow", u"No iniciado", None))
+        self.CbxBetteryTestType.setItemText(0, QCoreApplication.translate("MainWindow", u"Por tiempo", None))
+        self.CbxBetteryTestType.setItemText(1, QCoreApplication.translate("MainWindow", u"Intensiva", None))
+
         self.BtnStopBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Detener prueba de bater\u00eda", None))
-        self.BtnStartBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
+        self.BtnStartBatteryIntensiveTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
         self.label_37.setText(QCoreApplication.translate("MainWindow", u"Revisado por:", None))
         self.CboxBatCheckedBy.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona el t\u00e9cnico", None))
         self.ChkBoxSaveAtEnd.setText(QCoreApplication.translate("MainWindow", u"\u00bfGuardar al terminar?", None))

@@ -26,29 +26,84 @@ class BatteryTest(QObject):
         self._stopped = False
         self.WAIT_TIME = 1  # seconds
         self.WRITE_TIME = 60  # seconds
-        self.STOP_TIME =  7200 # 2hr 7200
+        self.MIN_PERCENT = 10
         self.HOURS_CONVERSION_CONSTANT = 3600 / self.WAIT_TIME
         self.seconds_elapsed = 0
         self.battery_percet_accepted = 30
-
-    def run(self):
+        
+    def intensive(self):
         now = datetime.now()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         try:
             with open("c:/battery_test.txt", "a") as f:
-                f.write("Inicio de prueba de batería el " + date_time)
+                f.write("Inicio de prueba de batería INTENSIVA el " + date_time)
                 f.write("\n")
                 f.close()
         except Exception as e:
             print("No se pudo guardar", e)
 
-        while not self._stopped and self.seconds_elapsed <= self.STOP_TIME:
+        while not self._stopped:
+            battery = psutil.sensors_battery()
+            if battery == None :
+                self._stopped = True
+            
+            self.timeElapsed.emit(secs2hours(self.seconds_elapsed))
+            print(secs2hours(self.seconds_elapsed))
+            sleep(self.WAIT_TIME)
+
+            d, r = divmod(self.seconds_elapsed, self.WRITE_TIME)
+            if r == 0:
+                self.battery.emit(str(battery.percent), str(battery.power_plugged))
+                try:
+                    with open("c:/battery_test.txt", "a") as f:
+                        f.write(secs2hours(self.seconds_elapsed))
+                        f.write("\t")
+                        f.write("Cargando" if battery.power_plugged else "Deconectado")
+                        f.write("\t")
+                        f.write(str(battery.percent))
+                        f.write("\n")
+                        f.close()
+                except Exception as e:
+                    print("No se pudo guardar", e)
+                    
+            if battery.percent < self.MIN_PERCENT:
+                self._stopped = True
+
+            self.seconds_elapsed += 1
+
+        try:
+            with open("c:/battery_test.txt", "a") as f:
+
+                f.write(
+                    "El equipo duró {}".format(
+                        secs2hours(self.seconds_elapsed)
+                    )
+                )
+                f.write("\n")
+                f.write("Fin de prueba INTENSIVA")
+                f.write("\n")
+                f.close()
+        except Exception as e:
+            print("No se pudo guardar", e)
+        
+    def bytime(self, time):
+        now = datetime.now()
+        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        try:
+            with open("c:/battery_test.txt", "a") as f:
+                f.write("Inicio de prueba de batería POR TIEMPO el " + date_time)
+                f.write("\n")
+                f.close()
+        except Exception as e:
+            print("No se pudo guardar", e)
+
+        while not self._stopped and self.seconds_elapsed <= time:
             battery = psutil.sensors_battery()
             if battery == None :
                 self._stopped = True
             if (
                 battery.percent <= self.battery_percet_accepted
-                and self.seconds_elapsed <= self.STOP_TIME
+                and self.seconds_elapsed <= time
             ):
                 self.sound.emit("fail")
                 sleep(5)
@@ -100,6 +155,8 @@ class BatteryTest(QObject):
         except Exception as e:
             print("No se pudo guardar", e)
 
+    
+    
     def stop(self):
         self.finished.emit()
         self._stopped = True

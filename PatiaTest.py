@@ -148,7 +148,7 @@ class MainWindow(QMainWindow):
             lambda: self.start_loading_dialog()
         )
 
-        self.ui.BtnStartBatteryTest.clicked.connect(
+        self.ui.BtnStartBatteryIntensiveTest.clicked.connect(
             lambda: self.open_battery_test_mode()
         )
         self.ui.BtnStopBatteryTest.clicked.connect(
@@ -455,10 +455,15 @@ class MainWindow(QMainWindow):
         thread = QThread()
         worker = BatteryTest()
         worker.moveToThread(thread)
-
-        # this is essential when worker is in local scope!
         thread.worker = worker
-        thread.started.connect(worker.run)
+        if self.ui.CbxBetteryTestType.currentText() == "Por tiempo":
+            thread.started.connect(worker.bytime(time=time_to_test))
+        elif self.ui.CbxBetteryTestType.currentText() == "Intensiva":
+            time_to_test = self.ui.TxtBatteryTestTime.text()
+            thread.started.connect(worker.intensive())
+        # this is essential when worker is in local scope!
+        
+        
         worker.timeElapsed.connect(self.set_time_elapsed)
         worker.battery.connect(self.add_entry_to_battey_log)
         worker.error.connect(lambda message: showFailDialog(self, message))

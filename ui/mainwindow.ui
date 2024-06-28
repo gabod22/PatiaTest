@@ -15,14 +15,14 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../assets/logo_min.ico</normaloff>../assets/logo_min.ico</iconset>
+    <normaloff>C:/Users/brian/.designer/assets/logo_min.ico</normaloff>C:/Users/brian/.designer/assets/logo_min.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_10">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -52,7 +52,8 @@
              <item row="0" column="1">
               <widget class="QLineEdit" name="TextWinver">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(222, 222, 222);</string>
+                <string notr="true">background-color: rgb(222, 222, 222);
+color:rgb(0,0,0)</string>
                </property>
                <property name="readOnly">
                 <bool>true</bool>
@@ -69,7 +70,8 @@
              <item row="1" column="1">
               <widget class="QLineEdit" name="TextModel">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(222, 222, 222);</string>
+                <string notr="true">background-color: rgb(222, 222, 222);
+color:rgb(0,0,0)</string>
                </property>
                <property name="readOnly">
                 <bool>true</bool>
@@ -86,7 +88,9 @@
              <item row="2" column="1">
               <widget class="QLineEdit" name="TextServiceNumber">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(222, 222, 222);</string>
+                <string notr="true">background-color: rgb(222, 222, 222);
+color: rgb(0,0,0)
+</string>
                </property>
                <property name="readOnly">
                 <bool>true</bool>
@@ -103,7 +107,9 @@
              <item row="3" column="1">
               <widget class="QLineEdit" name="TextBatteryHealth">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(222, 222, 222);</string>
+                <string notr="true">background-color: rgb(222, 222, 222);
+color: rgb(0,0,0)
+</string>
                </property>
                <property name="readOnly">
                 <bool>true</bool>
@@ -114,19 +120,6 @@
               <widget class="QLabel" name="label_7">
                <property name="text">
                 <string>Procesador</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="TextProcessorName">
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(222, 222, 222);</string>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -143,7 +136,9 @@
                 <bool>false</bool>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(222, 222, 222);</string>
+                <string notr="true">background-color: rgb(222, 222, 222);
+color: rgb(0,0,0)
+</string>
                </property>
                <property name="readOnly">
                 <bool>true</bool>
@@ -163,7 +158,9 @@
                 <bool>false</bool>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(222, 222, 222);</string>
+                <string notr="true">background-color: rgb(222, 222, 222);
+color: rgb(0,0,0)
+</string>
                </property>
                <property name="readOnly">
                 <bool>true</bool>
@@ -174,6 +171,21 @@
               <widget class="QLabel" name="label_5">
                <property name="text">
                 <string>Versión de windows</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="TextProcessorName">
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(222, 222, 222);
+color: rgb(0,0,0)
+</string>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -224,7 +236,7 @@
            <item>
             <widget class="Line" name="line_5">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -238,7 +250,7 @@
            <item>
             <spacer name="verticalSpacer_3">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -271,7 +283,7 @@
                <number>16</number>
               </property>
               <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
+               <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
               </property>
               <property name="columnCount">
                <number>5</number>
@@ -457,7 +469,7 @@
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -485,7 +497,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>916</width>
+                <width>921</width>
                 <height>454</height>
                </rect>
               </property>
@@ -495,10 +507,10 @@
                  <item>
                   <layout class="QFormLayout" name="formLayout">
                    <property name="fieldGrowthPolicy">
-                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                    <enum>QFormLayout::FieldGrowthPolicy::AllNonFixedFieldsGrow</enum>
                    </property>
                    <property name="rowWrapPolicy">
-                    <enum>QFormLayout::WrapLongRows</enum>
+                    <enum>QFormLayout::RowWrapPolicy::WrapLongRows</enum>
                    </property>
                    <item row="0" column="1">
                     <widget class="QLineEdit" name="TextBatteryHealth_2">
@@ -1135,7 +1147,7 @@
                <item>
                 <spacer name="verticalSpacer">
                  <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                  <enum>Qt::Orientation::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -1176,7 +1188,7 @@
              </property>
              <property name="icon">
               <iconset theme="document-save">
-               <normaloff>../../PatiaTest_v1/PatiaTestUI_bak</normaloff>../../PatiaTest_v1/PatiaTestUI_bak</iconset>
+               <normaloff>C:/Users/brian/PatiaTest_v1/PatiaTestUI_bak</normaloff>C:/Users/brian/PatiaTest_v1/PatiaTestUI_bak</iconset>
              </property>
             </widget>
            </item>
@@ -1282,7 +1294,7 @@
            <item>
             <spacer name="verticalSpacer_2">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -1306,6 +1318,23 @@
             </widget>
            </item>
            <item>
+            <widget class="QComboBox" name="CbxBetteryTestType">
+             <item>
+              <property name="text">
+               <string>Por tiempo</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Intensiva</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="TxtBatteryTestTime"/>
+           </item>
+           <item>
             <widget class="QPushButton" name="BtnStopBatteryTest">
              <property name="enabled">
               <bool>false</bool>
@@ -1316,7 +1345,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="BtnStartBatteryTest">
+            <widget class="QPushButton" name="BtnStartBatteryIntensiveTest">
              <property name="text">
               <string>Iniciar prueba de batería</string>
              </property>
@@ -1325,7 +1354,7 @@
            <item>
             <spacer name="verticalSpacer_6">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -1393,7 +1422,7 @@
                 <number>16</number>
                </property>
                <property name="editTriggers">
-                <set>QAbstractItemView::NoEditTriggers</set>
+                <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
                </property>
                <property name="columnCount">
                 <number>5</number>
@@ -1461,7 +1490,7 @@
              <item>
               <widget class="QTableWidget" name="TableBatteryLog">
                <property name="editTriggers">
-                <set>QAbstractItemView::NoEditTriggers</set>
+                <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
                </property>
                <column>
                 <property name="text">
@@ -1565,7 +1594,7 @@
            <item>
             <spacer name="verticalSpacer_4">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -1608,7 +1637,7 @@
            <item>
             <spacer name="verticalSpacer_5">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -1658,11 +1687,14 @@
        <attribute name="title">
         <string>Código QR</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <layout class="QVBoxLayout" name="verticalLayout_11">
         <item>
          <widget class="QLabel" name="LBQrCode">
           <property name="text">
            <string>TextLabel</string>
+          </property>
+          <property name="scaledContents">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -1678,7 +1710,7 @@
      <x>0</x>
      <y>0</y>
      <width>997</width>
-     <height>22</height>
+     <height>33</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConfiguraci_n">

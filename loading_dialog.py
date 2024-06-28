@@ -1,5 +1,6 @@
 import pythoncom
 from PySide6.QtCore import QThreadPool, QThread, Qt
+from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QDialog, QTableWidgetItem
 from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from ui.loading_dialog_ui import Ui_LoadingDialog
@@ -8,6 +9,8 @@ from Jobs.Jobs import Jobs
 from Jobs.GetPrograms import GetProgramsJob
 from Jobs.DiskInfo import DiskInfoJob
 from Jobs.Gpuz import GpuzJob
+
+from PIL.ImageQt import ImageQt
 
 from functools import partial
 from function import open_program
@@ -238,6 +241,10 @@ class LoadingDialog(QDialog):
 
     def set_system_info(self, info):
         self.system_info = info
+        
+        model = info["computer_system"]["Model"]
+        bios_ver = info["bios"]["Version"]
+        serial = info["bios"]["SerialNumber"]
         # if (info['cpu']['vendor_id_raw'] == 'GenuineIntel'):
         #     try:
         #         cpu_model = re.search(
@@ -253,17 +260,16 @@ class LoadingDialog(QDialog):
         )
         self.parent.systeminfo = info
         self.parent.ui.TextWinver.setText(info["winver"])
-        self.parent.ui.TextBiosVersion.setText(info["bios"]["Version"])
+        self.parent.ui.TextBiosVersion.setText(bios_ver)
         self.parent.ui.TextTotalRAM.setText(ram)
         self.parent.ui.TextProcessorName.setText(cpu_model)
-        self.parent.ui.TextModel.setText(info["computer_system"]["Model"])
-        self.parent.ui.TextServiceNumber.setText(info["bios"]["SerialNumber"])
+        self.parent.ui.TextModel.setText(model)
+        self.parent.ui.TextServiceNumber.setText(serial)
         # Add all Disks to table
-        # print(info['disks']['disks'])
         
         # Add all gpus to table
         
-        self.serial_number = info["bios"]["SerialNumber"]
+        self.serial_number = serial
 
         if is_battery_installed():
 
@@ -312,6 +318,20 @@ class LoadingDialog(QDialog):
 
         self.parent.ui.TextBatteryHealth.setText(self.battery_health)
         self.parent.ui.TextBatteryHealth_2.setText(self.battery_health)
+        
+        data = {
+            "model": model,
+            "serial": serial,
+            "battery": self.battery_health,
+            "cpu": cpu_model,
+            "ram": ram,
+        }
+        
+        img = qrcode.make(data)
+        
+        qim = ImageQt(img)
+        pix =QPixmap.fromImage(qim)
+        self.parent.ui.LBQrCode.setPixmap(pix)
 
     def showRegisterComputerdialog(self):
         print("Mostrando dialogo")
@@ -342,11 +362,6 @@ class LoadingDialog(QDialog):
         print("asdasdads")
 
     def loading_finished(self):
-        qrcode_data = {
-            "serial": self.serial_number,
-            "model": self.system_info["cpu"]["brand_raw"]
-        }
-        
         
         if self.enable_register:
             self.parent.ui.tabReport.setEnabled(True)
