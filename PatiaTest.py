@@ -116,7 +116,7 @@ class MainWindow(QMainWindow):
         self.ui.BtnOpenPrograms.clicked.connect(lambda: self.open_all_tests())
         self.ui.BtnTestSpeakers.clicked.connect(lambda: self.playSound())
         self.ui.BtnStopTestSpeakers.clicked.connect(lambda: self.stopSound())
-        self.ui.CboxCameraSelector.changeEvent(e)
+        
         self.ui.BtnTestKeyboard.clicked.connect(
             lambda: open_program("keyboard_test.exe")
         )
@@ -139,7 +139,7 @@ class MainWindow(QMainWindow):
         self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
 
     def cameraSelectorChange(e: QEvent):
-        print(e.)
+        pass
     
     def asing_menu_buttons_functions(self):
         # Config Menu
@@ -406,12 +406,12 @@ class MainWindow(QMainWindow):
 
     def __get_thread_camera_capure(self):
         thread = QThread()
-        worker = CameraCapture()
+        camera = self.ui.CboxCameraSelector.currentIndex()
+        worker = CameraCapture(camera)
         worker.moveToThread(thread)
         thread.worker = worker
-        camera = int(self.ui.CboxCameraSelector.currentIndex())
 
-        thread.started.connect(worker.run(camera))
+        thread.started.connect(worker.run)
 
         worker.imageUpdate.connect(self.set_new_img)
         worker.onError.connect(lambda message: showFailDialog(self, message))

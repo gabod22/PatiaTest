@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.2
+## Created by: Qt User Interface Compiler version 6.6.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(997, 744)
         icon = QIcon()
-        icon.addFile(u"C:/Users/brian/.designer/assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"C:/Users/brian/.designer/assets/logo_min.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -197,8 +197,8 @@ class Ui_MainWindow(object):
 
         self.line_5 = QFrame(self.groupBox_2)
         self.line_5.setObjectName(u"line_5")
-        self.line_5.setFrameShape(QFrame.Shape.HLine)
-        self.line_5.setFrameShadow(QFrame.Shadow.Sunken)
+        self.line_5.setFrameShape(QFrame.HLine)
+        self.line_5.setFrameShadow(QFrame.Sunken)
 
         self.verticalLayout.addWidget(self.line_5)
 
@@ -662,7 +662,7 @@ class Ui_MainWindow(object):
         if QIcon.hasThemeIcon(iconThemeName):
             icon1 = QIcon.fromTheme(iconThemeName)
         else:
-            icon1.addFile(u"C:/Users/brian/PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+            icon1.addFile(u"C:/Users/brian/PatiaTest_v1/PatiaTestUI_bak", QSize(), QIcon.Normal, QIcon.Off)
 
         self.BtnSaveToGoogleSheets.setIcon(icon1)
 

@@ -19,18 +19,20 @@ class CameraCapture(QObject):
     imageUpdate = Signal(QImage)  # should be class attributes
     onError = Signal(str)
 
-    def __init__(self):
+    def __init__(self, camera):
         super().__init__()
         print('Inicializando')
+        self.camera_id = camera
         self.camera = None
         self.running = None
         self.video_size = QSize(320, 240)
 
-    def run(self, camera):
+    def run(self):
+        print(self.camera_id)
         print('Corriendo')
         self.running = True
         self.camera = cv2.VideoCapture(
-            camera, cv2.CAP_DSHOW)
+            self.camera_id, cv2.CAP_DSHOW)
 
         if not self.camera.isOpened():
             self.running = False
