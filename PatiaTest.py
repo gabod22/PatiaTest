@@ -3,7 +3,7 @@
 from chunk import Chunk
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
-from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize
+from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize,QEvent
 from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
 from PIL.ImageQt import ImageQt
 from ui.mainwindow_ui import Ui_MainWindow
@@ -116,6 +116,7 @@ class MainWindow(QMainWindow):
         self.ui.BtnOpenPrograms.clicked.connect(lambda: self.open_all_tests())
         self.ui.BtnTestSpeakers.clicked.connect(lambda: self.playSound())
         self.ui.BtnStopTestSpeakers.clicked.connect(lambda: self.stopSound())
+        self.ui.CboxCameraSelector.changeEvent(e)
         self.ui.BtnTestKeyboard.clicked.connect(
             lambda: open_program("keyboard_test.exe")
         )
@@ -137,6 +138,9 @@ class MainWindow(QMainWindow):
         self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
         self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
 
+    def cameraSelectorChange(e: QEvent):
+        print(e.)
+    
     def asing_menu_buttons_functions(self):
         # Config Menu
         self.ui.actionConfig.triggered.connect(lambda: self.open_config_dialog())
