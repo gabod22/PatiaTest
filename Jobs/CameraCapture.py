@@ -26,11 +26,11 @@ class CameraCapture(QObject):
         self.running = None
         self.video_size = QSize(320, 240)
 
-    def run(self):
+    def run(self, camera):
         print('Corriendo')
         self.running = True
         self.camera = cv2.VideoCapture(
-            0, cv2.CAP_DSHOW)
+            camera, cv2.CAP_DSHOW)
 
         if not self.camera.isOpened():
             self.running = False

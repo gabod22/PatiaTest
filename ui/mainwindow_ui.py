@@ -935,6 +935,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_22.addWidget(self.BtnStopCameraCapture)
 
+        self.CboxCameraSelector = QComboBox(self.groupBox_8)
+        self.CboxCameraSelector.addItem("")
+        self.CboxCameraSelector.addItem("")
+        self.CboxCameraSelector.addItem("")
+        self.CboxCameraSelector.addItem("")
+        self.CboxCameraSelector.addItem("")
+        self.CboxCameraSelector.setObjectName(u"CboxCameraSelector")
+
+        self.verticalLayout_22.addWidget(self.CboxCameraSelector)
+
         self.CameraLabel = QLabel(self.groupBox_8)
         self.CameraLabel.setObjectName(u"CameraLabel")
 
@@ -1006,7 +1016,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(3)
         self.CboxPlug.setCurrentIndex(-1)
         self.CboxUSB.setCurrentIndex(-1)
         self.CboxScreen.setCurrentIndex(-1)
@@ -1192,6 +1202,12 @@ class Ui_MainWindow(object):
         self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Programas", None))
         self.BtnStartCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Probar c\u00e1mara", None))
         self.BtnStopCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Detener", None))
+        self.CboxCameraSelector.setItemText(0, QCoreApplication.translate("MainWindow", u"0", None))
+        self.CboxCameraSelector.setItemText(1, QCoreApplication.translate("MainWindow", u"1", None))
+        self.CboxCameraSelector.setItemText(2, QCoreApplication.translate("MainWindow", u"2", None))
+        self.CboxCameraSelector.setItemText(3, QCoreApplication.translate("MainWindow", u"3", None))
+        self.CboxCameraSelector.setItemText(4, QCoreApplication.translate("MainWindow", u"4", None))
+
         self.CameraLabel.setText(QCoreApplication.translate("MainWindow", u"Camera", None))
         self.LbRecordAudio.setText("")
         self.BtnRecordAudio.setText(QCoreApplication.translate("MainWindow", u"Grabar microfono", None))

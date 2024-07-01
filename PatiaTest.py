@@ -405,8 +405,9 @@ class MainWindow(QMainWindow):
         worker = CameraCapture()
         worker.moveToThread(thread)
         thread.worker = worker
+        camera = int(self.ui.CboxCameraSelector.currentIndex())
 
-        thread.started.connect(worker.run)
+        thread.started.connect(worker.run(camera))
 
         worker.imageUpdate.connect(self.set_new_img)
         worker.onError.connect(lambda message: showFailDialog(self, message))
@@ -445,6 +446,8 @@ class MainWindow(QMainWindow):
         self.ui.BtnStartCameraCapture.setVisible(True)
         self.ui.BtnStartCameraCapture.setEnabled(True)
         self.ui.CameraLabel.setPixmap(self.pix)
+        
+        
 
     def set_new_img(self, Image):
         self.ui.CameraLabel.setPixmap(QPixmap.fromImage(Image))
