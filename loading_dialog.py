@@ -242,6 +242,9 @@ class LoadingDialog(QDialog):
     def set_system_info(self, info):
         self.system_info = info
         
+        if len(info['cameras']) > 1:
+            self.parent.ui.BtnSwitchCamera.setVisible(True) 
+        
         model = info["computer_system"]["Model"]
         bios_ver = info["bios"]["Version"]
         serial = info["bios"]["SerialNumber"]
@@ -270,6 +273,7 @@ class LoadingDialog(QDialog):
         # Add all gpus to table
         
         self.serial_number = serial
+        print(info['cameras'])
 
         if is_battery_installed():
 

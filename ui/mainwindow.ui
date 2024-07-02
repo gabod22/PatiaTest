@@ -236,7 +236,7 @@ color: rgb(0,0,0)
            <item>
             <widget class="Line" name="line_5">
              <property name="orientation">
-              <enum>Qt::Orientation::Horizontal</enum>
+              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -250,7 +250,7 @@ color: rgb(0,0,0)
            <item>
             <spacer name="verticalSpacer_3">
              <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -283,7 +283,7 @@ color: rgb(0,0,0)
                <number>16</number>
               </property>
               <property name="editTriggers">
-               <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+               <set>QAbstractItemView::NoEditTriggers</set>
               </property>
               <property name="columnCount">
                <number>5</number>
@@ -469,7 +469,7 @@ color: rgb(0,0,0)
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -497,7 +497,7 @@ color: rgb(0,0,0)
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>921</width>
+                <width>916</width>
                 <height>454</height>
                </rect>
               </property>
@@ -507,10 +507,10 @@ color: rgb(0,0,0)
                  <item>
                   <layout class="QFormLayout" name="formLayout">
                    <property name="fieldGrowthPolicy">
-                    <enum>QFormLayout::FieldGrowthPolicy::AllNonFixedFieldsGrow</enum>
+                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                    </property>
                    <property name="rowWrapPolicy">
-                    <enum>QFormLayout::RowWrapPolicy::WrapLongRows</enum>
+                    <enum>QFormLayout::WrapLongRows</enum>
                    </property>
                    <item row="0" column="1">
                     <widget class="QLineEdit" name="TextBatteryHealth_2">
@@ -1147,7 +1147,7 @@ color: rgb(0,0,0)
                <item>
                 <spacer name="verticalSpacer">
                  <property name="orientation">
-                  <enum>Qt::Orientation::Vertical</enum>
+                  <enum>Qt::Vertical</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -1294,7 +1294,7 @@ color: rgb(0,0,0)
            <item>
             <spacer name="verticalSpacer_2">
              <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -1332,7 +1332,27 @@ color: rgb(0,0,0)
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="TxtBatteryTestTime"/>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Minutos de duración</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="SpinTimeToTest">
+             <property name="minimum">
+              <number>10</number>
+             </property>
+             <property name="maximum">
+              <number>9999</number>
+             </property>
+             <property name="singleStep">
+              <number>10</number>
+             </property>
+             <property name="value">
+              <number>120</number>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QPushButton" name="BtnStopBatteryTest">
@@ -1345,7 +1365,7 @@ color: rgb(0,0,0)
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="BtnStartBatteryIntensiveTest">
+            <widget class="QPushButton" name="BtnStartBatteryTest">
              <property name="text">
               <string>Iniciar prueba de batería</string>
              </property>
@@ -1354,7 +1374,7 @@ color: rgb(0,0,0)
            <item>
             <spacer name="verticalSpacer_6">
              <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -1422,7 +1442,7 @@ color: rgb(0,0,0)
                 <number>16</number>
                </property>
                <property name="editTriggers">
-                <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+                <set>QAbstractItemView::NoEditTriggers</set>
                </property>
                <property name="columnCount">
                 <number>5</number>
@@ -1490,7 +1510,7 @@ color: rgb(0,0,0)
              <item>
               <widget class="QTableWidget" name="TableBatteryLog">
                <property name="editTriggers">
-                <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+                <set>QAbstractItemView::NoEditTriggers</set>
                </property>
                <column>
                 <property name="text">
@@ -1594,7 +1614,7 @@ color: rgb(0,0,0)
            <item>
             <spacer name="verticalSpacer_4">
              <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -1612,7 +1632,7 @@ color: rgb(0,0,0)
           <property name="title">
            <string>Programas</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_22">
+          <layout class="QVBoxLayout" name="verticalLayout_17">
            <item>
             <widget class="QPushButton" name="BtnStartCameraCapture">
              <property name="text">
@@ -1628,32 +1648,10 @@ color: rgb(0,0,0)
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="CboxCameraSelector">
-             <item>
-              <property name="text">
-               <string>0</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>1</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>2</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>3</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>4</string>
-              </property>
-             </item>
+            <widget class="QPushButton" name="BtnSwitchCamera">
+             <property name="text">
+              <string>Cambiar cámara</string>
+             </property>
             </widget>
            </item>
            <item>
@@ -1666,7 +1664,7 @@ color: rgb(0,0,0)
            <item>
             <spacer name="verticalSpacer_5">
              <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -1739,7 +1737,7 @@ color: rgb(0,0,0)
      <x>0</x>
      <y>0</y>
      <width>997</width>
-     <height>33</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuConfiguraci_n">

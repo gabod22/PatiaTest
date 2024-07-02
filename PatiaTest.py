@@ -82,9 +82,12 @@ class MainWindow(QMainWindow):
         """
             Configuración inicial de la captura de video
         """
+        self.current_camera = 0
         self.video_size = QSize(320, 240)
         self.ui.CameraLabel.setFixedSize(self.video_size)
         self.ui.BtnStopCameraCapture.setVisible(False)
+        
+        self.ui.BtnSwitchCamera.setVisible(False)
 
         self.config = read_yaml(config_file)
 
@@ -130,16 +133,12 @@ class MainWindow(QMainWindow):
 
         self.ui.BtnStopCameraCapture.clicked.connect(self.stop_feed)
         self.ui.BtnStartCameraCapture.clicked.connect(self.start_feed)
-        # self.ui.BtnConnectToWifi.clicked.connect(
-        #     lambda: self.start_jobs_thread())
-        # self.ui.BtnCmd.clicked.connect(lambda: self.executeCommand())
+        self.ui.BtnSwitchCamera.clicked.connect(self.switch_camera)
         self.ui.BtnTestMicrophone.clicked.connect(open_record_config)
         self.ui.BtnRecordAudio.clicked.connect(self.thread_record_audio)
         self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
         self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
 
-    def cameraSelectorChange(e: QEvent):
-        pass
     
     def asing_menu_buttons_functions(self):
         # Config Menu
@@ -152,12 +151,14 @@ class MainWindow(QMainWindow):
             lambda: self.start_loading_dialog()
         )
 
-        self.ui.BtnStartBatteryIntensiveTest.clicked.connect(
+        self.ui.BtnStartBatteryTest.clicked.connect(
             lambda: self.open_battery_test_mode()
         )
+        
         self.ui.BtnStopBatteryTest.clicked.connect(
             lambda: self.stop_battery_test_mode()
         )
+        
         self.ui.BtnSaveToGoogleSheets.clicked.connect(
             lambda: self.start_thread_save_inspection()
         )
@@ -406,8 +407,9 @@ class MainWindow(QMainWindow):
 
     def __get_thread_camera_capure(self):
         thread = QThread()
-        camera = self.ui.CboxCameraSelector.currentIndex()
-        worker = CameraCapture(camera)
+        
+        worker = CameraCapture()
+        
         worker.moveToThread(thread)
         thread.worker = worker
 
@@ -418,13 +420,14 @@ class MainWindow(QMainWindow):
 
         worker.finished.connect(self.worker_done)
         thread.finished.connect(self.thread_done)
+        
 
         return thread
 
     def start_feed(self):
         if not self.__thread_CameraCapture.isRunning():
             self.__thread_CameraCapture = self.__get_thread_camera_capure()
-            self.__thread_CameraCapture.running = True
+            self.__thread_CameraCapture.worker.setCamera(self.current_camera)
             self.ui.BtnStopCameraCapture.setVisible(True)
             self.ui.BtnStopCameraCapture.setEnabled(True)
             self.ui.BtnStartCameraCapture.setVisible(False)
@@ -434,13 +437,11 @@ class MainWindow(QMainWindow):
     def stop_feed(self):
         if self.__thread_CameraCapture.isRunning():
             self.ui.BtnStopCameraCapture.setEnabled(False)
-            self.__thread_CameraCapture.worker.camera.release()
             self.__thread_CameraCapture.worker.running = False
             print("feed was asked to stop")
 
     def worker_done(self):
         print("worker finished")
-        self.__thread_CameraCapture.worker.camera.release()
         self.__thread_CameraCapture.quit()
 
     def thread_done(self):
@@ -455,19 +456,36 @@ class MainWindow(QMainWindow):
 
     def set_new_img(self, Image):
         self.ui.CameraLabel.setPixmap(QPixmap.fromImage(Image))
+        
+    def switch_camera(self):
+        
+        self.current_camera += 1
+        if self.current_camera >= len(self.systeminfo['cameras']):
+            self.current_camera = 0
+            
+        print(self.current_camera)
+        
+        
+        
+        
 
     # SECTION - Battery Test Thread
 
     def __get_thread_battery_test(self):
+        minutes = self.ui.SpinTimeToTest.value()
+                
         thread = QThread()
-        worker = BatteryTest()
+        worker = BatteryTest(time_to_test=minutes)
         worker.moveToThread(thread)
+        
+        
+        
         thread.worker = worker
         if self.ui.CbxBetteryTestType.currentText() == "Por tiempo":
-            thread.started.connect(worker.bytime(time=time_to_test))
+            thread.started.connect(worker.bytime)
         elif self.ui.CbxBetteryTestType.currentText() == "Intensiva":
-            time_to_test = self.ui.TxtBatteryTestTime.text()
-            thread.started.connect(worker.intensive())
+            
+            thread.started.connect(worker.intensive)
         # this is essential when worker is in local scope!
         
         
@@ -526,6 +544,8 @@ class MainWindow(QMainWindow):
     def set_time_elapsed(self, time):
         self.ui.LBTimeElapsed.setText(time)
         self.ui.TextBatteryDuration.setText(time)
+        
+    
 
     # SECTION Monitor Thread
 

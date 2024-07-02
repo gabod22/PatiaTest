@@ -19,16 +19,21 @@ class CameraCapture(QObject):
     imageUpdate = Signal(QImage)  # should be class attributes
     onError = Signal(str)
 
-    def __init__(self, camera):
+    def __init__(self):
         super().__init__()
         print('Inicializando')
-        self.camera_id = camera
+        self.camera_id = 0
         self.camera = None
         self.running = None
         self.video_size = QSize(320, 240)
+        self.ref = False
+        
+    def setCamera(self, camera = 0):
+        self.camera_id = camera
+    def refresh(self):
+        self.ref = True
 
     def run(self):
-        print(self.camera_id)
         print('Corriendo')
         self.running = True
         self.camera = cv2.VideoCapture(
@@ -50,8 +55,11 @@ class CameraCapture(QObject):
                                            QImage.Format.Format_RGB888)
                 Pic = ConvertToQtFormat.scaled(
                     self.video_size.width(), self.video_size.height(), Qt.AspectRatioMode.KeepAspectRatio)
-                print("it got the pic")
+                
                 self.imageUpdate.emit(Pic)
+            if self.ref:
+                break
+        self.camera.release()
 
         print("\nfinished signal emited")
         self.finished.emit()

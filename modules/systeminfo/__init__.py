@@ -7,6 +7,8 @@ import psutil
 import pythoncom
 import platform
 from ..gpuz import get_gpuz_info
+import cv2
+from cv2_enumerate_cameras import enumerate_cameras
 
 MemoryType = {
     0: "Desconocido",
@@ -28,6 +30,10 @@ def get_system_info(progress_callback, on_error, show_dialog):
     w = wmi.WMI()
 
     progress_callback.emit('Obteniendo info de la computadora')
+    
+    #Get Cameras alvaibles
+
+    info['cameras'] = enumerate_cameras(cv2.CAP_MSMF)
 
     # INFO
     info['computer_system'] = dict(wmiToDict(w.Win32_ComputerSystem()[0]))

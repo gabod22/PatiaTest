@@ -21,8 +21,8 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QComb
     QHeaderView, QLabel, QLineEdit, QMainWindow,
     QMenu, QMenuBar, QPlainTextEdit, QProgressBar,
     QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
-    QStatusBar, QTabWidget, QTableWidget, QTableWidgetItem,
-    QVBoxLayout, QWidget)
+    QSpinBox, QStatusBar, QTabWidget, QTableWidget,
+    QTableWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -247,7 +247,7 @@ class Ui_MainWindow(object):
         self.TableStorage.setObjectName(u"TableStorage")
         self.TableStorage.setEnabled(True)
         self.TableStorage.setAutoScrollMargin(16)
-        self.TableStorage.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.TableStorage.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.TableStorage.setColumnCount(5)
 
         self.verticalLayout_8.addWidget(self.TableStorage)
@@ -360,15 +360,15 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 921, 454))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 916, 454))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
-        self.formLayout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
-        self.formLayout.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
+        self.formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+        self.formLayout.setRowWrapPolicy(QFormLayout.WrapLongRows)
         self.TextBatteryHealth_2 = QLineEdit(self.scrollAreaWidgetContents_2)
         self.TextBatteryHealth_2.setObjectName(u"TextBatteryHealth_2")
         self.TextBatteryHealth_2.setMaximumSize(QSize(300, 16777215))
@@ -749,10 +749,19 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.CbxBetteryTestType)
 
-        self.TxtBatteryTestTime = QLineEdit(self.groupBox_3)
-        self.TxtBatteryTestTime.setObjectName(u"TxtBatteryTestTime")
+        self.label = QLabel(self.groupBox_3)
+        self.label.setObjectName(u"label")
 
-        self.verticalLayout_7.addWidget(self.TxtBatteryTestTime)
+        self.verticalLayout_7.addWidget(self.label)
+
+        self.SpinTimeToTest = QSpinBox(self.groupBox_3)
+        self.SpinTimeToTest.setObjectName(u"SpinTimeToTest")
+        self.SpinTimeToTest.setMinimum(10)
+        self.SpinTimeToTest.setMaximum(9999)
+        self.SpinTimeToTest.setSingleStep(10)
+        self.SpinTimeToTest.setValue(120)
+
+        self.verticalLayout_7.addWidget(self.SpinTimeToTest)
 
         self.BtnStopBatteryTest = QPushButton(self.groupBox_3)
         self.BtnStopBatteryTest.setObjectName(u"BtnStopBatteryTest")
@@ -760,10 +769,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.BtnStopBatteryTest)
 
-        self.BtnStartBatteryIntensiveTest = QPushButton(self.groupBox_3)
-        self.BtnStartBatteryIntensiveTest.setObjectName(u"BtnStartBatteryIntensiveTest")
+        self.BtnStartBatteryTest = QPushButton(self.groupBox_3)
+        self.BtnStartBatteryTest.setObjectName(u"BtnStartBatteryTest")
 
-        self.verticalLayout_7.addWidget(self.BtnStartBatteryIntensiveTest)
+        self.verticalLayout_7.addWidget(self.BtnStartBatteryTest)
 
         self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -830,7 +839,7 @@ class Ui_MainWindow(object):
         self.TableBatteryInfo.setObjectName(u"TableBatteryInfo")
         self.TableBatteryInfo.setEnabled(True)
         self.TableBatteryInfo.setAutoScrollMargin(16)
-        self.TableBatteryInfo.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.TableBatteryInfo.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.TableBatteryInfo.setColumnCount(5)
 
         self.verticalLayout_5.addWidget(self.TableBatteryInfo)
@@ -854,7 +863,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem24 = QTableWidgetItem()
         self.TableBatteryLog.setHorizontalHeaderItem(3, __qtablewidgetitem24)
         self.TableBatteryLog.setObjectName(u"TableBatteryLog")
-        self.TableBatteryLog.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.TableBatteryLog.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
         self.verticalLayout_4.addWidget(self.TableBatteryLog)
 
@@ -923,57 +932,52 @@ class Ui_MainWindow(object):
 
         self.groupBox_8 = QGroupBox(self.tab_4)
         self.groupBox_8.setObjectName(u"groupBox_8")
-        self.verticalLayout_22 = QVBoxLayout(self.groupBox_8)
-        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
+        self.verticalLayout_17 = QVBoxLayout(self.groupBox_8)
+        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
         self.BtnStartCameraCapture = QPushButton(self.groupBox_8)
         self.BtnStartCameraCapture.setObjectName(u"BtnStartCameraCapture")
 
-        self.verticalLayout_22.addWidget(self.BtnStartCameraCapture)
+        self.verticalLayout_17.addWidget(self.BtnStartCameraCapture)
 
         self.BtnStopCameraCapture = QPushButton(self.groupBox_8)
         self.BtnStopCameraCapture.setObjectName(u"BtnStopCameraCapture")
 
-        self.verticalLayout_22.addWidget(self.BtnStopCameraCapture)
+        self.verticalLayout_17.addWidget(self.BtnStopCameraCapture)
 
-        self.CboxCameraSelector = QComboBox(self.groupBox_8)
-        self.CboxCameraSelector.addItem("")
-        self.CboxCameraSelector.addItem("")
-        self.CboxCameraSelector.addItem("")
-        self.CboxCameraSelector.addItem("")
-        self.CboxCameraSelector.addItem("")
-        self.CboxCameraSelector.setObjectName(u"CboxCameraSelector")
+        self.BtnSwitchCamera = QPushButton(self.groupBox_8)
+        self.BtnSwitchCamera.setObjectName(u"BtnSwitchCamera")
 
-        self.verticalLayout_22.addWidget(self.CboxCameraSelector)
+        self.verticalLayout_17.addWidget(self.BtnSwitchCamera)
 
         self.CameraLabel = QLabel(self.groupBox_8)
         self.CameraLabel.setObjectName(u"CameraLabel")
 
-        self.verticalLayout_22.addWidget(self.CameraLabel)
+        self.verticalLayout_17.addWidget(self.CameraLabel)
 
         self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_22.addItem(self.verticalSpacer_5)
+        self.verticalLayout_17.addItem(self.verticalSpacer_5)
 
         self.LbRecordAudio = QLabel(self.groupBox_8)
         self.LbRecordAudio.setObjectName(u"LbRecordAudio")
 
-        self.verticalLayout_22.addWidget(self.LbRecordAudio)
+        self.verticalLayout_17.addWidget(self.LbRecordAudio)
 
         self.BtnRecordAudio = QPushButton(self.groupBox_8)
         self.BtnRecordAudio.setObjectName(u"BtnRecordAudio")
 
-        self.verticalLayout_22.addWidget(self.BtnRecordAudio)
+        self.verticalLayout_17.addWidget(self.BtnRecordAudio)
 
         self.BtnPlayAudio = QPushButton(self.groupBox_8)
         self.BtnPlayAudio.setObjectName(u"BtnPlayAudio")
 
-        self.verticalLayout_22.addWidget(self.BtnPlayAudio)
+        self.verticalLayout_17.addWidget(self.BtnPlayAudio)
 
         self.BtnStopAudio = QPushButton(self.groupBox_8)
         self.BtnStopAudio.setObjectName(u"BtnStopAudio")
         self.BtnStopAudio.setEnabled(True)
 
-        self.verticalLayout_22.addWidget(self.BtnStopAudio)
+        self.verticalLayout_17.addWidget(self.BtnStopAudio)
 
 
         self.horizontalLayout_6.addWidget(self.groupBox_8)
@@ -996,7 +1000,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 997, 33))
+        self.menubar.setGeometry(QRect(0, 0, 997, 22))
         self.menuConfiguraci_n = QMenu(self.menubar)
         self.menuConfiguraci_n.setObjectName(u"menuConfiguraci_n")
         self.menuTools = QMenu(self.menubar)
@@ -1155,8 +1159,9 @@ class Ui_MainWindow(object):
         self.CbxBetteryTestType.setItemText(0, QCoreApplication.translate("MainWindow", u"Por tiempo", None))
         self.CbxBetteryTestType.setItemText(1, QCoreApplication.translate("MainWindow", u"Intensiva", None))
 
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Minutos de duraci\u00f3n", None))
         self.BtnStopBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Detener prueba de bater\u00eda", None))
-        self.BtnStartBatteryIntensiveTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
+        self.BtnStartBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
         self.label_37.setText(QCoreApplication.translate("MainWindow", u"Revisado por:", None))
         self.CboxBatCheckedBy.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Selecciona el t\u00e9cnico", None))
         self.ChkBoxSaveAtEnd.setText(QCoreApplication.translate("MainWindow", u"\u00bfGuardar al terminar?", None))
@@ -1202,12 +1207,7 @@ class Ui_MainWindow(object):
         self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Programas", None))
         self.BtnStartCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Probar c\u00e1mara", None))
         self.BtnStopCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Detener", None))
-        self.CboxCameraSelector.setItemText(0, QCoreApplication.translate("MainWindow", u"0", None))
-        self.CboxCameraSelector.setItemText(1, QCoreApplication.translate("MainWindow", u"1", None))
-        self.CboxCameraSelector.setItemText(2, QCoreApplication.translate("MainWindow", u"2", None))
-        self.CboxCameraSelector.setItemText(3, QCoreApplication.translate("MainWindow", u"3", None))
-        self.CboxCameraSelector.setItemText(4, QCoreApplication.translate("MainWindow", u"4", None))
-
+        self.BtnSwitchCamera.setText(QCoreApplication.translate("MainWindow", u"Cambiar c\u00e1mara", None))
         self.CameraLabel.setText(QCoreApplication.translate("MainWindow", u"Camera", None))
         self.LbRecordAudio.setText("")
         self.BtnRecordAudio.setText(QCoreApplication.translate("MainWindow", u"Grabar microfono", None))
