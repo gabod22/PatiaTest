@@ -26,24 +26,12 @@ class ConfigDialog(QDialog):
         # Get Config info
         self.accepted.connect(lambda: self.save_config())
         self.rejected.connect(lambda: self.parent.update_config())
-        self.setOptions()
         self.set_config_info()
 
     def save_config(self):
 
-        self.config['DEFAULT_EMPLOYEE'] = self.ui.CboxDefaultTechnician.currentIndex()
-
-        self.config['DEFAULT_VALUES']['ETHERNET'] = self.ui.CboxEthernet.currentIndex()
-        self.config['DEFAULT_VALUES']['SUPPLY_PLUG'] = self.ui.CboxPlug.currentIndex()
-        self.config['DEFAULT_VALUES']['USB'] = self.ui.CboxUSB.currentIndex()
-        self.config['DEFAULT_VALUES']['SCREEN'] = self.ui.CboxScreen.currentIndex()
-        self.config['DEFAULT_VALUES']['SPICKERS'] = self.ui.CboxSpikers.currentIndex()
-        self.config['DEFAULT_VALUES']['KEYBOARD'] = self.ui.CboxKeyboard.currentIndex()
-        self.config['DEFAULT_VALUES']['CAMERA'] = self.ui.CboxCamera.currentIndex()
-        self.config['DEFAULT_VALUES']['MICROPHONE'] = self.ui.CboxMicro.currentIndex()
-        self.config['DEFAULT_VALUES']['TOUCHPAD'] = self.ui.CboxTouchpad.currentIndex()
-        self.config['DEFAULT_VALUES']['TOUCHSCREEN'] = self.ui.CboxTouchscreen.currentIndex()
-        self.config['DEFAULT_VALUES']['HINGES'] = self.ui.CboxHinges.currentIndex()
+        self.config['BATTERY_TEST']['DEFAULT_TIME_TO_TEST'] = self.ui.SpinDefaultTestTime.value()
+        self.config['BATTERY_TEST']['MINIMUM_LEFTOVER'] = self.ui.SpinMinimunLeftOver.value()
 
         self.config['WIFI']['SSID5G'] = self.ui.TextSSID5G.text()
         self.config['WIFI']['PASS5G'] = self.ui.TextPass5G.text()
@@ -96,21 +84,7 @@ class ConfigDialog(QDialog):
                 return
         to_list.addItem(item.text())
 
-    def setOptions(self):
-        for status in self.parent.configData['component_statuses']:
-            self.ui.CboxBattery.addItem(status['slug'])
-            self.ui.CboxEthernet.addItem(status['slug'])
-            self.ui.CboxPlug.addItem(status['slug'])
-            self.ui.CboxUSB.addItem(status['slug'])
-            self.ui.CboxScreen.addItem(status['slug'])
-            self.ui.CboxSpikers.addItem(status['slug'])
-            self.ui.CboxKeyboard.addItem(status['slug'])
-            self.ui.CboxCamera.addItem(status['slug'])
-            self.ui.CboxConnectivity.addItem(status['slug'])
-            self.ui.CboxTouchpad.addItem(status['slug'])
-            self.ui.CboxTouchscreen.addItem(status['slug'])
-            self.ui.CboxHinges.addItem(status['slug'])
-            self.ui.CboxMicro.addItem(status['slug'])
+
 
     def set_config_info(self):
 
@@ -121,27 +95,8 @@ class ConfigDialog(QDialog):
             self.ui.ListSelectedProgrms.addItems(
                 self.config['SELECTED_PROGRAMS'])
 
-        self.ui.CboxEthernet.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['ETHERNET'])
-        self.ui.CboxPlug.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['SUPPLY_PLUG'])
-        self.ui.CboxUSB.setCurrentIndex(self.config['DEFAULT_VALUES']['USB'])
-        self.ui.CboxScreen.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['SCREEN'])
-        self.ui.CboxSpikers.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['SPICKERS'])
-        self.ui.CboxKeyboard.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['KEYBOARD'])
-        self.ui.CboxCamera.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['CAMERA'])
-        self.ui.CboxMicro.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['MICROPHONE'])
-        self.ui.CboxTouchpad.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['TOUCHPAD'])
-        self.ui.CboxTouchscreen.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['TOUCHSCREEN'])
-        self.ui.CboxHinges.setCurrentIndex(
-            self.config['DEFAULT_VALUES']['HINGES'])
+        self.ui.SpinDefaultTestTime.setValue(self.config['BATTERY_TEST']['DEFAULT_TIME_TO_TEST'])
+        self.ui.SpinMinimunLeftOver.setValue(self.config['BATTERY_TEST']['MINIMUM_LEFTOVER'])
 
         self.ui.TextPass5G.setText(self.config['WIFI']['PASS5G'])
         self.ui.TextSSID5G.setText(self.config['WIFI']['SSID5G'])

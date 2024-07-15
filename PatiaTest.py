@@ -96,12 +96,10 @@ class MainWindow(QMainWindow):
         self.systeminfo = None
         self.threadpool = QThreadPool()
         self.ui.BtnStopTestSpeakers.hide()
-        self.ui.tabReport.setEnabled(False)
         self.ui.tabBatteryTest.setEnabled(False)
 
         self.asing_menu_buttons_functions()
         self.asing_all_buttons_functions()
-        self.set_all_initial_values()
 
         qim = ImageQt(path.join(dirname + "/assets/no_camera.jpg"))
         self.pix = QPixmap.fromImage(qim)
@@ -138,7 +136,16 @@ class MainWindow(QMainWindow):
         self.ui.BtnRecordAudio.clicked.connect(self.thread_record_audio)
         self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
         self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
+        
+        self.ui.CbxBetteryTestType.currentTextChanged.connect(self.on_battery_test_mode_change)
 
+    def on_battery_test_mode_change(self):
+        if self.ui.CbxBetteryTestType.currentText() != "Por tiempo":
+            self.ui.lbMinutestime.hide()
+            self.ui.SpinTimeToTest.hide()
+        else:
+            self.ui.SpinTimeToTest.show()
+            self.ui.lbMinutestime.hide()
     
     def asing_menu_buttons_functions(self):
         # Config Menu
@@ -159,87 +166,6 @@ class MainWindow(QMainWindow):
             lambda: self.stop_battery_test_mode()
         )
         
-        self.ui.BtnSaveToGoogleSheets.clicked.connect(
-            lambda: self.start_thread_save_inspection()
-        )
-
-    def set_all_initial_values(self):
-        if path.exists("c:/patiatest_info.yaml"):
-            try:
-                dataSaved = read_yaml("c:/patiatest_info.yaml")
-                self.ui.TextPixelId.setText(dataSaved["PIXELID"])
-                self.ui.CboxAesthetics.setCurrentIndex(dataSaved["AESTHETIC"])
-                self.ui.CboxEthernet.setCurrentIndex(dataSaved["BATTERY"])
-                self.ui.CboxEthernet.setCurrentIndex(dataSaved["ETHERNET"])
-                self.ui.CboxPlug.setCurrentIndex(dataSaved["SUPPLY_PLUG"])
-                self.ui.CboxUSB.setCurrentIndex(dataSaved["USB"])
-                self.ui.CboxScreen.setCurrentIndex(dataSaved["SCREEN"])
-                self.ui.CboxSpikers.setCurrentIndex(dataSaved["SPICKERS"])
-                self.ui.CboxKeyboard.setCurrentIndex(dataSaved["KEYBOARD"])
-                self.ui.CboxCamera.setCurrentIndex(dataSaved["CAMERA"])
-                self.ui.CboxMicro.setCurrentIndex(dataSaved["MICROPHONE"])
-                self.ui.CboxConnectivity.setCurrentIndex(dataSaved["CONNECTIVITY"])
-                self.ui.CboxTouchpad.setCurrentIndex(dataSaved["TOUCHPAD"])
-                self.ui.CboxTouchscreen.setCurrentIndex(dataSaved["TOUCHSCREEN"])
-                self.ui.CboxHinges.setCurrentIndex(dataSaved["HINGES"])
-
-                self.ui.TextBatteryNote.setText(dataSaved["BATTERY_NOTE"])
-                self.ui.TextBatteryDuration.setText(dataSaved["BATTERY_DURATION"])
-                self.ui.TextEthernetNote.setText(dataSaved["ETHERNET_NOTE"])
-                self.ui.TextPlugNote.setText(dataSaved["SUPPLY_PLUG_NOTE"])
-                self.ui.TextUSBNote.setText(dataSaved["USB_NOTE"])
-                self.ui.TextScreenNote.setText(dataSaved["SCREEN_NOTE"])
-                self.ui.TextSpikersNote.setText(dataSaved["SPICKERS_NOTE"])
-                self.ui.TextKeyboardNote.setText(dataSaved["KEYBOARD_NOTE"])
-                self.ui.TextCameraNote.setText(dataSaved["CAMERA_NOTE"])
-                self.ui.TextMicroNote.setText(dataSaved["MICROPHONE_NOTE"])
-                self.ui.TextConnectivityNote.setText(dataSaved["MICROPHONE_NOTE"])
-                self.ui.TextTouchpadNote.setText(dataSaved["CONNECTIVITY_NOTE"])
-                self.ui.TextTouchscreenNote.setText(dataSaved["TOUCHSCREEN_NOTE"])
-                self.ui.TextHingesNote.setText(dataSaved["HINGES_NOTE"])
-                self.ui.PlainTextDetails.setPlainText(dataSaved["DETAILS"])
-
-            except Exception as e:
-                print("No hay archivo por defecto", e)
-                self.ui.CboxEthernet.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["BATTERY"]
-                )
-                self.ui.CboxEthernet.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["ETHERNET"]
-                )
-                self.ui.CboxPlug.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["SUPPLY_PLUG"]
-                )
-                self.ui.CboxUSB.setCurrentIndex(self.config["DEFAULT_VALUES"]["USB"])
-                self.ui.CboxScreen.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["SCREEN"]
-                )
-                self.ui.CboxSpikers.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["SPICKERS"]
-                )
-                self.ui.CboxKeyboard.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["KEYBOARD"]
-                )
-                self.ui.CboxCamera.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["CAMERA"]
-                )
-                self.ui.CboxMicro.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["MICROPHONE"]
-                )
-                self.ui.CboxConnectivity.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["CONNECTIVITY"]
-                )
-                self.ui.CboxTouchpad.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["TOUCHPAD"]
-                )
-                self.ui.CboxTouchscreen.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["TOUCHSCREEN"]
-                )
-                self.ui.CboxHinges.setCurrentIndex(
-                    self.config["DEFAULT_VALUES"]["HINGES"]
-                )
-        else:
-            print("No hay archivo de informacion guarado...")
 
     def open_config_dialog(self):
         if self.config_dialog is None:
@@ -247,84 +173,11 @@ class MainWindow(QMainWindow):
             self.config_dialog.show()
         else:
             self.config_dialog = None
-
+            
     def update_config(self):
         self.config = read_yaml(config_file)
-        self.ui.CboxCheckedBy.setCurrentIndex(self.config["DEFAULT_EMPLOYEE"])
         self.config_dialog = None
 
-    def set_options(self):
-        self.ui.CboxAesthetics.clear()
-        self.ui.CboxCheckedBy.clear()
-        self.ui.CboxBattery.clear()
-        self.ui.CboxEthernet.clear()
-        self.ui.CboxPlug.clear()
-        self.ui.CboxUSB.clear()
-        self.ui.CboxScreen.clear()
-        self.ui.CboxSpikers.clear()
-        self.ui.CboxKeyboard.clear()
-        self.ui.CboxCamera.clear()
-        self.ui.CboxConnectivity.clear()
-        self.ui.CboxTouchpad.clear()
-        self.ui.CboxTouchscreen.clear()
-        self.ui.CboxHinges.clear()
-        self.ui.CboxMicro.clear()
-        for aesthetic in self.configData["aesthetics"]:
-            self.ui.CboxAesthetics.addItem(aesthetic["slug"])
-        for employee in self.configData["technicians"]:
-            self.ui.CboxCheckedBy.addItem(employee["name"])
-            self.ui.CboxBatCheckedBy.addItem(employee["name"])
-
-        for status in self.configData["component_statuses"]:
-            self.ui.CboxBattery.addItem(status["slug"])
-            self.ui.CboxEthernet.addItem(status["slug"])
-            self.ui.CboxPlug.addItem(status["slug"])
-            self.ui.CboxUSB.addItem(status["slug"])
-            self.ui.CboxScreen.addItem(status["slug"])
-            self.ui.CboxSpikers.addItem(status["slug"])
-            self.ui.CboxKeyboard.addItem(status["slug"])
-            self.ui.CboxCamera.addItem(status["slug"])
-            self.ui.CboxConnectivity.addItem(status["slug"])
-            self.ui.CboxTouchpad.addItem(status["slug"])
-            self.ui.CboxTouchscreen.addItem(status["slug"])
-            self.ui.CboxHinges.addItem(status["slug"])
-            self.ui.CboxMicro.addItem(status["slug"])
-
-    def save_local(self):
-        info = {}
-        info["PIXELID"] = self.ui.TextPixelId.text()
-        info["AESTHETIC"] = self.ui.CboxAesthetics.currentIndex()
-        info["BATTERY"] = self.ui.CboxBattery.currentIndex()
-        info["ETHERNET"] = self.ui.CboxEthernet.currentIndex()
-        info["SUPPLY_PLUG"] = self.ui.CboxPlug.currentIndex()
-        info["USB"] = self.ui.CboxUSB.currentIndex()
-        info["SCREEN"] = self.ui.CboxScreen.currentIndex()
-        info["SPICKERS"] = self.ui.CboxSpikers.currentIndex()
-        info["KEYBOARD"] = self.ui.CboxKeyboard.currentIndex()
-        info["CAMERA"] = self.ui.CboxCamera.currentIndex()
-        info["CONNECTIVITY"] = self.ui.CboxConnectivity.currentIndex()
-        info["MICROPHONE"] = self.ui.CboxMicro.currentIndex()
-        info["TOUCHPAD"] = self.ui.CboxTouchpad.currentIndex()
-        info["TOUCHSCREEN"] = self.ui.CboxTouchscreen.currentIndex()
-        info["HINGES"] = self.ui.CboxHinges.currentIndex()
-
-        info["BATTERY_DURATION"] = self.ui.TextBatteryDuration.text()
-        info["BATTERY_NOTE"] = self.ui.TextBatteryNote.text()
-        info["ETHERNET_NOTE"] = self.ui.TextEthernetNote.text()
-        info["SUPPLY_PLUG_NOTE"] = self.ui.TextPlugNote.text()
-        info["USB_NOTE"] = self.ui.TextUSBNote.text()
-        info["SCREEN_NOTE"] = self.ui.TextScreenNote.text()
-        info["SPICKERS_NOTE"] = self.ui.TextSpikersNote.text()
-        info["KEYBOARD_NOTE"] = self.ui.TextKeyboardNote.text()
-        info["CAMERA_NOTE"] = self.ui.TextCameraNote.text()
-        info["CONNECTIVITY_NOTE"] = self.ui.TextCameraNote.text()
-        info["MICROPHONE_NOTE"] = self.ui.TextMicroNote.text()
-        info["TOUCHPAD_NOTE"] = self.ui.TextTouchpadNote.text()
-        info["TOUCHSCREEN_NOTE"] = self.ui.TextTouchscreenNote.text()
-        info["HINGES_NOTE"] = self.ui.TextHingesNote.text()
-        info["DETAILS"] = self.ui.PlainTextDetails.toPlainText()
-        # print(info)
-        write_yaml("c:/patiatest_info.yaml", info)
 
     # SECTION - Tests
 
@@ -484,8 +337,10 @@ class MainWindow(QMainWindow):
         if self.ui.CbxBetteryTestType.currentText() == "Por tiempo":
             thread.started.connect(worker.bytime)
         elif self.ui.CbxBetteryTestType.currentText() == "Intensiva":
-            
             thread.started.connect(worker.intensive)
+        elif self.ui.CbxBetteryTestType.currentText() == "Exaustiva":
+            thread.started.connect(worker.exausitive)
+            
         # this is essential when worker is in local scope!
         
         
@@ -497,6 +352,11 @@ class MainWindow(QMainWindow):
         worker.finished.connect(lambda: self.end_battery_test())
 
         return thread
+    
+    def end_battery_test(self):
+        print('Fin de prueba de batería')
+        self.ui.BtnStartBatteryTest.setEnabled(True)
+        self.ui.BtnStopBatteryTest.setEnabled(False)
 
     def add_entry_to_battey_log(self, percent, plugged):
         timestamp = str(datetime.now().strftime("%d/%m/%Y, %H:%M:%S"))
@@ -536,14 +396,8 @@ class MainWindow(QMainWindow):
             self.__thread_battery.worker.stop()
             self.__thread_battery.quit()
 
-    def end_battery_test(self):
-        if self.ui.ChkBoxSaveAtEnd.isChecked():
-            print("Guardando despues de prueba bateria")
-            self.start_thread_save_to_google_sheets()
-
     def set_time_elapsed(self, time):
         self.ui.LBTimeElapsed.setText(time)
-        self.ui.TextBatteryDuration.setText(time)
         
     
 

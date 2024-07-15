@@ -3,13 +3,16 @@ import psutil
 from modules.helpers import secs2hours
 from time import sleep
 from function import play_lologro_sound, play_cansado_sound
+from modules.helpers import open_program
+from modules.constants import config, config_file
+
 
 from datetime import datetime
 
-DEFAULT_TIME = 60
 TOTAL_CPU = psutil.cpu_count(logical=True)
 PERCENT = 100
-DEFAULT_MINUTES_TIME_TEST = 120
+DEFAULT_TIME = 60
+DEFAULT_MINUTES_TIME_TEST = config['BATTERY_TEST']['DEFAULT_TIME_TO_TEST']
 
 
 class BatteryTest(QObject):
@@ -31,7 +34,7 @@ class BatteryTest(QObject):
         self.HOURS_CONVERSION_CONSTANT = 3600 / self.WAIT_TIME
         self.seconds_elapsed = 0
         self.seconds_left = time_to_test * 60
-        self.battery_percet_accepted = 30
+        self.battery_percet_accepted = config['BATTERY_TEST']['MINIMUM_LEFTOVER']
         self.time_to_test = time_to_test
         
     def intensive(self):
@@ -49,6 +52,7 @@ class BatteryTest(QObject):
             battery = psutil.sensors_battery()
             if battery == None :
                 self._stopped = True
+                self.finished.emit()
             
             self.timeElapsed.emit(secs2hours(self.seconds_elapsed))
             print(secs2hours(self.seconds_elapsed))
@@ -71,6 +75,7 @@ class BatteryTest(QObject):
                     
             if battery.percent < self.MIN_PERCENT:
                 self._stopped = True
+                self.finished.emit()
 
             self.seconds_elapsed += 1
 
@@ -111,9 +116,10 @@ class BatteryTest(QObject):
                 self.sound.emit("fail")
                 sleep(5)
                 self.error.emit(
-                    "No alcanzó el rendimiento minimo deseado de 2:00 horas y con un remanente minimo de 30%",
+                    "No alcanzó el rendimiento minimo deseado de {0} horas y con un remanente minimo de {1}%".format(secs2hours(self.time_to_test), str(self.battery_percet_accepted) ),
                 )
                 self._stopped = True
+                self.finished.emit()
             self.timeElapsed.emit(secs2hours(self.seconds_left))
             print(secs2hours(self.seconds_left))
             sleep(self.WAIT_TIME)
@@ -136,18 +142,17 @@ class BatteryTest(QObject):
             self.seconds_left -= 1
 
         if self._stopped == False:
+            self.finished.emit()
             self.sound.emit("success")
             self.aproved.emit(
-                "La prueba fue exitosa, duró más de 2 horas y tuvo un remanente de "
-                + str(battery.percent)
-                + "%"
+                "La prueba fue exitosa, duró más de {0} horas y tuvo un remanente de {1}%".format(secs2hours(self.time_to_test), str(battery.percent))
             )
 
         try:
             with open("c:/battery_test.txt", "a") as f:
 
                 f.write(
-                    "El equipo duró {} y con un remanente de {}%".format(
+                    "El equipo duró {1} y con un remanente de {2}%".format(
                         secs2hours(self.seconds_elapsed), battery.percent
                     )
                 )
@@ -158,7 +163,10 @@ class BatteryTest(QObject):
         except Exception as e:
             print("No se pudo guardar", e)
 
-    
+    def exausitive(self):
+        open_program('power_max.exe')
+        self.intensive()
+        
     
     def stop(self):
         self.finished.emit()

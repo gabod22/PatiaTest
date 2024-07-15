@@ -224,11 +224,8 @@ class LoadingDialog(QDialog):
             self.__thread_diskinfo.quit()
 
     def setConfigData(self, data):
-
         self.parent.configData = data
-        self.parent.set_options()
         # print("imprimiendo configuracion", data)
-
         # print(self.configData)
 
     def setThisComputerData(self, data):
@@ -321,7 +318,6 @@ class LoadingDialog(QDialog):
             self.battery_health = "Sin batería"
 
         self.parent.ui.TextBatteryHealth.setText(self.battery_health)
-        self.parent.ui.TextBatteryHealth_2.setText(self.battery_health)
         
         data = {
             "model": model,

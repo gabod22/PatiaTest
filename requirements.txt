@@ -16,3 +16,4 @@ python-dotenv
 xmltodict
 pyinstaller
 qrcode
+cv2_enumerate_cameras
