@@ -38,13 +38,10 @@ from modules.constants import config_file, dirname
 import pyaudio
 import wave
 from loading_dialog import LoadingDialog
-from dotenv import load_dotenv
-
 
 extDataDir = os.getcwd()
 if getattr(sys, "frozen", False):
     extDataDir = sys._MEIPASS
-load_dotenv(dotenv_path=os.path.join(extDataDir, ".env"))
 
 
 class MainWindow(QMainWindow):
@@ -305,8 +302,6 @@ class MainWindow(QMainWindow):
         self.ui.BtnStartCameraCapture.setEnabled(True)
         self.ui.CameraLabel.setPixmap(self.pix)
         
-        
-
     def set_new_img(self, Image):
         self.ui.CameraLabel.setPixmap(QPixmap.fromImage(Image))
         
@@ -317,9 +312,6 @@ class MainWindow(QMainWindow):
             self.current_camera = 0
             
         print(self.current_camera)
-        
-        
-        
         
 
     # SECTION - Battery Test Thread
@@ -399,7 +391,6 @@ class MainWindow(QMainWindow):
     def set_time_elapsed(self, time):
         self.ui.LBTimeElapsed.setText(time)
         
-    
 
     # SECTION Monitor Thread
 
