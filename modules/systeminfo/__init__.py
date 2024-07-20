@@ -6,7 +6,7 @@ import cpuinfo
 import psutil
 import pythoncom
 import platform
-from ..gpuz import get_gpuz_info
+
 import cv2
 from cv2_enumerate_cameras import enumerate_cameras
 

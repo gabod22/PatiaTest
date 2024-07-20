@@ -30,6 +30,7 @@ class CameraCapture(QObject):
         
     def setCamera(self, camera = 0):
         self.camera_id = camera
+        
     def refresh(self):
         self.ref = True
 

@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QDialog, QTableWidgetItem
 from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from ui.loading_dialog_ui import Ui_LoadingDialog
 
-from Jobs.Jobs import Jobs
+from Jobs.Initialization import Jobs
 from Jobs.GetPrograms import GetProgramsJob
 from Jobs.DiskInfo import DiskInfoJob
 from Jobs.Gpuz import GpuzJob

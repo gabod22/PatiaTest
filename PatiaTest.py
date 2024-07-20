@@ -16,7 +16,7 @@ from Jobs.worker import Worker
 from time import sleep
 
 # from dialogs.SuccessDialog import CustomDialog
-from Jobs.Battery import BatteryTest
+from Jobs.BatteryTest import BatteryTest
 
 from Jobs.Monitor import Monitor
 from Jobs.CameraCapture import CameraCapture
@@ -331,19 +331,25 @@ class MainWindow(QMainWindow):
         elif self.ui.CbxBetteryTestType.currentText() == "Intensiva":
             thread.started.connect(worker.intensive)
         elif self.ui.CbxBetteryTestType.currentText() == "Exaustiva":
-            thread.started.connect(worker.exausitive)
+            thread.started.connect(worker.exhaustive)
             
         # this is essential when worker is in local scope!
         
         
-        worker.timeElapsed.connect(self.set_time_elapsed)
-        worker.battery.connect(self.add_entry_to_battey_log)
-        worker.error.connect(lambda message: showFailDialog(self, message))
-        worker.aproved.connect(lambda message: showSuccessDialog(self, message))
-        worker.sound.connect(lambda x: play_lologro_sound() if x == 'success' else play_cansado_sound())
-        worker.finished.connect(lambda: self.end_battery_test())
+        worker.timeElapsedSignal.connect(self.set_time_elapsed)
+        worker.batterySignal.connect(self.add_entry_to_battey_log)
+        worker.errorSignal.connect(self.show_result_dialog_battery_test)
+        worker.resultDialogTestSignal.connect(lambda message: showSuccessDialog(self, message))
+        worker.playSoundSignal.connect(lambda x: play_lologro_sound() if x == 'success' else play_cansado_sound())
+        worker.finishedSignal.connect(lambda: self.end_battery_test())
 
         return thread
+    
+    def show_result_dialog_battery_test(self, dialogInfo):
+        if dialogInfo[0] == "success":
+            showSuccessDialog(dialogInfo[1])
+        elif dialogInfo[0] == "fail":
+            showFailDialog(dialogInfo[1])
     
     def end_battery_test(self):
         print('Fin de prueba de batería')
