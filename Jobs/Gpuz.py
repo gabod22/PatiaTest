@@ -2,7 +2,7 @@
 from PySide6.QtCore import Signal, QObject
 from modules.programs import get_all_programs
 
-from modules.gpuz import get_gpuz_info
+from modules.parsers.GpuzParser import get_gpuz_info
 
 class GpuzJob(QObject):
     

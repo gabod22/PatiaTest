@@ -3,7 +3,7 @@ from os import path
 from time import sleep
 import sys
 import xmltodict
-from .constants import programs_path
+from ..constants import programs_path
 
 
 def kill_process_by_name(name):

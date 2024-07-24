@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QDialog, QTableWidgetItem
 from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from ui.loading_dialog_ui import Ui_LoadingDialog
 
-from Jobs.Initialization import Jobs
+from Jobs.Initialization import Initialization
 from Jobs.GetPrograms import GetProgramsJob
 from Jobs.DiskInfo import DiskInfoJob
 from Jobs.Gpuz import GpuzJob
@@ -13,7 +13,7 @@ from Jobs.Gpuz import GpuzJob
 from PIL.ImageQt import ImageQt
 
 from functools import partial
-from function import open_program
+from modules.helpers import open
 
 from modules.helpers import convert_size
 from modules.helpers import add_data_to_table
@@ -40,7 +40,7 @@ class LoadingDialog(QDialog):
         self.ui = Ui_LoadingDialog()
         self.ui.setupUi(self)
         self.system_info = None
-        self.__thread_jobs = QThread()
+        self.__thread_initialization = QThread()
         self.__thread_gpuz = QThread()
         self.__thread_getprograms = QThread()
         self.__thread_diskinfo = QThread()
@@ -61,9 +61,9 @@ class LoadingDialog(QDialog):
 
 
     # SECTION - Jobs Thread
-    def __get_thread_jobs(self):
+    def __get_thread_initialization(self):
         thread = QThread()
-        worker = Jobs()
+        worker = Initialization()
         worker.moveToThread(thread)
 
         # this is essential when worker is in local scope!
@@ -71,8 +71,6 @@ class LoadingDialog(QDialog):
         thread.worker = worker
 
         thread.started.connect(worker.run)
-        worker.configData.connect(self.setConfigData)
-        worker.thisComputer.connect(self.setThisComputerData)
         worker.systemData.connect(self.set_system_info)
         worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
         worker.showDialog.connect(lambda: self.showRegisterComputerdialog())
@@ -82,14 +80,14 @@ class LoadingDialog(QDialog):
         return thread
     
     def start_jobs_thread(self):
-        if not self.__thread_jobs.isRunning():
-            self.__thread_jobs = self.__get_thread_jobs()
-            self.__thread_jobs.start()
+        if not self.__thread_initialization.isRunning():
+            self.__thread_initialization = self.__get_thread_initialization()
+            self.__thread_initialization.start()
 
     def stop_jobs_thread(self):
-        if self.__thread_jobs.isRunning():
-            self.__thread_jobs.worker.stop()
-            self.__thread_jobs.quit()
+        if self.__thread_initialization.isRunning():
+            self.__thread_initialization.worker.stop()
+            self.__thread_initialization.quit()
     
     def __get_thread_getprograms(self):
         thread = QThread()

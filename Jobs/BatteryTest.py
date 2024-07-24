@@ -61,8 +61,6 @@ class BatteryTest(QObject):
 
             self.seconds_elapsed += 1
 
-        
-        
     def bytime(self):
         # Se escribe la primera linea del test
         self.write_start_line_to_txt('POR TIEMPO')
@@ -103,8 +101,6 @@ class BatteryTest(QObject):
                 "La prueba fue exitosa, duró más de {0} horas y tuvo un remanente de {1}%".format(secs2hours(self.time_to_test), str(battery.percent))
             )
 
-        
-        
     def intensive(self):
         open_program('power_max.exe')
         self.intensive()
@@ -118,7 +114,9 @@ class BatteryTest(QObject):
     def write_start_line_to_txt(self, type_of_test):
         """Escribe la primera linea del registro del test de la batería,
         incluye la fecha y el tipo de prueba
-        :param type_of_test: Es el tipo de prueba (INTENSIVA, POR TIEMPO, ETC.)
+        
+        Args:
+            type_of_test (str): Es un texto que indica el tipo de prueba realizada
         """
         date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         try:
@@ -130,6 +128,11 @@ class BatteryTest(QObject):
             print("No se pudo guardar", e)
     
     def write_final_line_to_txt(self, type_of_test):
+        """Escribe la línea final del test, indica el tiempo que duró la prueba y el tipo de test realizado
+
+        Args:
+            type_of_test (str): Es un texto que indica el tipo de prueba realizada
+        """
         try:
             with open(PATH_TO_BATTERY_LOG, "a") as f:
                 f.write(
@@ -138,18 +141,18 @@ class BatteryTest(QObject):
                     )
                 )
                 f.write("\n")
-                f.write("Fin de prueba INTENSIVA")
+                f.write("Fin de prueba {}".format(type_of_test))
                 f.write("\n")
                 f.close()
                 
         except Exception as e:
             print("No se pudo guardar", e)
     
-    """_summary_
-        Escribe en un archvo de texto, una linea con el estado de la batería,
-        que incluye el tiempo de prueba, el estatus del cargador y el porcentaje de la batería
-    """
+    
     def write_to_txt(self, battery):
+        """Escribe en un archvo de texto, una linea con el estado de la batería,
+        que incluye el tiempo de prueba, el estatus del cargador y el porcentaje de la batería
+        """
         try:
             with open(PATH_TO_BATTERY_LOG, "a") as f:
                 f.write(secs2hours(self.seconds_left))

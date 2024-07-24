@@ -2,7 +2,7 @@ from PySide6.QtCore import Signal, QObject
 from modules.wifi import connect, createNewConnection
 from time import sleep
 from modules.helpers import is_admin
-from function import sync_date_time
+from modules.Tests.set_time import sync_date_time
 from modules.files_managment import read_yaml
 from modules.constants import dirname, config_file
 
