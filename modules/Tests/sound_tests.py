@@ -19,14 +19,14 @@ def stop_speaker_test_sound():
 
 
 def play_cansado_sound():
-    soundtest = os.path.join(dirname, "assets/estoy-cansado-jefe.wav")
+    soundtest = os.path.join(dirname, "assets/failure.wav")
     duration = calculate_wav_duration(soundtest)
     winsound.PlaySound(soundtest, winsound.SND_ASYNC)
     sleep(duration)
 
 
 def play_lologro_sound():
-    soundtest = os.path.join(dirname, "assets/lo-logro-senor.wav")
+    soundtest = os.path.join(dirname, "assets/success.wav")
     duration = calculate_wav_duration(soundtest)
     winsound.PlaySound(soundtest, winsound.SND_ASYNC)
     sleep(duration)

@@ -29,7 +29,7 @@ class Ui_LoadingDialog(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.Logo = QLabel(LoadingDialog)
         self.Logo.setObjectName(u"Logo")
-        self.Logo.setPixmap(QPixmap(u"../assets/logo.png"))
+        self.Logo.setPixmap(QPixmap(u"_internal/assets/logo.png"))
         self.Logo.setScaledContents(False)
         self.Logo.setAlignment(Qt.AlignCenter)
 

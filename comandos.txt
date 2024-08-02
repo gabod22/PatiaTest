@@ -1,3 +1,5 @@
 pyinstaller  --add-data=config_files/*:config_files --add-data=programs/*:programs --add-data=assets/*:assets  --uac-admin --icon C:\Users\brian\Proyectos\patiatest\assets\logo_min.ico --hidden-import=pywintypes --add-data '.env:.'  PatiaTest.py
 
 pyinstaller  --add-data=config_files/*:config_files --add-data=programs/*:programs --add-data=assets/*:assets  --uac-admin --icon assets\logo_min.ico --hidden-import=pywintypes --add-data '.env:.'  PatiaTest.py
+
+pyinstaller  --add-data=config_files/*:config_files --add-data=programs/*:programs --add-data=assets/*:assets  --uac-admin --icon assets\logo_min.ico --hidden-import=pywintypes PixelTest.py

@@ -70,7 +70,6 @@ class LoadingDialog(QDialog):
         thread.started.connect(worker.run)
         worker.systemData.connect(self.set_system_info)
         worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
-        worker.showDialog.connect(lambda: self.showRegisterComputerdialog())
         worker.finished.connect(lambda: self.loading_finished())
         # worker.error.connect(lambda m: showFailDialog(self, m))
 
@@ -328,33 +327,8 @@ class LoadingDialog(QDialog):
         pix =QPixmap.fromImage(qim)
         self.parent.ui.LBQrCode.setPixmap(pix)
 
-    def showRegisterComputerdialog(self):
-        print("Mostrando dialogo")
-        register = RegisterComputerDialog(self)
-        result = register.exec_()
-        if result:
-            self.showRegisterFormDialog()
-        else:
-            self.loading_finished()
 
-    def showRegisterFormDialog(self):
-        print("Mostrando form")
-        register = RegisterFormDialog(self)
-        result = register.exec_()
-        # print(result)
-        if result:
-            print("Guardando info")
-            self.enable_register = True
-            # print(self.this_computer)
-            self.parent.ui.TextPixelId.setText(self.this_computer["internal_id"])
-            self.loading_finished()
-        self.loading_finished()
 
-    def printMessage(self):
-        print("se ha registrado")
-
-    def get_computer_done(self):
-        print("asdasdads")
 
     def loading_finished(self):
         
