@@ -1,10 +1,11 @@
 from PySide6.QtWidgets import QDialog, QLineEdit, QListWidget, QMessageBox, QComboBox
 from PySide6.QtGui import QCloseEvent
 from ui.config_dialog_ui import Ui_Dialog
-from modules.constants import config, config_file
+from modules.constants import config, config_file, dirname
 from modules.files_managment import write_yaml
 from modules.helpers.system_accions import get_all_programs
 
+import os
 
 class ConfigDialog(QDialog):
 
@@ -88,7 +89,7 @@ class ConfigDialog(QDialog):
 
     def set_config_info(self):
 
-        for program in get_all_programs():
+        for program in get_all_programs(os.path.join(dirname, 'programs')):
             self.ui.ListAllPrograms.addItem(program["name"])
 
         if self.config['SELECTED_PROGRAMS']:

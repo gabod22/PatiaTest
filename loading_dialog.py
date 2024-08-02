@@ -18,7 +18,6 @@ from modules.utils import convert_size, is_battery_installed
 from modules.helpers.helpers import add_data_to_table
 
 import qrcode
-
 # from PatiaTest import MainWindow
 from functools import partial
 
@@ -26,8 +25,8 @@ from functools import partial
 # from Jobs.worker import Worker
 
 # from Dialogs import showSuccessDialog, showFailDialog
-
-
+from multiprocessing import freeze_support
+freeze_support()
 class LoadingDialog(QDialog):
 
     def __init__(self, parent):
@@ -332,8 +331,6 @@ class LoadingDialog(QDialog):
 
     def loading_finished(self):
         
-        if self.enable_register:
-            self.parent.ui.tabReport.setEnabled(True)
         if is_battery_installed():
             self.parent.ui.tabBatteryTest.setEnabled(True)
         self.parent.show()

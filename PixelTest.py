@@ -42,8 +42,13 @@ from modules.tests.sound_tests import *
 import pyaudio
 import wave
 
+from multiprocessing import freeze_support
+freeze_support()
+
+
 if getattr(sys, "frozen", False):
     extDataDir = sys._MEIPASS
+    
 
 
 class MainWindow(QMainWindow):
@@ -52,6 +57,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.ui.PixelLapLogo.setPixmap(QPixmap(u"_internal/assets/logo.png"))
 
         """
             Dialogos iniciales

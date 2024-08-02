@@ -16,21 +16,20 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QComboBox,
-    QFormLayout, QFrame, QGroupBox, QHBoxLayout,
-    QHeaderView, QLabel, QLineEdit, QMainWindow,
-    QMenu, QMenuBar, QProgressBar, QPushButton,
-    QSizePolicy, QSpacerItem, QSpinBox, QStatusBar,
-    QTabWidget, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QFormLayout,
+    QFrame, QGroupBox, QHBoxLayout, QHeaderView,
+    QLabel, QLineEdit, QMainWindow, QMenu,
+    QMenuBar, QProgressBar, QPushButton, QSizePolicy,
+    QSpacerItem, QSpinBox, QStatusBar, QTabWidget,
+    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(874, 734)
+        MainWindow.resize(874, 729)
         icon = QIcon()
-        icon.addFile(u"../assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"C:/Users/brian/.designer/assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -202,14 +201,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.line_5)
 
-        self.ChkRestoreEnergyConfig = QCheckBox(self.groupBox_2)
-        self.ChkRestoreEnergyConfig.setObjectName(u"ChkRestoreEnergyConfig")
-
-        self.verticalLayout.addWidget(self.ChkRestoreEnergyConfig)
-
         self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_3)
+
+        self.PixelLapLogo = QLabel(self.groupBox_2)
+        self.PixelLapLogo.setObjectName(u"PixelLapLogo")
+
+        self.verticalLayout.addWidget(self.PixelLapLogo)
 
 
         self.horizontalLayout_5.addWidget(self.groupBox_2)
@@ -612,14 +611,14 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Patiatest", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Pixel-lap - PixelTest", None))
         self.actionSave.setText(QCoreApplication.translate("MainWindow", u"Guardar", None))
         self.actionSaveLocal.setText(QCoreApplication.translate("MainWindow", u"Guardar local", None))
         self.actionConfig.setText(QCoreApplication.translate("MainWindow", u"Configuraci\u00f3n", None))
@@ -636,7 +635,7 @@ class Ui_MainWindow(object):
         self.label_22.setText(QCoreApplication.translate("MainWindow", u"CPU", None))
         self.label_24.setText(QCoreApplication.translate("MainWindow", u"RAM", None))
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"Bater\u00eda", None))
-        self.ChkRestoreEnergyConfig.setText(QCoreApplication.translate("MainWindow", u"\u00bfRestaurar configuracion de energia?", None))
+        self.PixelLapLogo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label_27.setText(QCoreApplication.translate("MainWindow", u"Unidades de almacenamiento", None))
         ___qtablewidgetitem = self.TableStorage.verticalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Modelo", None));
