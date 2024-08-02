@@ -2,8 +2,9 @@ import os
 import subprocess
 from pathlib import Path
 from .helpers import filter_exe_files
+from ..constants import programs_path
 
-def open_program(program_path):
+def open_program(program_name):
     """Ejecuta un programa dentro especificado
 
     Args:
@@ -11,13 +12,12 @@ def open_program(program_path):
     """
     
     try:
-        path = Path(program_path)
-        filename = path.name
-        print("Abriendo el programa {0} ".format(filename))
-        os.popen(program_path)
+        path = os.path.join(programs_path, program_name)
+        print("Abriendo el programa {0} ".format(program_name))
+        os.popen(path)
 
     except Exception as e:
-        print("No se pudo ejectutar el programa {0} por un error: {1}".format(program_path, e))
+        print("No se pudo ejectutar el programa {0} por un error: {1}".format(program_name, e))
 
 def get_all_programs(path: Path):
     """devuelve la lista de todos los ejecutables .exe de la ubicación proporcionada

@@ -9,7 +9,6 @@ from time import sleep
 # Sound tests
 def play_speaker_test_sound():
     soundtest = os.path.join(dirname, "assets/soundtest.wav")
-    
     winsound.PlaySound(soundtest, winsound.SND_ASYNC)
     
 
