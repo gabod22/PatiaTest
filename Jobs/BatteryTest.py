@@ -1,8 +1,8 @@
 from PySide6.QtCore import Signal, QObject
 import psutil
-from modules.helpers import secs2hours
+from modules.utils import secs2hours
 from time import sleep
-from modules.helpers import open_program
+from modules.helpers.system_accions import open_program
 from modules.constants import config
 
 
@@ -36,17 +36,15 @@ class BatteryTest(QObject):
         self.seconds_left = time_to_test * 60
         self.battery_percent_accepted = config['BATTERY_TEST']['MINIMUM_LEFTOVER']
         self.time_to_test = time_to_test
-        
-    def exhaustive(self):
-        self.write_start_line_to_txt('INTENSIVA')
-        
+    
+    def battery_test(self):
         while not self._stopped:
             battery = psutil.sensors_battery()
             if battery == None :
                 self._stopped = True
                 self.finishedSignal.emit()
             
-            self.timeElapsed.emit(secs2hours(self.seconds_elapsed))
+            self.timeElapsedSignal.emit(secs2hours(self.seconds_elapsed))
             print(secs2hours(self.seconds_elapsed))
             sleep(WAIT_TIME)
 
@@ -60,6 +58,13 @@ class BatteryTest(QObject):
                 self.finishedSignal.emit()
 
             self.seconds_elapsed += 1
+    
+        
+    def exhaustive(self):
+        self.write_start_line_to_txt('EXAUSTIVA')
+        self.battery_test()
+        
+        
 
     def bytime(self):
         # Se escribe la primera linea del test
@@ -102,8 +107,9 @@ class BatteryTest(QObject):
             )
 
     def intensive(self):
+        self.write_start_line_to_txt('INVENSIVA')
         open_program('power_max.exe')
-        self.intensive()
+        self.battery_test()
         
     
     def stop(self):

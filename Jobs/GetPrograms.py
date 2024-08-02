@@ -1,7 +1,8 @@
 # MenuBar
 from PySide6.QtCore import Signal, QObject
-from modules.programs import get_all_programs
-
+from modules.helpers.system_accions import get_all_programs
+from modules.constants import dirname
+import os
 class GetProgramsJob(QObject):
     
     finished = Signal(list)
@@ -11,7 +12,7 @@ class GetProgramsJob(QObject):
         
         self.progress.emit('Obteniendo los programas')
 
-        programs = get_all_programs()
+        programs = get_all_programs(os.path.join(dirname, 'programs'))
         self.finished.emit(programs)
         # self.finished.emit()
         # pixmap = QPixmap(program['icon'])

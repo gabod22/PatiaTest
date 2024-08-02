@@ -608,11 +608,7 @@ class Ui_MainWindow(object):
 
         self.menubar.addAction(self.menuConfiguraci_n.menuAction())
         self.menubar.addAction(self.menuTools.menuAction())
-        self.menuConfiguraci_n.addAction(self.actionSave)
-        self.menuConfiguraci_n.addAction(self.actionSaveLocal)
-        self.menuConfiguraci_n.addSeparator()
         self.menuConfiguraci_n.addAction(self.actionConfig)
-        self.menuConfiguraci_n.addAction(self.actionReconectar_servidor)
 
         self.retranslateUi(MainWindow)
 

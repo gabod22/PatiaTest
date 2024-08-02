@@ -905,11 +905,7 @@ color: rgb(0,0,0)
     <property name="title">
      <string>Archivo</string>
     </property>
-    <addaction name="actionSave"/>
-    <addaction name="actionSaveLocal"/>
-    <addaction name="separator"/>
     <addaction name="actionConfig"/>
-    <addaction name="actionReconectar_servidor"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">

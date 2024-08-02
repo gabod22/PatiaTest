@@ -5,7 +5,7 @@ from PySide6.QtGui import QImage
 
 from PySide6.QtCore import Signal, QObject
 import psutil
-from modules.helpers import secs2hours
+from modules.utils import secs2hours
 from time import sleep
 
 DEFAULT_TIME = 60

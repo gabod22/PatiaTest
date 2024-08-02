@@ -2,7 +2,6 @@ import pythoncom
 from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QDialog, QTableWidgetItem
-from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from ui.loading_dialog_ui import Ui_LoadingDialog
 
 from Jobs.Initialization import Initialization
@@ -13,15 +12,14 @@ from Jobs.Gpuz import GpuzJob
 from PIL.ImageQt import ImageQt
 
 from functools import partial
-from modules.helpers import open
+from modules.helpers.system_accions import open_program
 
-from modules.helpers import convert_size
-from modules.helpers import add_data_to_table
-from modules.battery import is_battery_installed
+from modules.utils import convert_size, is_battery_installed
+from modules.helpers.helpers import add_data_to_table
 
 import qrcode
 
-
+# from PatiaTest import MainWindow
 from functools import partial
 
 
@@ -53,7 +51,6 @@ class LoadingDialog(QDialog):
             "Multithreading with maximum %d threads" % self.threadpool.maxThreadCount()
         )
 
-        # self.start_get_system_info_thread()
         self.start_jobs_thread()
         self.start_getprograms_thread()
         self.start_thread_gpuz()

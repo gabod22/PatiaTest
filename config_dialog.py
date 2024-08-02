@@ -3,7 +3,7 @@ from PySide6.QtGui import QCloseEvent
 from ui.config_dialog_ui import Ui_Dialog
 from modules.constants import config, config_file
 from modules.files_managment import write_yaml
-from modules.programs import get_all_programs
+from modules.helpers.system_accions import get_all_programs
 
 
 class ConfigDialog(QDialog):

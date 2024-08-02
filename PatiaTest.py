@@ -1,6 +1,5 @@
 # -*- coding: latin-1 -*-
 
-from chunk import Chunk
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize,QEvent
@@ -8,6 +7,8 @@ from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
 from PIL.ImageQt import ImageQt
 from ui.mainwindow_ui import Ui_MainWindow
 from os import path
+
+from loading_dialog import LoadingDialog
 
 from datetime import datetime
 
@@ -24,7 +25,6 @@ from config_dialog import ConfigDialog
 
 from dialogs import showFailDialog, showSuccessDialog
 
-from function import *
 from modules.files_managment import *
 from modules.powerManager import (
     set_configuration_to_current_scheme,
@@ -34,12 +34,14 @@ from modules.powerManager import (
 )
 from modules.constants import config_file, dirname
 
+from modules.helpers.system_accions import open_program, run_powershell_command
+
+from modules.tests.sound_tests import *
+
 
 import pyaudio
 import wave
-from loading_dialog import LoadingDialog
 
-extDataDir = os.getcwd()
 if getattr(sys, "frozen", False):
     extDataDir = sys._MEIPASS
 
@@ -62,7 +64,7 @@ class MainWindow(QMainWindow):
         """
         icon = QIcon()
         icon.addFile(
-            os.path.join(dirname, "assets/logo_min.ico"),
+            path.join(dirname, "assets/logo_min.ico"),
             QSize(),
             QIcon.Normal,
             QIcon.Off,
@@ -83,8 +85,9 @@ class MainWindow(QMainWindow):
         self.video_size = QSize(320, 240)
         self.ui.CameraLabel.setFixedSize(self.video_size)
         self.ui.BtnStopCameraCapture.setVisible(False)
-        
         self.ui.BtnSwitchCamera.setVisible(False)
+
+
 
         self.config = read_yaml(config_file)
 

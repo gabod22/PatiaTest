@@ -1,14 +1,14 @@
 from PySide6.QtCore import Signal, QObject
 from modules.wifi import connect, createNewConnection
 from time import sleep
-from modules.helpers import is_admin
-from modules.Tests.set_time import sync_date_time
+from modules.utils import is_admin
+from modules.helpers.system_accions import sync_date_time
 from modules.files_managment import read_yaml
 from modules.constants import dirname, config_file
 
 
 from modules.systeminfo import get_system_info
-from modules.helpers import isConnected
+from modules.utils import isConnected
 
 
 class Initialization(QObject):

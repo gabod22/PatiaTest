@@ -3,7 +3,7 @@ import os
 import winsound
 from modules.constants import dirname
 
-from helpers import calculate_wav_duration
+from ..helpers.helpers import calculate_wav_duration
 from time import sleep
 
 # Sound tests
