@@ -1,4 +1,4 @@
-# -*- coding: latin-1 -*-
+# -*- coding: UTF-8 -*-
 
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
@@ -347,23 +347,27 @@ class MainWindow(QMainWindow):
         
         worker.timeElapsedSignal.connect(self.set_time_elapsed)
         worker.batterySignal.connect(self.add_entry_to_battey_log)
-        worker.errorSignal.connect(self.show_result_dialog_battery_test)
-        worker.resultDialogTestSignal.connect(lambda message: showSuccessDialog(self, message))
+        worker.resultDialogTestSignal.connect(self.show_result_dialog_battery_test)
         worker.playSoundSignal.connect(lambda x: play_lologro_sound() if x == 'success' else play_cansado_sound())
         worker.finishedSignal.connect(lambda: self.end_battery_test())
 
         return thread
     
     def show_result_dialog_battery_test(self, dialogInfo):
+        print("Mostrando resultados")
+        print(dialogInfo)
         if dialogInfo[0] == "success":
-            showSuccessDialog(dialogInfo[1])
+            showSuccessDialog(message=dialogInfo[1])
         elif dialogInfo[0] == "fail":
-            showFailDialog(dialogInfo[1])
+            showFailDialog(message=dialogInfo[1])
     
     def end_battery_test(self):
         print('Fin de prueba de batería')
-        self.ui.BtnStartBatteryTest.setEnabled(True)
         self.ui.BtnStopBatteryTest.setEnabled(False)
+        self.ui.BtnStartBatteryTest.setEnabled(True)
+        set_showroom_configuration()
+        if self.__thread_battery.isRunning():
+            self.__thread_battery.quit()
 
     def add_entry_to_battey_log(self, percent, plugged):
         timestamp = str(datetime.now().strftime("%d/%m/%Y, %H:%M:%S"))

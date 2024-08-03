@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(874, 729)
         icon = QIcon()
-        icon.addFile(u"C:/Users/brian/.designer/assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"_internal/assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -394,11 +394,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addItem(self.verticalSpacer_6)
 
-        self.BtnSaveBatteryRecord = QPushButton(self.groupBox_3)
-        self.BtnSaveBatteryRecord.setObjectName(u"BtnSaveBatteryRecord")
-
-        self.verticalLayout_7.addWidget(self.BtnSaveBatteryRecord)
-
 
         self.horizontalLayout_2.addWidget(self.groupBox_3)
 
@@ -678,7 +673,6 @@ class Ui_MainWindow(object):
         self.lbMinutestime.setText(QCoreApplication.translate("MainWindow", u"Minutos de duraci\u00f3n", None))
         self.BtnStopBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Detener prueba de bater\u00eda", None))
         self.BtnStartBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
-        self.BtnSaveBatteryRecord.setText(QCoreApplication.translate("MainWindow", u"QR ", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Bater\u00edas", None))
         ___qtablewidgetitem12 = self.TableBatteryInfo.horizontalHeaderItem(0)
         ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"1", None));

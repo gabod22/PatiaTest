@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from PySide6.QtCore import Signal, QObject
 import psutil
 from modules.utils import secs2hours
@@ -25,7 +26,7 @@ class BatteryTest(QObject):
     batterySignal = Signal(str, str)
     errorSignal = Signal(str)
     finishedSignal = Signal()
-    resultDialogTestSignal = Signal(str,str)
+    resultDialogTestSignal = Signal(list)
 
     def __init__(self, parent=None, time_to_test = DEFAULT_MINUTES_TIME_TEST):
         super().__init__(parent)
@@ -51,7 +52,7 @@ class BatteryTest(QObject):
             d, r = divmod(self.seconds_elapsed, self.WRITE_TIME)
             if r == 0:
                 self.batterySignal.emit(str(battery.percent), str(battery.power_plugged))
-                self.saveToTxt(battery)
+                self.write_to_txt(battery)
                     
             if battery.percent < self.MIN_PERCENT:
                 self._stopped = True
@@ -81,9 +82,9 @@ class BatteryTest(QObject):
             ):
                 self.playSoundSignal.emit("fail")
                 sleep(5)
-                self.errorSignal.emit(
+                self.resultDialogTestSignal.emit(["fail",
                     "No alcanzó el rendimiento minimo deseado de {0} horas y con un remanente minimo de {1}%".format(secs2hours(self.time_to_test), str(self.battery_percent_accepted)),
-                )
+                ])
                 self._stopped = True
                 self.finishedSignal.emit()
                 
@@ -95,16 +96,16 @@ class BatteryTest(QObject):
             d, r = divmod(self.seconds_left, self.WRITE_TIME)
             if r == 0:
                 self.batterySignal.emit(str(battery.percent), str(battery.power_plugged))
-                self.saveToTxt(battery)
+                self.write_to_txt(battery)
 
             self.seconds_left -= 1
 
         if self._stopped == False:
             self.finishedSignal.emit()
             self.playSoundSignal.emit("success")
-            self.resultDialogTestSignal.emit("success",
-                "La prueba fue exitosa, duró más de {0} horas y tuvo un remanente de {1}%".format(secs2hours(self.time_to_test), str(battery.percent))
-            )
+            self.resultDialogTestSignal.emit(["success",
+                u"La prueba fue exitosa, duró más de {0} horas y tuvo un remanente de {1}%".format(secs2hours(self.time_to_test), str(battery.percent))
+            ])
 
     def intensive(self):
         self.write_start_line_to_txt('INVENSIVA')
@@ -170,3 +171,5 @@ class BatteryTest(QObject):
                 f.close()
         except Exception as e:
             print("No se pudo guardar", e)
+            
+    

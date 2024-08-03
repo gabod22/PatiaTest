@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 import pythoncom
 from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtGui import QPixmap

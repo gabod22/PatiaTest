@@ -576,13 +576,6 @@ color: rgb(0,0,0)
              </property>
             </spacer>
            </item>
-           <item>
-            <widget class="QPushButton" name="BtnSaveBatteryRecord">
-             <property name="text">
-              <string>QR </string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </item>
