@@ -1,4 +1,4 @@
-# -*- coding: latin-1 -*-
+# -*- coding: UTF-8 -*-
 from os import path
 import sys
 from .files_managment import read_yaml

@@ -1,7 +1,7 @@
 import os
 
 from .constants import power_scheme_path
-from .helpers import run_powershell_command
+from .helpers.system_accions import run_powershell_command
 
 
 def set_configuration_to_current_scheme():

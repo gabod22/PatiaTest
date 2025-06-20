@@ -5,7 +5,7 @@ import json
 import sys
 from os import path, getenv
 
-from .constants import dirname, programs_path
+from ..constants import dirname, programs_path
 
 
 class ReadMode(enum.Enum):

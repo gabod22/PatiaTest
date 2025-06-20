@@ -1,12 +1,14 @@
-from ..helpers import convert_size, WMIDateStringToDate, wmiToDict, get_registry_value
+from modules.utils import convert_size, wmiToDict
+from modules.helpers.helpers import WMIDateStringToDate
+from modules.helpers.system_accions import get_registry_value
 
-from ..battery import get_battery_info
+from modules.parsers.BatteryViewInfoParser import get_battery_info
 import wmi
 import cpuinfo
 import psutil
 import pythoncom
 import platform
-from ..gpuz import get_gpuz_info
+
 import cv2
 from cv2_enumerate_cameras import enumerate_cameras
 

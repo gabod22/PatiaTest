@@ -16,21 +16,20 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QComboBox,
-    QFormLayout, QFrame, QGroupBox, QHBoxLayout,
-    QHeaderView, QLabel, QLineEdit, QMainWindow,
-    QMenu, QMenuBar, QProgressBar, QPushButton,
-    QSizePolicy, QSpacerItem, QSpinBox, QStatusBar,
-    QTabWidget, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QFormLayout,
+    QFrame, QGroupBox, QHBoxLayout, QHeaderView,
+    QLabel, QLineEdit, QMainWindow, QMenu,
+    QMenuBar, QProgressBar, QPushButton, QSizePolicy,
+    QSpacerItem, QSpinBox, QStatusBar, QTabWidget,
+    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(874, 734)
+        MainWindow.resize(874, 729)
         icon = QIcon()
-        icon.addFile(u"C:/Users/brian/.designer/assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"_internal/assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -202,14 +201,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.line_5)
 
-        self.ChkRestoreEnergyConfig = QCheckBox(self.groupBox_2)
-        self.ChkRestoreEnergyConfig.setObjectName(u"ChkRestoreEnergyConfig")
-
-        self.verticalLayout.addWidget(self.ChkRestoreEnergyConfig)
-
         self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_3)
+
+        self.PixelLapLogo = QLabel(self.groupBox_2)
+        self.PixelLapLogo.setObjectName(u"PixelLapLogo")
+
+        self.verticalLayout.addWidget(self.PixelLapLogo)
 
 
         self.horizontalLayout_5.addWidget(self.groupBox_2)
@@ -394,11 +393,6 @@ class Ui_MainWindow(object):
         self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_6)
-
-        self.BtnSaveBatteryRecord = QPushButton(self.groupBox_3)
-        self.BtnSaveBatteryRecord.setObjectName(u"BtnSaveBatteryRecord")
-
-        self.verticalLayout_7.addWidget(self.BtnSaveBatteryRecord)
 
 
         self.horizontalLayout_2.addWidget(self.groupBox_3)
@@ -608,22 +602,18 @@ class Ui_MainWindow(object):
 
         self.menubar.addAction(self.menuConfiguraci_n.menuAction())
         self.menubar.addAction(self.menuTools.menuAction())
-        self.menuConfiguraci_n.addAction(self.actionSave)
-        self.menuConfiguraci_n.addAction(self.actionSaveLocal)
-        self.menuConfiguraci_n.addSeparator()
         self.menuConfiguraci_n.addAction(self.actionConfig)
-        self.menuConfiguraci_n.addAction(self.actionReconectar_servidor)
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Patiatest", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Pixel-lap - PixelTest", None))
         self.actionSave.setText(QCoreApplication.translate("MainWindow", u"Guardar", None))
         self.actionSaveLocal.setText(QCoreApplication.translate("MainWindow", u"Guardar local", None))
         self.actionConfig.setText(QCoreApplication.translate("MainWindow", u"Configuraci\u00f3n", None))
@@ -640,7 +630,7 @@ class Ui_MainWindow(object):
         self.label_22.setText(QCoreApplication.translate("MainWindow", u"CPU", None))
         self.label_24.setText(QCoreApplication.translate("MainWindow", u"RAM", None))
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"Bater\u00eda", None))
-        self.ChkRestoreEnergyConfig.setText(QCoreApplication.translate("MainWindow", u"\u00bfRestaurar configuracion de energia?", None))
+        self.PixelLapLogo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label_27.setText(QCoreApplication.translate("MainWindow", u"Unidades de almacenamiento", None))
         ___qtablewidgetitem = self.TableStorage.verticalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Modelo", None));
@@ -683,7 +673,6 @@ class Ui_MainWindow(object):
         self.lbMinutestime.setText(QCoreApplication.translate("MainWindow", u"Minutos de duraci\u00f3n", None))
         self.BtnStopBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Detener prueba de bater\u00eda", None))
         self.BtnStartBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
-        self.BtnSaveBatteryRecord.setText(QCoreApplication.translate("MainWindow", u"QR ", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Bater\u00edas", None))
         ___qtablewidgetitem12 = self.TableBatteryInfo.horizontalHeaderItem(0)
         ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"1", None));

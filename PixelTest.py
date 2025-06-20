@@ -1,6 +1,5 @@
-# -*- coding: latin-1 -*-
+# -*- coding: UTF-8 -*-
 
-from chunk import Chunk
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize,QEvent
@@ -9,6 +8,8 @@ from PIL.ImageQt import ImageQt
 from ui.mainwindow_ui import Ui_MainWindow
 from os import path
 
+from loading_dialog import LoadingDialog
+
 from datetime import datetime
 
 from Jobs.worker import Worker
@@ -16,7 +17,7 @@ from Jobs.worker import Worker
 from time import sleep
 
 # from dialogs.SuccessDialog import CustomDialog
-from Jobs.Battery import BatteryTest
+from Jobs.BatteryTest import BatteryTest
 
 from Jobs.Monitor import Monitor
 from Jobs.CameraCapture import CameraCapture
@@ -24,7 +25,6 @@ from config_dialog import ConfigDialog
 
 from dialogs import showFailDialog, showSuccessDialog
 
-from function import *
 from modules.files_managment import *
 from modules.powerManager import (
     set_configuration_to_current_scheme,
@@ -34,17 +34,21 @@ from modules.powerManager import (
 )
 from modules.constants import config_file, dirname
 
+from modules.helpers.system_accions import open_program, run_powershell_command
+
+from modules.tests.sound_tests import *
+
 
 import pyaudio
 import wave
-from loading_dialog import LoadingDialog
-from dotenv import load_dotenv
+
+from multiprocessing import freeze_support
+freeze_support()
 
 
-extDataDir = os.getcwd()
 if getattr(sys, "frozen", False):
     extDataDir = sys._MEIPASS
-load_dotenv(dotenv_path=os.path.join(extDataDir, ".env"))
+    
 
 
 class MainWindow(QMainWindow):
@@ -53,6 +57,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.ui.PixelLapLogo.setPixmap(QPixmap(u"_internal/assets/logo.png"))
 
         """
             Dialogos iniciales
@@ -65,7 +70,7 @@ class MainWindow(QMainWindow):
         """
         icon = QIcon()
         icon.addFile(
-            os.path.join(dirname, "assets/logo_min.ico"),
+            path.join(dirname, "assets/logo_min.ico"),
             QSize(),
             QIcon.Normal,
             QIcon.Off,
@@ -86,8 +91,9 @@ class MainWindow(QMainWindow):
         self.video_size = QSize(320, 240)
         self.ui.CameraLabel.setFixedSize(self.video_size)
         self.ui.BtnStopCameraCapture.setVisible(False)
-        
         self.ui.BtnSwitchCamera.setVisible(False)
+
+
 
         self.config = read_yaml(config_file)
 
@@ -305,8 +311,6 @@ class MainWindow(QMainWindow):
         self.ui.BtnStartCameraCapture.setEnabled(True)
         self.ui.CameraLabel.setPixmap(self.pix)
         
-        
-
     def set_new_img(self, Image):
         self.ui.CameraLabel.setPixmap(QPixmap.fromImage(Image))
         
@@ -317,9 +321,6 @@ class MainWindow(QMainWindow):
             self.current_camera = 0
             
         print(self.current_camera)
-        
-        
-        
         
 
     # SECTION - Battery Test Thread
@@ -339,24 +340,34 @@ class MainWindow(QMainWindow):
         elif self.ui.CbxBetteryTestType.currentText() == "Intensiva":
             thread.started.connect(worker.intensive)
         elif self.ui.CbxBetteryTestType.currentText() == "Exaustiva":
-            thread.started.connect(worker.exausitive)
+            thread.started.connect(worker.exhaustive)
             
         # this is essential when worker is in local scope!
         
         
-        worker.timeElapsed.connect(self.set_time_elapsed)
-        worker.battery.connect(self.add_entry_to_battey_log)
-        worker.error.connect(lambda message: showFailDialog(self, message))
-        worker.aproved.connect(lambda message: showSuccessDialog(self, message))
-        worker.sound.connect(lambda x: play_lologro_sound() if x == 'success' else play_cansado_sound())
-        worker.finished.connect(lambda: self.end_battery_test())
+        worker.timeElapsedSignal.connect(self.set_time_elapsed)
+        worker.batterySignal.connect(self.add_entry_to_battey_log)
+        worker.resultDialogTestSignal.connect(self.show_result_dialog_battery_test)
+        worker.playSoundSignal.connect(lambda x: play_lologro_sound() if x == 'success' else play_cansado_sound())
+        worker.finishedSignal.connect(lambda: self.end_battery_test())
 
         return thread
     
+    def show_result_dialog_battery_test(self, dialogInfo):
+        print("Mostrando resultados")
+        print(dialogInfo)
+        if dialogInfo[0] == "success":
+            showSuccessDialog(message=dialogInfo[1])
+        elif dialogInfo[0] == "fail":
+            showFailDialog(message=dialogInfo[1])
+    
     def end_battery_test(self):
         print('Fin de prueba de batería')
-        self.ui.BtnStartBatteryTest.setEnabled(True)
         self.ui.BtnStopBatteryTest.setEnabled(False)
+        self.ui.BtnStartBatteryTest.setEnabled(True)
+        set_showroom_configuration()
+        if self.__thread_battery.isRunning():
+            self.__thread_battery.quit()
 
     def add_entry_to_battey_log(self, percent, plugged):
         timestamp = str(datetime.now().strftime("%d/%m/%Y, %H:%M:%S"))
@@ -399,7 +410,6 @@ class MainWindow(QMainWindow):
     def set_time_elapsed(self, time):
         self.ui.LBTimeElapsed.setText(time)
         
-    
 
     # SECTION Monitor Thread
 

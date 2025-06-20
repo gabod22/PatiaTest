@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>874</width>
-    <height>734</height>
+    <height>729</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Patiatest</string>
+   <string>Pixel-lap - PixelTest</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -22,7 +22,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -241,13 +241,6 @@ color: rgb(0,0,0)
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="ChkRestoreEnergyConfig">
-             <property name="text">
-              <string>¿Restaurar configuracion de energia?</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <spacer name="verticalSpacer_3">
              <property name="orientation">
               <enum>Qt::Orientation::Vertical</enum>
@@ -259,6 +252,13 @@ color: rgb(0,0,0)
               </size>
              </property>
             </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="PixelLapLogo">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -575,13 +575,6 @@ color: rgb(0,0,0)
               </size>
              </property>
             </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="BtnSaveBatteryRecord">
-             <property name="text">
-              <string>QR </string>
-             </property>
-            </widget>
            </item>
           </layout>
          </widget>
@@ -905,11 +898,7 @@ color: rgb(0,0,0)
     <property name="title">
      <string>Archivo</string>
     </property>
-    <addaction name="actionSave"/>
-    <addaction name="actionSaveLocal"/>
-    <addaction name="separator"/>
     <addaction name="actionConfig"/>
-    <addaction name="actionReconectar_servidor"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">

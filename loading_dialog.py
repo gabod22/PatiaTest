@@ -1,11 +1,11 @@
+# -*- coding: latin-1 -*-
 import pythoncom
 from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QDialog, QTableWidgetItem
-from dialogs.CustomDialogs import RegisterComputerDialog, RegisterFormDialog
 from ui.loading_dialog_ui import Ui_LoadingDialog
 
-from Jobs.Jobs import Jobs
+from Jobs.Initialization import Initialization
 from Jobs.GetPrograms import GetProgramsJob
 from Jobs.DiskInfo import DiskInfoJob
 from Jobs.Gpuz import GpuzJob
@@ -13,23 +13,21 @@ from Jobs.Gpuz import GpuzJob
 from PIL.ImageQt import ImageQt
 
 from functools import partial
-from function import open_program
+from modules.helpers.system_accions import open_program
 
-from modules.helpers import convert_size
-from modules.helpers import add_data_to_table
-from modules.battery import is_battery_installed
+from modules.utils import convert_size, is_battery_installed
+from modules.helpers.helpers import add_data_to_table
 
 import qrcode
-
-
+# from PatiaTest import MainWindow
 from functools import partial
 
 
 # from Jobs.worker import Worker
 
 # from Dialogs import showSuccessDialog, showFailDialog
-
-
+from multiprocessing import freeze_support
+freeze_support()
 class LoadingDialog(QDialog):
 
     def __init__(self, parent):
@@ -40,7 +38,7 @@ class LoadingDialog(QDialog):
         self.ui = Ui_LoadingDialog()
         self.ui.setupUi(self)
         self.system_info = None
-        self.__thread_jobs = QThread()
+        self.__thread_initialization = QThread()
         self.__thread_gpuz = QThread()
         self.__thread_getprograms = QThread()
         self.__thread_diskinfo = QThread()
@@ -53,7 +51,6 @@ class LoadingDialog(QDialog):
             "Multithreading with maximum %d threads" % self.threadpool.maxThreadCount()
         )
 
-        # self.start_get_system_info_thread()
         self.start_jobs_thread()
         self.start_getprograms_thread()
         self.start_thread_gpuz()
@@ -61,9 +58,9 @@ class LoadingDialog(QDialog):
 
 
     # SECTION - Jobs Thread
-    def __get_thread_jobs(self):
+    def __get_thread_initialization(self):
         thread = QThread()
-        worker = Jobs()
+        worker = Initialization()
         worker.moveToThread(thread)
 
         # this is essential when worker is in local scope!
@@ -71,25 +68,22 @@ class LoadingDialog(QDialog):
         thread.worker = worker
 
         thread.started.connect(worker.run)
-        worker.configData.connect(self.setConfigData)
-        worker.thisComputer.connect(self.setThisComputerData)
         worker.systemData.connect(self.set_system_info)
         worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
-        worker.showDialog.connect(lambda: self.showRegisterComputerdialog())
         worker.finished.connect(lambda: self.loading_finished())
         # worker.error.connect(lambda m: showFailDialog(self, m))
 
         return thread
     
     def start_jobs_thread(self):
-        if not self.__thread_jobs.isRunning():
-            self.__thread_jobs = self.__get_thread_jobs()
-            self.__thread_jobs.start()
+        if not self.__thread_initialization.isRunning():
+            self.__thread_initialization = self.__get_thread_initialization()
+            self.__thread_initialization.start()
 
     def stop_jobs_thread(self):
-        if self.__thread_jobs.isRunning():
-            self.__thread_jobs.worker.stop()
-            self.__thread_jobs.quit()
+        if self.__thread_initialization.isRunning():
+            self.__thread_initialization.worker.stop()
+            self.__thread_initialization.quit()
     
     def __get_thread_getprograms(self):
         thread = QThread()
@@ -333,38 +327,11 @@ class LoadingDialog(QDialog):
         pix =QPixmap.fromImage(qim)
         self.parent.ui.LBQrCode.setPixmap(pix)
 
-    def showRegisterComputerdialog(self):
-        print("Mostrando dialogo")
-        register = RegisterComputerDialog(self)
-        result = register.exec_()
-        if result:
-            self.showRegisterFormDialog()
-        else:
-            self.loading_finished()
 
-    def showRegisterFormDialog(self):
-        print("Mostrando form")
-        register = RegisterFormDialog(self)
-        result = register.exec_()
-        # print(result)
-        if result:
-            print("Guardando info")
-            self.enable_register = True
-            # print(self.this_computer)
-            self.parent.ui.TextPixelId.setText(self.this_computer["internal_id"])
-            self.loading_finished()
-        self.loading_finished()
 
-    def printMessage(self):
-        print("se ha registrado")
-
-    def get_computer_done(self):
-        print("asdasdads")
 
     def loading_finished(self):
         
-        if self.enable_register:
-            self.parent.ui.tabReport.setEnabled(True)
         if is_battery_installed():
             self.parent.ui.tabBatteryTest.setEnabled(True)
         self.parent.show()

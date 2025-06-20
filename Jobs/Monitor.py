@@ -1,5 +1,5 @@
 from PySide6.QtCore import Signal, QObject
-from modules.helpers import secs2hours
+from modules.utils import secs2hours
 import psutil
 
 

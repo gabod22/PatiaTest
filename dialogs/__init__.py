@@ -1,6 +1,7 @@
+# -*- coding: latin-1 -*-
 from PySide6.QtWidgets import QMessageBox
 
-def showSuccessDialog(self, message):
+def showSuccessDialog(message):
     msgBox = QMessageBox()
     msgBox.setIcon(QMessageBox.Information)
     msgBox.setText(message)
@@ -11,7 +12,7 @@ def showSuccessDialog(self, message):
     if returnValue == QMessageBox.Ok:
         print('OK clicked')
 
-def showFailDialog(self, message):
+def showFailDialog(message):
     msgBox = QMessageBox()
     msgBox.setIcon(QMessageBox.Critical)
     msgBox.setText(message)
