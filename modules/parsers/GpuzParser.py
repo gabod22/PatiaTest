@@ -1,7 +1,5 @@
 import subprocess
 from os import path
-from time import sleep
-import sys
 import xmltodict
 from ..constants import programs_path
 
@@ -18,9 +16,9 @@ def get_gpuz_info():
     # dev = getenv("DEV_MODE")
     gpuz_command = "gpuz.exe"
 
+    status = -1
     try:
-        command = f'"{path.join(
-            programs_path, gpuz_command)}" /minimized /dump "{xmlfile}"'
+        command = f'"{path.join(programs_path, gpuz_command)}" /minimized /dump "{xmlfile}"'
         print(command)
         status = subprocess.call(command)
         print(status)
@@ -28,7 +26,7 @@ def get_gpuz_info():
         print("GPUZ error", e)
 
     if status != 0:
-        raise Exception("DiskInfo.exe exited with status code " + status)
+        raise Exception("gpuz.exe exited with status code " + str(status))
 
     # read data
     input_data = None

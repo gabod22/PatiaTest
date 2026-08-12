@@ -5,8 +5,8 @@ from modules.parsers.DiskInfoParser import DiskInfo
 
 class DiskInfoJob(QObject):
     
-    finished = Signal(list)
-    progress = Signal(str)
+    finished = Signal(object)
+    progress = Signal(object)
     
     def run(self):
 

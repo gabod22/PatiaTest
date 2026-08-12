@@ -17,7 +17,7 @@ class CameraCapture(QObject):
 
     finished = Signal()  # signals to communicate with main
     imageUpdate = Signal(QImage)  # should be class attributes
-    onError = Signal(str)
+    onError = Signal(object)
 
     def __init__(self):
         super().__init__()

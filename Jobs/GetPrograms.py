@@ -5,14 +5,19 @@ from modules.constants import dirname
 import os
 class GetProgramsJob(QObject):
     
-    finished = Signal(list)
-    progress = Signal(str)
+    finished = Signal(object)
+    progress = Signal(object)
     
     def run(self):
         
         self.progress.emit('Obteniendo los programas')
 
-        programs = get_all_programs(os.path.join(dirname, 'programs'))
+        try:
+            programs = get_all_programs(os.path.join(dirname, 'programs'))
+        except Exception as e:
+            print(e)
+            programs = []
+            
         self.finished.emit(programs)
         # self.finished.emit()
         # pixmap = QPixmap(program['icon'])

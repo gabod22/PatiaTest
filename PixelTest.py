@@ -24,7 +24,7 @@ from Jobs.CameraCapture import CameraCapture
 from config_dialog import ConfigDialog
 
 from dialogs import showFailDialog, showSuccessDialog
-
+from modules.utils import is_battery_installed
 from modules.files_managment import *
 from modules.powerManager import (
     set_configuration_to_current_scheme,
@@ -36,7 +36,7 @@ from modules.constants import config_file, dirname
 
 from modules.helpers.system_accions import open_program, run_powershell_command
 
-from modules.tests.sound_tests import *
+from modules.test.sound_tests import *
 
 
 import pyaudio
@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.PixelLapLogo.setPixmap(QPixmap(u"_internal/assets/logo.png"))
+        self.ui.PixelLapLogo.setPixmap(QPixmap(path.join(dirname, "assets/logo_new.png")))
 
         """
             Dialogos iniciales
@@ -70,7 +70,7 @@ class MainWindow(QMainWindow):
         """
         icon = QIcon()
         icon.addFile(
-            path.join(dirname, "assets/logo_min.ico"),
+            path.join(dirname, "assets/logo_min_new.ico"),
             QSize(),
             QIcon.Normal,
             QIcon.Off,
@@ -103,6 +103,14 @@ class MainWindow(QMainWindow):
         self.threadpool = QThreadPool()
         self.ui.BtnStopTestSpeakers.hide()
         self.ui.tabBatteryTest.setEnabled(False)
+        
+        if not is_battery_installed():
+            self.ui.BarBatteryPercentage.hide()
+            self.ui.label_29.hide()
+            self.ui.TextBatteryHealth.hide()
+            self.ui.label_6.hide()
+            # Opcional: Ocultar toda la caja de estado del test de bateria si no hay
+            self.ui.groupBox_3.hide()
 
         self.asing_menu_buttons_functions()
         self.asing_all_buttons_functions()
@@ -406,10 +414,16 @@ class MainWindow(QMainWindow):
         if self.__thread_battery.isRunning():
             self.__thread_battery.worker.stop()
             self.__thread_battery.quit()
+            self.__thread_battery.wait()
 
     def set_time_elapsed(self, time):
         self.ui.LBTimeElapsed.setText(time)
         
+
+    def update_battery_percentage(self, value):
+        if isinstance(value, (int, float)):
+            self.ui.BarBatteryPercentage_2.setValue(int(value))
+            self.ui.BarBatteryPercentage.setValue(int(value))
 
     # SECTION Monitor Thread
 
@@ -427,8 +441,7 @@ class MainWindow(QMainWindow):
         worker.cpuPercent.connect(self.ui.BarCPUPercentage.setValue)
         worker.cpuPercent.connect(self.ui.BarCPUPercentage_2.setValue)
         worker.ramPercent.connect(self.ui.BarRAMPercentage.setValue)
-        worker.batteryPercent.connect(self.ui.BarBatteryPercentage_2.setValue)
-        worker.batteryPercent.connect(self.ui.BarBatteryPercentage.setValue)
+        worker.batteryPercent.connect(self.update_battery_percentage)
         worker.batteryStatus.connect(self.ui.LbBatteryStatus.setText)
         worker.batteryPlugged.connect(self.ui.LbPluggedIn.setText)
         worker.batteryRemainTime.connect(self.ui.LbBatteryRemain.setText)
@@ -444,6 +457,7 @@ class MainWindow(QMainWindow):
         if self.__thread_monitor.isRunning():
             self.__thread_monitor.worker.stop()
             self.__thread_monitor.quit()
+            self.__thread_monitor.wait()
 
     def closeEvent(self, event: QCloseEvent) -> None:
         self.hide()
@@ -451,6 +465,9 @@ class MainWindow(QMainWindow):
             self.stop_battery_test_mode()
         self.stop_monitor_thread()
         self.stop_feed()
+        if self.__thread_CameraCapture.isRunning():
+            self.__thread_CameraCapture.quit()
+            self.__thread_CameraCapture.wait()
         set_showroom_configuration()
 
         """ Elimina los archivos creados

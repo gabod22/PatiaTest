@@ -4,8 +4,8 @@ from modules.parsers.GpuzParser import get_gpuz_info
 
 class GpuzJob(QObject):
     
-    finished = Signal(list)
-    progress = Signal(str)
+    finished = Signal(object)
+    progress = Signal(object)
     
     def run(self):
 

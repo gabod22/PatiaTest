@@ -1,5 +1,6 @@
 # -*- coding: latin-1 -*-
 import pythoncom
+import threading
 from PySide6.QtCore import QThreadPool, QThread, Qt
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QDialog, QTableWidgetItem
@@ -37,6 +38,11 @@ class LoadingDialog(QDialog):
         self.enable_register = False
         self.ui = Ui_LoadingDialog()
         self.ui.setupUi(self)
+        
+        from modules.constants import dirname
+        from os import path
+        self.ui.Logo.setPixmap(QPixmap(path.join(dirname, "assets/logo_new.png")))
+        
         self.system_info = None
         self.__thread_initialization = QThread()
         self.__thread_gpuz = QThread()
@@ -69,9 +75,8 @@ class LoadingDialog(QDialog):
 
         thread.started.connect(worker.run)
         worker.systemData.connect(self.set_system_info)
-        worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
-        worker.finished.connect(lambda: self.loading_finished())
-        # worker.error.connect(lambda m: showFailDialog(self, m))
+        worker.progress.connect(self.update_log)
+        worker.finished.connect(self.loading_finished)
 
         return thread
     
@@ -91,12 +96,13 @@ class LoadingDialog(QDialog):
         worker.moveToThread(thread)
         thread.worker = worker
         thread.started.connect(worker.run)
-        worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
+        worker.progress.connect(self.update_log)
         worker.finished.connect(self.set_programs_to_menu)
         
         return thread
     
     def set_programs_to_menu(self, programs):
+        print(f"[DEBUG] [{threading.current_thread().name}] Entering set_programs_to_menu")
         for program in programs:
             self.parent.ui.menuTools.addAction(
                 program["name"], partial(open_program, program["name"])
@@ -118,12 +124,13 @@ class LoadingDialog(QDialog):
         worker.moveToThread(thread)
         thread.worker = worker
         thread.started.connect(worker.run)
-        worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
+        worker.progress.connect(self.update_log)
         worker.finished.connect(self.set_gpu_info)
         
         return thread
     
     def set_gpu_info(self, gpus):
+        print(f"[DEBUG] [{threading.current_thread().name}] Entering set_gpu_info with {len(gpus) if isinstance(gpus, list) else gpus} items")
         print(gpus)
         self.parent.ui.TableGPUs.setRowCount(len(gpus))
         add_data_to_table(gpus, self.parent.ui.TableGPUs)
@@ -144,12 +151,13 @@ class LoadingDialog(QDialog):
         worker.moveToThread(thread)
         thread.worker = worker
         thread.started.connect(worker.run)
-        worker.progress.connect(self.ui.PlainTextLog.appendPlainText)
+        worker.progress.connect(self.update_log)
         worker.finished.connect(self.set_diskinfo)
         
         return thread
     
     def set_diskinfo(self, disks):
+        print(f"[DEBUG] [{threading.current_thread().name}] Entering set_diskinfo")
         if disks:
             for idx, disk in enumerate(disks):
                 self.parent.ui.TableStorage.setItem(
@@ -231,6 +239,7 @@ class LoadingDialog(QDialog):
     # SECTION - Get system info
 
     def set_system_info(self, info):
+        print(f"[DEBUG] [{threading.current_thread().name}] Entering set_system_info")
         self.system_info = info
         
         if len(info['cameras']) > 1:
@@ -323,7 +332,7 @@ class LoadingDialog(QDialog):
         
         img = qrcode.make(data)
         
-        qim = ImageQt(img)
+        qim = ImageQt(img.get_image())
         pix =QPixmap.fromImage(qim)
         self.parent.ui.LBQrCode.setPixmap(pix)
 
@@ -331,6 +340,7 @@ class LoadingDialog(QDialog):
 
 
     def loading_finished(self):
+        print(f"[DEBUG] [{threading.current_thread().name}] Entering loading_finished")
         
         if is_battery_installed():
             self.parent.ui.tabBatteryTest.setEnabled(True)
@@ -339,3 +349,7 @@ class LoadingDialog(QDialog):
 
     # def closeEvent(self, event: QCloseEvent) -> None:
     #     # self.parent.close()
+
+    def update_log(self, text):
+        print(f"[DEBUG] [{threading.current_thread().name}] update_log: {text}")
+        self.ui.PlainTextLog.appendPlainText(str(text))

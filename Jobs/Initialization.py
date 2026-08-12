@@ -13,9 +13,9 @@ from modules.utils import isConnected
 
 class Initialization(QObject):
     finished = Signal()
-    progress = Signal(str)
-    systemData = Signal(dict)
-    error = Signal(str)
+    progress = Signal(object)
+    systemData = Signal(object)
+    error = Signal(object)
     online = False
     config = None
     system = None

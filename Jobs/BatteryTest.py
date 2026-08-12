@@ -20,13 +20,13 @@ MIN_PERCENT_TO_STOP = 10 # (%)
 
 class BatteryTest(QObject):
 
-    fullChargedRemainingTimeSginal = Signal(str)
-    playSoundSignal = Signal(str)
-    timeElapsedSignal = Signal(str)
-    batterySignal = Signal(str, str)
-    errorSignal = Signal(str)
+    fullChargedRemainingTimeSginal = Signal(object)
+    playSoundSignal = Signal(object)
+    timeElapsedSignal = Signal(object)
+    batterySignal = Signal(object, object)
+    errorSignal = Signal(object)
     finishedSignal = Signal()
-    resultDialogTestSignal = Signal(list)
+    resultDialogTestSignal = Signal(object)
 
     def __init__(self, parent=None, time_to_test = DEFAULT_MINUTES_TIME_TEST):
         super().__init__(parent)

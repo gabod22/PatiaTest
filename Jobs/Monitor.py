@@ -4,13 +4,13 @@ import psutil
 
 
 class Monitor(QObject):
-    cpuPercent = Signal(int)
-    ramPercent = Signal(int)
-    gpuPercent = Signal(int)
-    batteryPercent = Signal(int)
-    batteryStatus = Signal(str)
-    batteryPlugged = Signal(str)
-    batteryRemainTime = Signal(str)
+    cpuPercent = Signal(object)
+    ramPercent = Signal(object)
+    gpuPercent = Signal(object)
+    batteryPercent = Signal(object)
+    batteryStatus = Signal(object)
+    batteryPlugged = Signal(object)
+    batteryRemainTime = Signal(object)
     finished = Signal()
 
     def run(self):
