@@ -53,8 +53,9 @@ class BatteryTest(QObject):
             if r == 0:
                 self.batterySignal.emit(str(battery.percent), str(battery.power_plugged))
                 self.write_to_txt(battery)
+                print("Battery percent: {0} %".format(battery.percent))
                     
-            if battery.percent < self.MIN_PERCENT:
+            if battery.percent < MIN_PERCENT_TO_STOP:
                 self._stopped = True
                 self.finishedSignal.emit()
 
@@ -64,6 +65,7 @@ class BatteryTest(QObject):
     def exhaustive(self):
         self.write_start_line_to_txt('EXAUSTIVA')
         self.battery_test()
+        self.write_final_line_to_txt('EXAUSTIVA')
         
         
 
@@ -139,16 +141,18 @@ class BatteryTest(QObject):
 
         Args:
             type_of_test (str): Es un texto que indica el tipo de prueba realizada
+            date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         """
+        date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         try:
             with open(PATH_TO_BATTERY_LOG, "a") as f:
                 f.write(
-                    "El equipo duró {0}".format(
+                    "El equipo duró {0} horas".format(
                         secs2hours(self.seconds_elapsed)
                     )
                 )
                 f.write("\n")
-                f.write("Fin de prueba {}".format(type_of_test))
+                f.write("FIN de prueba de batería {0} el {1}".format(type_of_test, date_time) )
                 f.write("\n")
                 f.close()
                 
@@ -162,7 +166,7 @@ class BatteryTest(QObject):
         """
         try:
             with open(PATH_TO_BATTERY_LOG, "a") as f:
-                f.write(secs2hours(self.seconds_left))
+                f.write(secs2hours(self.seconds_elapsed))
                 f.write("\t")
                 f.write("Cargando" if battery.power_plugged else "Deconectado")
                 f.write("\t")
