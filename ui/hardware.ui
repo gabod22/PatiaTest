@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HardwarePanel</class>
+ <widget class="QWidget" name="HardwarePanel">
+  <layout class="QVBoxLayout" name="layout">
+   <item><widget class="QLabel" name="HardwareStatus"><property name="wordWrap"><bool>true</bool></property><property name="text"><string>Consultando hardware…</string></property></widget></item>
+   <item><layout class="QHBoxLayout" name="buttons">
+    <item><widget class="QPushButton" name="RefreshHardware"><property name="text"><string>Actualizar dispositivos</string></property></widget></item>
+    <item><widget class="QPushButton" name="PrepareSensors"><property name="text"><string>Preparar sensores (PawnIO)</string></property></widget></item>
+    <item><widget class="QPushButton" name="ResetSensorHistory"><property name="text"><string>Reiniciar mínimos/máximos</string></property></widget></item>
+   </layout></item>
+   <item><widget class="QTabWidget" name="HardwareTabs">
+    <widget class="QWidget" name="BatteryDetailsTab"><attribute name="title"><string>Baterías</string></attribute><layout class="QVBoxLayout" name="batteryLayout"><item><widget class="QTableWidget" name="BatteryDetails"><property name="editTriggers"><set>QAbstractItemView::NoEditTriggers</set></property></widget></item></layout></widget>
+    <widget class="QWidget" name="DiskDetailsTab"><attribute name="title"><string>Discos</string></attribute><layout class="QVBoxLayout" name="diskLayout"><item><widget class="QTableWidget" name="DiskDetails"><property name="editTriggers"><set>QAbstractItemView::NoEditTriggers</set></property></widget></item></layout></widget>
+    <widget class="QWidget" name="CpuDetailsTab"><attribute name="title"><string>CPU / RAM / placa</string></attribute><layout class="QVBoxLayout" name="cpuLayout"><item><widget class="QTableWidget" name="CpuDetails"><property name="editTriggers"><set>QAbstractItemView::NoEditTriggers</set></property></widget></item></layout></widget>
+    <widget class="QWidget" name="GpuDetailsTab"><attribute name="title"><string>GPU</string></attribute><layout class="QVBoxLayout" name="gpuLayout"><item><widget class="QTableWidget" name="GpuDetails"><property name="editTriggers"><set>QAbstractItemView::NoEditTriggers</set></property></widget></item></layout></widget>
+    <widget class="QWidget" name="SensorsTab"><attribute name="title"><string>Sensores</string></attribute><layout class="QVBoxLayout" name="sensorsLayout"><item><widget class="QTableWidget" name="SensorReadings"><property name="editTriggers"><set>QAbstractItemView::NoEditTriggers</set></property></widget></item></layout></widget>
+   </widget></item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

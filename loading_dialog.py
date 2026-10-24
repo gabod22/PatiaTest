@@ -1,355 +1,93 @@
-# -*- coding: latin-1 -*-
-import pythoncom
-import threading
-from PySide6.QtCore import QThreadPool, QThread, Qt
+# -*- coding: utf-8 -*-
+"""Startup tasks; hardware queries have an independently recoverable worker."""
+from functools import partial
+from os import path
+from PIL.ImageQt import ImageQt
+from PySide6.QtCore import QThread, Qt
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QDialog, QTableWidgetItem
-from ui.loading_dialog_ui import Ui_LoadingDialog
-
+from PySide6.QtWidgets import QDialog
+import qrcode
 from Jobs.Initialization import Initialization
 from Jobs.GetPrograms import GetProgramsJob
-from Jobs.DiskInfo import DiskInfoJob
-from Jobs.Gpuz import GpuzJob
-
-from PIL.ImageQt import ImageQt
-
-from functools import partial
+from modules.constants import dirname
 from modules.helpers.system_accions import open_program
-
 from modules.utils import convert_size, is_battery_installed
-from modules.helpers.helpers import add_data_to_table
-
-import qrcode
-# from PatiaTest import MainWindow
-from functools import partial
+from ui.loading_dialog_ui import Ui_LoadingDialog
 
 
-# from Jobs.worker import Worker
-
-# from Dialogs import showSuccessDialog, showFailDialog
-from multiprocessing import freeze_support
-freeze_support()
 class LoadingDialog(QDialog):
-
     def __init__(self, parent):
         super().__init__(parent)
         self.setWindowFlag(Qt.WindowStaysOnTopHint, True)
         self.parent = parent
-        self.enable_register = False
         self.ui = Ui_LoadingDialog()
         self.ui.setupUi(self)
-        
-        from modules.constants import dirname
-        from os import path
         self.ui.Logo.setPixmap(QPixmap(path.join(dirname, "assets/logo_new.png")))
-        
-        self.system_info = None
-        self.__thread_initialization = QThread()
-        self.__thread_gpuz = QThread()
-        self.__thread_getprograms = QThread()
-        self.__thread_diskinfo = QThread()
-        self.threadpool = QThreadPool()
-        self.serial_number = ""
-        self.this_computer = None
-        self.battery_health = ""
+        self._pending = 2
+        self.threads = []
+        initialization = Initialization()
+        initialization.systemData.connect(self.set_system_info)
+        initialization.progress.connect(self.update_log)
+        initialization.error.connect(self.update_log)
+        initialization.finished.connect(self.job_finished)
+        self.start_worker(initialization, initialization.finished)
+        programs = GetProgramsJob()
+        programs.finished.connect(self.set_programs_to_menu)
+        programs.finished.connect(self.job_finished)
+        programs.progress.connect(self.update_log)
+        self.start_worker(programs, programs.finished)
 
-        print(
-            "Multithreading with maximum %d threads" % self.threadpool.maxThreadCount()
-        )
-
-        self.start_jobs_thread()
-        self.start_getprograms_thread()
-        self.start_thread_gpuz()
-        self.start_thread_diskinfo()
-
-
-    # SECTION - Jobs Thread
-    def __get_thread_initialization(self):
-        thread = QThread()
-        worker = Initialization()
-        worker.moveToThread(thread)
-
-        # this is essential when worker is in local scope!
-        pythoncom.CoInitialize()
+    def start_worker(self, worker, finished):
+        thread = QThread(self.parent)
         thread.worker = worker
-
-        thread.started.connect(worker.run)
-        worker.systemData.connect(self.set_system_info)
-        worker.progress.connect(self.update_log)
-        worker.finished.connect(self.loading_finished)
-
-        return thread
-    
-    def start_jobs_thread(self):
-        if not self.__thread_initialization.isRunning():
-            self.__thread_initialization = self.__get_thread_initialization()
-            self.__thread_initialization.start()
-
-    def stop_jobs_thread(self):
-        if self.__thread_initialization.isRunning():
-            self.__thread_initialization.worker.stop()
-            self.__thread_initialization.quit()
-    
-    def __get_thread_getprograms(self):
-        thread = QThread()
-        worker = GetProgramsJob()
         worker.moveToThread(thread)
-        thread.worker = worker
         thread.started.connect(worker.run)
-        worker.progress.connect(self.update_log)
-        worker.finished.connect(self.set_programs_to_menu)
-        
-        return thread
-    
+        finished.connect(thread.quit, Qt.DirectConnection)
+        thread.finished.connect(worker.deleteLater)
+        self.threads.append(thread)
+        thread.start()
+
     def set_programs_to_menu(self, programs):
-        print(f"[DEBUG] [{threading.current_thread().name}] Entering set_programs_to_menu")
+        existing = {action.text() for action in self.parent.ui.menuTools.actions()}
         for program in programs:
-            self.parent.ui.menuTools.addAction(
-                program["name"], partial(open_program, program["name"])
-            )
-    
-    def start_getprograms_thread(self):
-        if not self.__thread_getprograms.isRunning():
-            self.__thread_getprograms = self.__get_thread_getprograms()
-            self.__thread_getprograms.start()
-
-    def stop_getprograms_thread(self):
-        if self.__thread_getprograms.isRunning():
-            self.__thread_getprograms.worker.stop()
-            self.__thread_getprograms.quit()
-    
-    def __get_thread_gpuz(self):
-        thread = QThread()
-        worker = GpuzJob()
-        worker.moveToThread(thread)
-        thread.worker = worker
-        thread.started.connect(worker.run)
-        worker.progress.connect(self.update_log)
-        worker.finished.connect(self.set_gpu_info)
-        
-        return thread
-    
-    def set_gpu_info(self, gpus):
-        print(f"[DEBUG] [{threading.current_thread().name}] Entering set_gpu_info with {len(gpus) if isinstance(gpus, list) else gpus} items")
-        print(gpus)
-        self.parent.ui.TableGPUs.setRowCount(len(gpus))
-        add_data_to_table(gpus, self.parent.ui.TableGPUs)
-    
-    def start_thread_gpuz(self):
-        if not self.__thread_gpuz.isRunning():
-            self.__thread_gpuz = self.__get_thread_gpuz()
-            self.__thread_gpuz.start()
-
-    def stop_thread_gpuz(self):
-        if self.__thread_gpuz.isRunning():
-            self.__thread_gpuz.worker.stop()
-            self.__thread_gpuz.quit()
-            
-    def __get_thread_diskinfo(self):
-        thread = QThread()
-        worker = DiskInfoJob()
-        worker.moveToThread(thread)
-        thread.worker = worker
-        thread.started.connect(worker.run)
-        worker.progress.connect(self.update_log)
-        worker.finished.connect(self.set_diskinfo)
-        
-        return thread
-    
-    def set_diskinfo(self, disks):
-        print(f"[DEBUG] [{threading.current_thread().name}] Entering set_diskinfo")
-        if disks:
-            for idx, disk in enumerate(disks):
-                self.parent.ui.TableStorage.setItem(
-                    0,
-                    idx,
-                    QTableWidgetItem(str(disk["Model"] if "Model" in disk else "")),
-                )
-                self.parent.ui.TableStorage.setItem(
-                    1,
-                    idx,
-                    QTableWidgetItem(
-                        str(disk["Disk Size"] if "Disk Size" in disk else "")
-                    ),
-                )
-                self.parent.ui.TableStorage.setItem(
-                    2,
-                    idx,
-                    QTableWidgetItem(
-                        str(disk["Health Status"] if "Health Status" in disk else "")
-                    ),
-                )
-                self.parent.ui.TableStorage.setItem(
-                    3,
-                    idx,
-                    QTableWidgetItem(
-                        str(disk["Interface"] if "Interface" in disk else "")
-                    ),
-                )
-                self.parent.ui.TableStorage.setItem(
-                    4,
-                    idx,
-                    QTableWidgetItem(
-                        str(disk["Host Reads"] if "Host Reads" in disk else "")
-                    ),
-                )
-                self.parent.ui.TableStorage.setItem(
-                    5,
-                    idx,
-                    QTableWidgetItem(
-                        str(disk["Host Writes"] if "Host Writes" in disk else "")
-                    ),
-                )
-                self.parent.ui.TableStorage.setItem(
-                    6,
-                    idx,
-                    QTableWidgetItem(
-                        str(disk["Power On Count"] if "Power On Count" in disk else "")
-                    ),
-                )
-                self.parent.ui.TableStorage.setItem(
-                    7,
-                    idx,
-                    QTableWidgetItem(
-                        str(disk["Power On Hours"] if "Power On Hours" in disk else "")
-                    ),
-                )
-    
-    def start_thread_diskinfo(self):
-        if not self.__thread_diskinfo.isRunning():
-            self.__thread_diskinfo = self.__get_thread_diskinfo()
-            self.__thread_diskinfo.start()
-
-    def stop_thread_diskinfo(self):
-        if self.__thread_diskinfo.isRunning():
-            self.__thread_diskinfo.worker.stop()
-            self.__thread_diskinfo.quit()
-
-    def setConfigData(self, data):
-        self.parent.configData = data
-        # print("imprimiendo configuracion", data)
-        # print(self.configData)
-
-    def setThisComputerData(self, data):
-        self.enable_register = True
-        self.parent.ui.TextPixelId.setText(str(data["internal_id"]))
-
-    
-
-    # SECTION - Get system info
+            if program["name"] not in existing:
+                self.parent.ui.menuTools.addAction(program["name"], partial(open_program, program["name"]))
 
     def set_system_info(self, info):
-        print(f"[DEBUG] [{threading.current_thread().name}] Entering set_system_info")
-        self.system_info = info
-        
-        if len(info['cameras']) > 1:
-            self.parent.ui.BtnSwitchCamera.setVisible(True) 
-        
-        model = info["computer_system"]["Model"]
-        bios_ver = info["bios"]["Version"]
-        serial = info["bios"]["SerialNumber"]
-        # if (info['cpu']['vendor_id_raw'] == 'GenuineIntel'):
-        #     try:
-        #         cpu_model = re.search(
-        #             "[A-z]\d-\d{4}[A-Z]", info["cpu"]["brand_raw"]).group()
-        #     except:
-        #         cpu_model = info["cpu"]["brand_raw"]
-        # else:
-        cpu_model = info["cpu"]["brand_raw"]
-        ram = (
-            str(convert_size(info["virtual_memory"]["total"]))
-            + " "
-            + info["memories"][0]["Tipo"]
-        )
         self.parent.systeminfo = info
-        self.parent.ui.TextWinver.setText(info["winver"])
-        self.parent.ui.TextBiosVersion.setText(bios_ver)
-        self.parent.ui.TextTotalRAM.setText(ram)
-        self.parent.ui.TextProcessorName.setText(cpu_model)
-        self.parent.ui.TextModel.setText(model)
-        self.parent.ui.TextServiceNumber.setText(serial)
-        # Add all Disks to table
-        
-        # Add all gpus to table
-        
-        self.serial_number = serial
-        print(info['cameras'])
+        ui = self.parent.ui
+        model = info.get("computer_system", {}).get("Model") or "No disponible"
+        bios = info.get("bios", {})
+        serial = bios.get("SerialNumber") or "No disponible"
+        cpu = info.get("cpu", {}).get("brand_raw") or "No disponible"
+        memory = info.get("memories", [])
+        ram = convert_size(info.get("virtual_memory", {}).get("total", 0))
+        if memory:
+            ram += " " + memory[0].get("Tipo", "")
+        ui.BtnSwitchCamera.setVisible(len(info.get("cameras", [])) > 1)
+        ui.TextWinver.setText(info.get("winver", "No disponible"))
+        ui.TextBiosVersion.setText(bios.get("Version") or "No disponible")
+        ui.TextTotalRAM.setText(ram)
+        ui.TextProcessorName.setText(cpu)
+        ui.TextModel.setText(model)
+        ui.TextServiceNumber.setText(serial)
+        image = qrcode.make({"model": model, "serial": serial, "battery": ui.TextBatteryHealth.text(), "cpu": cpu, "ram": ram})
+        ui.LBQrCode.setPixmap(QPixmap.fromImage(ImageQt(image.get_image())))
 
-        if is_battery_installed():
-
-            for idx, battery in enumerate(info["batteries"]):
-                self.parent.ui.TableBatteryInfo.setItem(
-                    0, idx, QTableWidgetItem(str(battery["Battery Name"]))
-                )
-                self.parent.ui.TableBatteryInfo.setItem(
-                    1, idx, QTableWidgetItem(str(battery["Manufacture Name"]))
-                )
-                self.parent.ui.TableBatteryInfo.setItem(
-                    2, idx, QTableWidgetItem(str(battery["Manufacture Date"]))
-                )
-                self.parent.ui.TableBatteryInfo.setItem(
-                    3, idx, QTableWidgetItem(str(battery["Serial Number"]))
-                )
-                self.parent.ui.TableBatteryInfo.setItem(
-                    4, idx, QTableWidgetItem(str(battery["Full Charged Capacity"]))
-                )
-                self.parent.ui.TableBatteryInfo.setItem(
-                    5, idx, QTableWidgetItem(str(battery["Designed Capacity"]))
-                )
-                self.parent.ui.TableBatteryInfo.setItem(
-                    6, idx, QTableWidgetItem(str(battery["Battery Health"]))
-                )
-                self.parent.ui.TableBatteryInfo.setItem(
-                    7,
-                    idx,
-                    QTableWidgetItem(str(battery["Number of charge/discharge cycles"])),
-                )
-
-                if info["batteries"][idx]["Voltage"] != "":
-                    if idx != len(info["batteries"]) - 1:
-                        self.battery_health = (
-                            self.battery_health
-                            + info["batteries"][idx]["Battery Health"]
-                            + ", "
-                        )
-                    else:
-                        self.battery_health = (
-                            self.battery_health
-                            + info["batteries"][idx]["Battery Health"]
-                        )
-        else:
-            self.battery_health = "Sin batería"
-
-        self.parent.ui.TextBatteryHealth.setText(self.battery_health)
-        
-        data = {
-            "model": model,
-            "serial": serial,
-            "battery": self.battery_health,
-            "cpu": cpu_model,
-            "ram": ram,
-        }
-        
-        img = qrcode.make(data)
-        
-        qim = ImageQt(img.get_image())
-        pix =QPixmap.fromImage(qim)
-        self.parent.ui.LBQrCode.setPixmap(pix)
-
-
-
-
-    def loading_finished(self):
-        print(f"[DEBUG] [{threading.current_thread().name}] Entering loading_finished")
-        
-        if is_battery_installed():
-            self.parent.ui.tabBatteryTest.setEnabled(True)
-        self.parent.show()
-        self.close()
-
-    # def closeEvent(self, event: QCloseEvent) -> None:
-    #     # self.parent.close()
+    def job_finished(self, *args):
+        self._pending -= 1
+        if self._pending == 0:
+            self.parent.ui.tabBatteryTest.setEnabled(is_battery_installed())
+            self.parent.show()
+            self.close()
 
     def update_log(self, text):
-        print(f"[DEBUG] [{threading.current_thread().name}] update_log: {text}")
         self.ui.PlainTextLog.appendPlainText(str(text))
+
+    def stop(self):
+        for thread in self.threads:
+            if thread.isRunning() and hasattr(thread.worker, "stop"):
+                thread.worker.stop()
+            thread.quit()
+        for thread in self.threads:
+            thread.wait(5000)

@@ -1,179 +1,56 @@
-from modules.utils import convert_size, wmiToDict
-from modules.helpers.helpers import WMIDateStringToDate
-from modules.helpers.system_accions import get_registry_value
-
-from modules.parsers.BatteryViewInfoParser import get_battery_info
-import wmi
+"""Basic startup summary. Detailed hardware inventory is owned by modules.hardware."""
+import platform
 import cpuinfo
+import cv2
 import psutil
 import pythoncom
-import platform
-
-import cv2
+import wmi
 from cv2_enumerate_cameras import enumerate_cameras
+from modules.helpers.system_accions import get_registry_value
+from modules.utils import convert_size, wmiToDict
 
-MemoryType = {
-    0: "Desconocido",
-    1: "Otro",
-    20: "DDR",
-    21: "DDR2",
-    22: "DDR2 FB-DIMM",
-    24: "DDR3",
-    26: "DDR4",
-    29: "Row of chips",
-    30: "Row of chips",
-    34: "DDR5"
-}
+MemoryType = {0: "Desconocido", 1: "Otro", 20: "DDR", 21: "DDR2", 22: "DDR2 FB-DIMM", 24: "DDR3", 26: "DDR4", 34: "DDR5", 35: "LPDDR5"}
 
 
 def get_system_info(progress_callback, on_error, show_dialog):
     pythoncom.CoInitialize()
-    info = dict()
-    w = wmi.WMI()
-
-    progress_callback.emit('Obteniendo info de la computadora')
-    
-    #Get Cameras alvaibles
-
-    info['cameras'] = enumerate_cameras(cv2.CAP_MSMF)
-
-    # INFO
-    info['computer_system'] = dict(wmiToDict(w.Win32_ComputerSystem()[0]))
-    # Platform
-    # uname_result = platform.uname()
-    # pl = dict()
-    # pl['system'] = uname_result.system
-    # pl['node'] = uname_result.node
-    # pl['release'] = uname_result.release
-    # pl['version'] = uname_result.version
-    # pl['machine'] = uname_result.machine
-    # info['platform'] = pl
-    progress_callback.emit('Obteniendo version de windows')
-    info['winver'] = os_version(progress_callback)
-
-    progress_callback.emit('Obteniendo info de la BIOS')
-    # BIOS
-    bios = dict()
-    biosraw = w.Win32_BIOS()[0]
-
-    bios = {
-        "Manufacturer": biosraw.Manufacturer,
-        "Version": biosraw.SMBIOSBIOSVersion,
-        "ReleaseDate": biosraw.ReleaseDate,
-        "SerialNumber": biosraw.SerialNumber,
-        "Description": biosraw.Description,
-        "InstallableLanguages": biosraw.InstallableLanguages,
-        "LanguageEdition": biosraw.LanguageEdition,
-        "Name": biosraw.Name,
-        "PrimaryBIOS": biosraw.PrimaryBIOS,
-        "Status": biosraw.Status,
-        "caption": biosraw.caption,
-    }
-
-    info['bios'] = bios
-
-    # CPU
-    cpu = getCpu(progress_callback)
-    # cpu['stats'] = psutil.cpu_stats()
-    info['cpu'] = cpu
-
-    # Memory
-    memories = getMemory(progress_callback, wmi=w)
-    info['memories'] = memories
-    info['virtual_memory'] = dict(psutil.virtual_memory()._asdict())
-    # info['swap_memory'] = dict(psutil.swap_memory()._asdict())
-
-    # Disk
-    # info['disk_partitions'] = psutil.disk_partitions()
-    # root_path = 'C:/' if sys.platform == 'win32' else '/'
-
-    # total, used, free, percent
-    # info['disk_usage'] = dict(psutil.disk_usage(root_path)._asdict())
-    # gpus = getGPUs(progress_callback)
-    # disks = getDisks(progress_callback)
-    batteries = getBatteryInfo(progress_callback)
-
-    # info['gpus'] = gpus
-    # info['disks'] = disks
-    info['batteries'] = batteries
-    progress_callback.emit('Terminado')
-
+    info = {"cameras": [], "computer_system": {}, "bios": {}, "cpu": {}, "memories": [],
+            "virtual_memory": dict(psutil.virtual_memory()._asdict()), "winver": platform.platform()}
+    def query(key, callback):
+        progress_callback.emit("Obteniendo información: " + key)
+        try:
+            info[key] = callback()
+        except Exception as error:
+            on_error.emit(f"{key}: {error}")
+    try:
+        query("cameras", lambda: enumerate_cameras(cv2.CAP_MSMF))
+        query("cpu", cpuinfo.get_cpu_info)
+        query("winver", lambda: os_version(progress_callback))
+        try:
+            connection = wmi.WMI()
+        except Exception as error:
+            on_error.emit(f"WMI: {error}")
+            return info
+        query("computer_system", lambda: dict(wmiToDict(connection.Win32_ComputerSystem()[0])))
+        def bios():
+            row = connection.Win32_BIOS()[0]
+            return {"Manufacturer": row.Manufacturer, "Version": row.SMBIOSBIOSVersion,
+                    "ReleaseDate": row.ReleaseDate, "SerialNumber": row.SerialNumber}
+        query("bios", bios)
+        query("memories", lambda: getMemory(progress_callback, connection))
+    finally:
+        pythoncom.CoUninitialize()
     return info
 
 
-
-
-
-def getBatteryInfo(progress_callback):
-    progress_callback.emit('Obteniendo info de las baterias')
-    try:
-        batteries = get_battery_info()
-    except Exception as e:
-        progress_callback.emit('Hubo un problema al cargar las baterias')
-        progress_callback.emit(e)
-        batteries = []
-    finally:
-        return batteries
-
-
-
-
-
 def getMemory(progress_callback, wmi):
-    progress_callback.emit('Obteniendo info de la memoria ram')
-    memories = []
-    try:
-        for memory in wmi.Win32_PhysicalMemory():
-            memoryType = "Desconocido"
-            if memory.SMBIOSMemoryType in MemoryType:
-                memoryType = MemoryType[memory.SMBIOSMemoryType]
-            else:
-                print("tipo de memoria", memory.SMBIOSMemoryType)
-            memories.append({
-                "capacidad": convert_size(memory.Capacity),
-                "Tipo": memoryType,
-                "Frecuencia": memory.Speed,
-                "Fabricante": memory.Manufacturer
-            })
-    except Exception as e:
-        print(e)
-        progress_callback.emit("No se pudo obtener la info de la memoria RAM")
-        memories = []
-    finally:
-        return memories
-
-
-def getCpu(progress_callback):
-    progress_callback.emit('Obteniendo info del CPU')
-    try:
-        cpu = dict(cpuinfo.get_cpu_info())
-        # cpu['processor'] = uname_result.processor
-        # cpu.pop('flags')
-        # cpu['cpu-times'] = psutil.cpu_times()
-        # cpu['pyhsical-core-count'] = psutil.cpu_count(False)
-        # cpu['logical-core-count'] = psutil.cpu_count(True)
-
-    except:
-        cpu = {}
-    finally:
-        return cpu
+    return [{"capacidad": convert_size(row.Capacity), "Tipo": MemoryType.get(row.SMBIOSMemoryType, "Desconocido"),
+             "Frecuencia": row.Speed, "Fabricante": row.Manufacturer,
+             "Referencia": row.PartNumber, "Serie": row.SerialNumber, "Ranura": row.DeviceLocator,
+             "FrecuenciaConfigurada": getattr(row, "ConfiguredClockSpeed", None)} for row in wmi.Win32_PhysicalMemory()]
 
 
 def os_version(progress_callback):
-    try:
-        def get(key):
-            return get_registry_value(
-                "HKEY_LOCAL_MACHINE",
-                "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion",
-                key)
-        os = get("ProductName")
-        # sp = get("CSDVersion")
-        build = get("DisplayVersion")
-        return "%s (build %s)" % (os, build)
-    except Exception as e:
-        print("Error al obtener la información del sistema operativo desde el registro: ", e)
-        progress_callback.emit('No se pudo obtener la build del sistema')
-        platform.platform()
-        os = platform.system() + " " + platform.release()
-
-        return "%s (build %s)" % (os, "Unknow")
+    def get(key):
+        return get_registry_value("HKEY_LOCAL_MACHINE", "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", key)
+    return f"{get('ProductName')} (build {get('DisplayVersion')})"

@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(874, 729)
         icon = QIcon()
-        icon.addFile(u"_internal/assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"C:/Users/brian/.designer/assets/logo_min.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         self.actionSave = QAction(MainWindow)
         self.actionSave.setObjectName(u"actionSave")
@@ -513,6 +513,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addWidget(self.BtnTestScreen)
 
+        self.BtnTestTouchpad = QPushButton(self.groupBox_7)
+        self.BtnTestTouchpad.setObjectName(u"BtnTestTouchpad")
+
+        self.verticalLayout_6.addWidget(self.BtnTestTouchpad)
+
         self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_6.addItem(self.verticalSpacer_4)
@@ -573,6 +578,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.addWidget(self.groupBox_8)
 
         self.tabWidget.addTab(self.tab_4, "")
+        self.tabHardware = QWidget()
+        self.tabHardware.setObjectName(u"tabHardware")
+        self.hardwareContainer = QVBoxLayout(self.tabHardware)
+        self.hardwareContainer.setObjectName(u"hardwareContainer")
+        self.tabWidget.addTab(self.tabHardware, "")
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
         self.verticalLayout_11 = QVBoxLayout(self.tab)
@@ -606,7 +616,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -711,6 +721,7 @@ class Ui_MainWindow(object):
         self.BtnTestMicrophone.setText(QCoreApplication.translate("MainWindow", u"Abrir configuracion micro", None))
         self.BtnTestKeyboard.setText(QCoreApplication.translate("MainWindow", u"Teclado", None))
         self.BtnTestScreen.setText(QCoreApplication.translate("MainWindow", u"Pantalla", None))
+        self.BtnTestTouchpad.setText(QCoreApplication.translate("MainWindow", u"Probar Touchpad", None))
         self.groupBox_8.setTitle(QCoreApplication.translate("MainWindow", u"Programas", None))
         self.BtnStartCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Probar c\u00e1mara", None))
         self.BtnStopCameraCapture.setText(QCoreApplication.translate("MainWindow", u"Detener", None))
@@ -721,6 +732,7 @@ class Ui_MainWindow(object):
         self.BtnPlayAudio.setText(QCoreApplication.translate("MainWindow", u"Reproducir grabaci\u00f3n", None))
         self.BtnStopAudio.setText(QCoreApplication.translate("MainWindow", u"Detener audio", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Herramientas", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabHardware), QCoreApplication.translate("MainWindow", u"Hardware", None))
         self.LBQrCode.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"C\u00f3digo QR", None))
         self.menuConfiguraci_n.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))

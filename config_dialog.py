@@ -3,7 +3,7 @@ from PySide6.QtGui import QCloseEvent
 from ui.config_dialog_ui import Ui_Dialog
 from modules.constants import config, config_file, dirname
 from modules.files_managment import write_yaml
-from modules.helpers.system_accions import get_all_programs
+from modules.helpers.system_accions import get_all_programs, is_replaced_program
 
 import os
 
@@ -94,7 +94,7 @@ class ConfigDialog(QDialog):
 
         if self.config['SELECTED_PROGRAMS']:
             self.ui.ListSelectedProgrms.addItems(
-                self.config['SELECTED_PROGRAMS'])
+                [name for name in self.config['SELECTED_PROGRAMS'] if not is_replaced_program(name)])
 
         self.ui.SpinDefaultTestTime.setValue(self.config['BATTERY_TEST']['DEFAULT_TIME_TO_TEST'])
         self.ui.SpinMinimunLeftOver.setValue(self.config['BATTERY_TEST']['MINIMUM_LEFTOVER'])

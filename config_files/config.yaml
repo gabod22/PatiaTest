@@ -19,7 +19,6 @@ DEFAULT_VALUES:
   TOUCHSCREEN: 5
   USB: 0
 SELECTED_PROGRAMS:
-- battery_info.exe
 - keyboard_test.exe
 - MemTest64.exe
 WIFI:

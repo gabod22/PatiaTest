@@ -9,6 +9,7 @@ from modules.constants import dirname, config_file
 
 from modules.systeminfo import get_system_info
 from modules.utils import isConnected
+import threading
 
 
 class Initialization(QObject):
@@ -21,7 +22,22 @@ class Initialization(QObject):
     system = None
     showDialog = Signal()
 
+    def __init__(self):
+        super().__init__()
+        self._stop = threading.Event()
+
+    def stop(self):
+        self._stop.set()
+
     def run(self):
+        try:
+            self.initialize()
+        except Exception as error:
+            self.error.emit(str(error))
+        finally:
+            self.finished.emit()
+
+    def initialize(self):
         """Long-running task."""
         self.config = read_yaml(config_file)
         self.progress.emit('Comprobando conexion a internet.')
@@ -31,6 +47,9 @@ class Initialization(QObject):
             progress_callback=self.progress, on_error=self.error, show_dialog=None)
 
         self.systemData.emit(self.system)
+
+        if self._stop.is_set():
+            return
 
         if self.online == False:
             self.progress.emit('No hay conexión a internet.')
@@ -44,10 +63,7 @@ class Initialization(QObject):
                     self.config['WIFI']['SSID5G'])
             sleep(2)
         self.online = isConnected()
-            
+
         if is_admin() and self.online:
             self.progress.emit('Sincronizando la hora')
             sync_date_time()
-
-        self.finished.emit()
-

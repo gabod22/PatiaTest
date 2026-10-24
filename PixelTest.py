@@ -2,7 +2,7 @@
 
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
-from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize,QEvent
+from PySide6.QtCore import QThreadPool, QThread, QTimer, QSize, QEvent, Qt
 from PySide6.QtGui import QCloseEvent, QIcon, QPixmap
 from PIL.ImageQt import ImageQt
 from ui.mainwindow_ui import Ui_MainWindow
@@ -20,6 +20,7 @@ from time import sleep
 from Jobs.BatteryTest import BatteryTest
 
 from Jobs.Monitor import Monitor
+from modules.hardware.panel import HardwarePanel
 from Jobs.CameraCapture import CameraCapture
 from config_dialog import ConfigDialog
 
@@ -118,6 +119,7 @@ class MainWindow(QMainWindow):
         qim = ImageQt(path.join(dirname + "/assets/no_camera.jpg"))
         self.pix = QPixmap.fromImage(qim)
         self.ui.CameraLabel.setPixmap(self.pix)
+        self.hardware_panel = HardwarePanel(self)
         self.start_loading_dialog()
         self.start_monitor_thread()
         set_showroom_configuration()
@@ -150,6 +152,7 @@ class MainWindow(QMainWindow):
         self.ui.BtnRecordAudio.clicked.connect(self.thread_record_audio)
         self.ui.BtnPlayAudio.clicked.connect(self.play_recorded_audio)
         self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
+        self.ui.BtnTestTouchpad.clicked.connect(lambda: open_program("TouchpadTester.exe"))
         
         self.ui.CbxBetteryTestType.currentTextChanged.connect(self.on_battery_test_mode_change)
 
@@ -355,6 +358,7 @@ class MainWindow(QMainWindow):
         
         worker.timeElapsedSignal.connect(self.set_time_elapsed)
         worker.batterySignal.connect(self.add_entry_to_battey_log)
+        worker.errorSignal.connect(lambda message: self.statusBar().showMessage(str(message), 10000))
         worker.resultDialogTestSignal.connect(self.show_result_dialog_battery_test)
         worker.playSoundSignal.connect(lambda x: play_lologro_sound() if x == 'success' else play_cansado_sound())
         worker.finishedSignal.connect(lambda: self.end_battery_test())
@@ -436,7 +440,7 @@ class MainWindow(QMainWindow):
         thread.worker = worker
 
         thread.started.connect(worker.run)
-        worker.finished.connect(lambda: thread.quit())
+        worker.finished.connect(thread.quit, Qt.DirectConnection)
 
         worker.cpuPercent.connect(self.ui.BarCPUPercentage.setValue)
         worker.cpuPercent.connect(self.ui.BarCPUPercentage_2.setValue)
@@ -461,6 +465,9 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event: QCloseEvent) -> None:
         self.hide()
+        self.hardware_panel.close_module()
+        if self.loading_dialog is not None:
+            self.loading_dialog.stop()
         if self.__thread_battery.isRunning():
             self.stop_battery_test_mode()
         self.stop_monitor_thread()
@@ -475,10 +482,6 @@ class MainWindow(QMainWindow):
 
         if path.exists(path.join(dirname, "output.wav")):
             os.remove(path.join(dirname, "output.wav"))
-        if path.exists(path.join(dirname, "battery.csv")):
-            os.remove(path.join(dirname, "battery.csv"))
-        if path.exists(path.join(dirname, "programs/gpuz.xml")):
-            os.remove(path.join(dirname, "programs/gpuz.xml"))
         sleep(2)
 
 

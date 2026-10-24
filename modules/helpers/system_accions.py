@@ -5,6 +5,15 @@ from pathlib import Path
 from .helpers import filter_exe_files
 from ..constants import programs_path
 
+# These utilities have been replaced by internal hardware modules.
+REPLACED_PROGRAMS = frozenset({"battery_info.exe", "batteryinfoview.exe", "diskinfo.exe",
+                               "diskinfo32.exe", "diskinfo64.exe", "gpuz.exe", "gpu-z.exe",
+                               "cpuz.exe", "cpu-z.exe", "hwinfo.exe", "hwinfo64.exe"})
+
+
+def is_replaced_program(name):
+    return os.path.basename(name.replace("\\", "/")).casefold() in REPLACED_PROGRAMS
+
 def open_program(program_name):
     """Ejecuta un programa dentro especificado
 
@@ -12,6 +21,8 @@ def open_program(program_name):
         program (str): Ubicación absoluta del programa
     """
     
+    if is_replaced_program(program_name):
+        return
     try:
         path = os.path.join(programs_path, program_name)
         print("Abriendo el programa {0} ".format(program_name))
@@ -29,9 +40,11 @@ def get_all_programs(path: Path):
     Returns:
         list: Lista de todos los programas en la carpeta
     """
+    if not os.path.isdir(path):
+        return []
     entries = os.listdir(path)
     # print(entries)
-    programs = list(filter(filter_exe_files, entries))
+    programs = [name for name in entries if filter_exe_files(name) and not is_replaced_program(name)]
     program_list = list()
     for program in programs:
         p = dict()

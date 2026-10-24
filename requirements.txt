@@ -6,14 +6,12 @@ psutil
 qimage2ndarray
 opencv-python
 wmi
-GPUtil
 py-cpuinfo
 PyYAML
 pywin32
 pyaudio
 cpu_load_generator
 python-dotenv
-xmltodict
 pyinstaller
 qrcode
 cv2_enumerate_cameras

@@ -37,14 +37,16 @@ class BatteryTest(QObject):
         self.seconds_left = time_to_test * 60
         self.battery_percent_accepted = config['BATTERY_TEST']['MINIMUM_LEFTOVER']
         self.time_to_test = time_to_test
-    
+
     def battery_test(self):
         while not self._stopped:
             battery = psutil.sensors_battery()
             if battery == None :
                 self._stopped = True
+                self.errorSignal.emit("Batería no instalada o retirada durante la prueba")
                 self.finishedSignal.emit()
-            
+                return
+
             self.timeElapsedSignal.emit(secs2hours(self.seconds_elapsed))
             print(secs2hours(self.seconds_elapsed))
             sleep(WAIT_TIME)
@@ -54,30 +56,33 @@ class BatteryTest(QObject):
                 self.batterySignal.emit(str(battery.percent), str(battery.power_plugged))
                 self.write_to_txt(battery)
                 print("Battery percent: {0} %".format(battery.percent))
-                    
+
             if battery.percent < MIN_PERCENT_TO_STOP:
                 self._stopped = True
                 self.finishedSignal.emit()
 
             self.seconds_elapsed += 1
-    
-        
+
+
     def exhaustive(self):
         self.write_start_line_to_txt('EXAUSTIVA')
         self.battery_test()
         self.write_final_line_to_txt('EXAUSTIVA')
-        
-        
+
+
 
     def bytime(self):
         # Se escribe la primera linea del test
         self.write_start_line_to_txt('POR TIEMPO')
-        
+
 
         while not self._stopped and self.seconds_left > 0:
             battery = psutil.sensors_battery()
             if battery == None :
                 self._stopped = True
+                self.errorSignal.emit("Batería no instalada o retirada durante la prueba")
+                self.finishedSignal.emit()
+                return
             if (
                 battery.percent <= self.battery_percent_accepted
                 and self.seconds_left > 0
@@ -89,10 +94,10 @@ class BatteryTest(QObject):
                 ])
                 self._stopped = True
                 self.finishedSignal.emit()
-                
+                return
             self.timeElapsedSignal.emit(secs2hours(self.seconds_left))
             print(secs2hours(self.seconds_left))
-            
+
             sleep(WAIT_TIME)
 
             d, r = divmod(self.seconds_left, self.WRITE_TIME)
@@ -113,17 +118,17 @@ class BatteryTest(QObject):
         self.write_start_line_to_txt('INVENSIVA')
         open_program('power_max.exe')
         self.battery_test()
-        
-    
+
+
     def stop(self):
         self.finishedSignal.emit()
         self._stopped = True
-    
-    
+
+
     def write_start_line_to_txt(self, type_of_test):
         """Escribe la primera linea del registro del test de la batería,
         incluye la fecha y el tipo de prueba
-        
+
         Args:
             type_of_test (str): Es un texto que indica el tipo de prueba realizada
         """
@@ -135,7 +140,7 @@ class BatteryTest(QObject):
                 f.close()
         except Exception as e:
             print("No se pudo guardar", e)
-    
+
     def write_final_line_to_txt(self, type_of_test):
         """Escribe la línea final del test, indica el tiempo que duró la prueba y el tipo de test realizado
 
@@ -155,11 +160,11 @@ class BatteryTest(QObject):
                 f.write("FIN de prueba de batería {0} el {1}".format(type_of_test, date_time) )
                 f.write("\n")
                 f.close()
-                
+
         except Exception as e:
             print("No se pudo guardar", e)
-    
-    
+
+
     def write_to_txt(self, battery):
         """Escribe en un archvo de texto, una linea con el estado de la batería,
         que incluye el tiempo de prueba, el estatus del cargador y el porcentaje de la batería
@@ -175,5 +180,3 @@ class BatteryTest(QObject):
                 f.close()
         except Exception as e:
             print("No se pudo guardar", e)
-            
-    

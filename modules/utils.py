@@ -64,10 +64,10 @@ def isConnected():
     try:
         # connect to the host -- tells us if the host is actually
         # reachable
-        sock = socket.create_connection(("www.google.com", 80))
+        sock = socket.create_connection(("www.google.com", 80), timeout=3)
         if sock is not None:
             print("Clossing socket")
-            sock.close
+            sock.close()
         return True
     except OSError:
         pass
