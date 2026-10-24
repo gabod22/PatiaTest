@@ -1,5 +1,7 @@
 # Módulos de hardware de PatiaTest
 
+La herramienta de carga regulada y los tres modos de batería se documentan en [LOAD_TEST.md](LOAD_TEST.md).
+
 La aplicación consulta las baterías, discos, CPU, RAM, placa/BIOS y GPU sin ejecutar BatteryInfoView, CrystalDiskInfo, CPU-Z, GPU-Z ni HWiNFO. Python conserva la interfaz PySide6 y las métricas de `psutil`; `PatiaHardwareHost`, un componente propio en C#, consulta Windows y las bibliotecas integradas.
 
 ## Compilar y ejecutar
@@ -11,6 +13,7 @@ Desde la raíz del proyecto:
 ```powershell
 python -m pip install -r requirements.txt
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-hardware.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-load.ps1
 python PixelTest.py
 ```
 

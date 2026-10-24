@@ -390,159 +390,263 @@ color: rgb(0,0,0)
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QGroupBox" name="groupBox_3">
+         <widget class="QWidget" name="BatterySidebar">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>410</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>430</width>
             <height>16777215</height>
            </size>
           </property>
-          <property name="title">
-           <string>Estado general</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <layout class="QVBoxLayout" name="BatterySidebarLayout">
            <item>
-            <widget class="QLabel" name="label_23">
-             <property name="text">
-              <string>CPU</string>
+            <widget class="QScrollArea" name="BatteryScroll">
+             <property name="widgetResizable">
+              <bool>true</bool>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QProgressBar" name="BarCPUPercentage_2">
-             <property name="value">
-              <number>24</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Batería</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QProgressBar" name="BarBatteryPercentage_2">
-             <property name="value">
-              <number>24</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="LbBatteryStatus">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>LbBatteryStatus</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="LbPluggedIn">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>LbPluggedIn</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_36">
-             <property name="text">
-              <string>Tiempo restante con carga total</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="LbBatteryRemain">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>LBBatteryRemain</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QLabel" name="LBTimeElapsed">
-             <property name="font">
-              <font>
-               <pointsize>26</pointsize>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>No iniciado</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="CbxBetteryTestType">
-             <item>
-              <property name="text">
-               <string>Por tiempo</string>
+             <widget class="QGroupBox" name="groupBox_3">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Intensiva</string>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
               </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Exaustiva</string>
+              <property name="title">
+               <string>Estado general</string>
               </property>
-             </item>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <widget class="QLabel" name="label_23">
+                 <property name="text">
+                  <string>CPU</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QProgressBar" name="BarCPUPercentage_2">
+                 <property name="value">
+                  <number>24</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_8">
+                 <property name="text">
+                  <string>Batería</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QProgressBar" name="BarBatteryPercentage_2">
+                 <property name="value">
+                  <number>24</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="LbBatteryStatus">
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>LbBatteryStatus</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="LbPluggedIn">
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>LbPluggedIn</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_36">
+                 <property name="text">
+                  <string>Tiempo restante con carga total</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="LbBatteryRemain">
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>LBBatteryRemain</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Policy::Fixed</enum>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="LBTimeElapsed">
+                 <property name="font">
+                  <font>
+                   <pointsize>26</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>No iniciado</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="CbxBetteryTestType">
+                 <item>
+                  <property name="text">
+                   <string>Por tiempo</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Intensiva</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Exhaustiva</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="BatteryLoadOptions">
+                 <property name="title">
+                  <string>Carga y corte de batería</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="BatteryLoadLayout">
+                  <item>
+                   <widget class="QCheckBox" name="EnableBatteryLoad">
+                    <property name="text">
+                     <string>Usar carga CPU/GPU regulada</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QWidget" name="BatteryLoadHolder">
+                    <layout class="QVBoxLayout" name="BatteryLoadControlsLayout" />
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="cutoffLayout">
+                    <item>
+                     <widget class="QLabel" name="cutoffLabel">
+                      <property name="text">
+                       <string>Corte de descarga (%)</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="BatteryCutoff">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>99</number>
+                      </property>
+                      <property name="value">
+                       <number>10</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="BatteryLoadStatus">
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                    <property name="text">
+                     <string>Carga desactivada.</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="lbMinutestime">
+                 <property name="text">
+                  <string>Minutos de duración</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="SpinTimeToTest">
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>9999</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>10</number>
+                 </property>
+                 <property name="value">
+                  <number>120</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_6">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Policy::Fixed</enum>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="lbMinutestime">
+            <widget class="QPushButton" name="BtnStartBatteryTest">
              <property name="text">
-              <string>Minutos de duración</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="SpinTimeToTest">
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>9999</number>
-             </property>
-             <property name="singleStep">
-              <number>10</number>
-             </property>
-             <property name="value">
-              <number>120</number>
+              <string>Iniciar prueba de batería</string>
              </property>
             </widget>
            </item>
@@ -555,26 +659,6 @@ color: rgb(0,0,0)
               <string>Detener prueba de batería</string>
              </property>
             </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="BtnStartBatteryTest">
-             <property name="text">
-              <string>Iniciar prueba de batería</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_6">
-             <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>
@@ -871,6 +955,7 @@ color: rgb(0,0,0)
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tabLoad"><attribute name="title"><string>Carga CPU/GPU</string></attribute><layout class="QVBoxLayout" name="loadContainer"/></widget>
       <widget class="QWidget" name="tabHardware">
        <attribute name="title"><string>Hardware</string></attribute>
        <layout class="QVBoxLayout" name="hardwareContainer"/>

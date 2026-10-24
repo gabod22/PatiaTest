@@ -8,7 +8,7 @@ from ..constants import programs_path
 # These utilities have been replaced by internal hardware modules.
 REPLACED_PROGRAMS = frozenset({"battery_info.exe", "batteryinfoview.exe", "diskinfo.exe",
                                "diskinfo32.exe", "diskinfo64.exe", "gpuz.exe", "gpu-z.exe",
-                               "cpuz.exe", "cpu-z.exe", "hwinfo.exe", "hwinfo64.exe"})
+                               "cpuz.exe", "cpu-z.exe", "hwinfo.exe", "hwinfo64.exe", "power_max.exe", "powermax.exe"})
 
 
 def is_replaced_program(name):

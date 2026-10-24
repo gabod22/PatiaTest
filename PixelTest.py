@@ -17,7 +17,7 @@ from Jobs.worker import Worker
 from time import sleep
 
 # from dialogs.SuccessDialog import CustomDialog
-from Jobs.BatteryTest import BatteryTest
+from modules.load.panel import LoadPanel
 
 from Jobs.Monitor import Monitor
 from modules.hardware.panel import HardwarePanel
@@ -82,7 +82,6 @@ class MainWindow(QMainWindow):
             Crea una instancia de los Threads que se utilizan
         """
         self.__thread_monitor = QThread()
-        self.__thread_battery = QThread()
         self.__thread_CameraCapture = QThread()
 
         """
@@ -111,7 +110,7 @@ class MainWindow(QMainWindow):
             self.ui.TextBatteryHealth.hide()
             self.ui.label_6.hide()
             # Opcional: Ocultar toda la caja de estado del test de bateria si no hay
-            self.ui.groupBox_3.hide()
+            self.ui.BatterySidebar.hide()
 
         self.asing_menu_buttons_functions()
         self.asing_all_buttons_functions()
@@ -121,10 +120,10 @@ class MainWindow(QMainWindow):
         self.ui.CameraLabel.setPixmap(self.pix)
         self.hardware_panel = HardwarePanel(self)
         self.hardware_panel.stopped.connect(self.close)
+        self.load_panel = LoadPanel(self)
+        self.load_panel.stopped.connect(self.close)
         self.start_loading_dialog()
         self.start_monitor_thread()
-        set_showroom_configuration()
-        set_brightness("100")
 
     def start_loading_dialog(self):
         self.loading_dialog = LoadingDialog(self)
@@ -155,16 +154,6 @@ class MainWindow(QMainWindow):
         self.ui.BtnStopAudio.clicked.connect(self.stop_recorded_audio)
         self.ui.BtnTestTouchpad.clicked.connect(lambda: open_program("TouchpadTester.exe"))
         
-        self.ui.CbxBetteryTestType.currentTextChanged.connect(self.on_battery_test_mode_change)
-
-    def on_battery_test_mode_change(self):
-        if self.ui.CbxBetteryTestType.currentText() != "Por tiempo":
-            self.ui.lbMinutestime.hide()
-            self.ui.SpinTimeToTest.hide()
-        else:
-            self.ui.SpinTimeToTest.show()
-            self.ui.lbMinutestime.hide()
-    
     def asing_menu_buttons_functions(self):
         # Config Menu
         self.ui.actionConfig.triggered.connect(lambda: self.open_config_dialog())
@@ -195,6 +184,8 @@ class MainWindow(QMainWindow):
     def update_config(self):
         self.config = read_yaml(config_file)
         self.config_dialog = None
+        if hasattr(self, "load_panel") and self.load_panel.session is None:
+            self.load_panel.refresh_preferences()
 
 
     # SECTION - Tests
@@ -337,89 +328,11 @@ class MainWindow(QMainWindow):
 
     # SECTION - Battery Test Thread
 
-    def __get_thread_battery_test(self):
-        minutes = self.ui.SpinTimeToTest.value()
-                
-        thread = QThread()
-        worker = BatteryTest(time_to_test=minutes)
-        worker.moveToThread(thread)
-        
-        
-        
-        thread.worker = worker
-        if self.ui.CbxBetteryTestType.currentText() == "Por tiempo":
-            thread.started.connect(worker.bytime)
-        elif self.ui.CbxBetteryTestType.currentText() == "Intensiva":
-            thread.started.connect(worker.intensive)
-        elif self.ui.CbxBetteryTestType.currentText() == "Exaustiva":
-            thread.started.connect(worker.exhaustive)
-            
-        # this is essential when worker is in local scope!
-        
-        
-        worker.timeElapsedSignal.connect(self.set_time_elapsed)
-        worker.batterySignal.connect(self.add_entry_to_battey_log)
-        worker.errorSignal.connect(lambda message: self.statusBar().showMessage(str(message), 10000))
-        worker.resultDialogTestSignal.connect(self.show_result_dialog_battery_test)
-        worker.playSoundSignal.connect(lambda x: play_lologro_sound() if x == 'success' else play_cansado_sound())
-        worker.finishedSignal.connect(lambda: self.end_battery_test())
-
-        return thread
-    
-    def show_result_dialog_battery_test(self, dialogInfo):
-        print("Mostrando resultados")
-        print(dialogInfo)
-        if dialogInfo[0] == "success":
-            showSuccessDialog(message=dialogInfo[1])
-        elif dialogInfo[0] == "fail":
-            showFailDialog(message=dialogInfo[1])
-    
-    def end_battery_test(self):
-        print('Fin de prueba de batería')
-        self.ui.BtnStopBatteryTest.setEnabled(False)
-        self.ui.BtnStartBatteryTest.setEnabled(True)
-        set_showroom_configuration()
-        if self.__thread_battery.isRunning():
-            self.__thread_battery.quit()
-
-    def add_entry_to_battey_log(self, percent, plugged):
-        timestamp = str(datetime.now().strftime("%d/%m/%Y, %H:%M:%S"))
-        rowPosition = self.ui.TableBatteryLog.rowCount()
-        self.ui.TableBatteryLog.insertRow(rowPosition)
-        self.ui.TableBatteryLog.setItem(
-            rowPosition, 0, QTableWidgetItem(str(timestamp))
-        )
-        self.ui.TableBatteryLog.setItem(
-            rowPosition, 1, QTableWidgetItem(str(percent) + "%")
-        )
-        self.ui.TableBatteryLog.setItem(rowPosition, 2, QTableWidgetItem(str(plugged)))
-        self.ui.TableBatteryLog.setItem(
-            rowPosition, 3, QTableWidgetItem(str(self.ui.BarCPUPercentage.value()))
-        )
-        # print(str(timestamp), str(percent), str(plugged))
-
     def open_battery_test_mode(self):
-        # open_program("power_max.exe")
-        set_configuration_to_current_scheme()
-        set_brightness("100")
-        self.ui.BtnStopBatteryTest.setEnabled(True)
-        self.ui.BtnStartBatteryTest.setEnabled(False)
-        if not self.__thread_battery.isRunning():
-            self.__thread_battery = self.__get_thread_battery_test()
-            self.__thread_battery.start()
+        self.load_panel.start_battery()
 
     def stop_battery_test_mode(self):
-        self.ui.BtnStopBatteryTest.setEnabled(False)
-        self.ui.BtnStartBatteryTest.setEnabled(True)
-        # set_brightness("50")
-        # if self.ui.ChkRestoreEnergyConfig.isChecked():
-        #     set_default_configuration()
-        # kill_process_by_name("power_max.exe")
-        set_showroom_configuration()
-        if self.__thread_battery.isRunning():
-            self.__thread_battery.worker.stop()
-            self.__thread_battery.quit()
-            self.__thread_battery.wait()
+        self.load_panel.stop_battery()
 
     def set_time_elapsed(self, time):
         self.ui.LBTimeElapsed.setText(time)
@@ -464,7 +377,20 @@ class MainWindow(QMainWindow):
             self.__thread_monitor.quit()
             self.__thread_monitor.wait()
 
+    def nativeEvent(self, event_type, message):
+        if sys.platform == "win32" and hasattr(self, "load_panel"):
+            import ctypes
+            from ctypes import wintypes
+            msg = wintypes.MSG.from_address(int(message))
+            if msg.message == 0x218 and msg.wParam == 4:
+                self.load_panel.interrupt("Windows entró en suspensión.")
+        return super().nativeEvent(event_type, message)
+
     def closeEvent(self, event: QCloseEvent) -> None:
+        if not self.load_panel.close_module():
+            self.statusBar().showMessage("Deteniendo la carga y cerrando el registro…")
+            event.ignore()
+            return
         if not self.hardware_panel.close_module(wait=False):
             self.statusBar().showMessage("Cerrando el monitoreo de hardware…")
             event.ignore()
@@ -472,21 +398,17 @@ class MainWindow(QMainWindow):
         self.hide()
         if self.loading_dialog is not None:
             self.loading_dialog.stop()
-        if self.__thread_battery.isRunning():
-            self.stop_battery_test_mode()
         self.stop_monitor_thread()
         self.stop_feed()
         if self.__thread_CameraCapture.isRunning():
             self.__thread_CameraCapture.quit()
             self.__thread_CameraCapture.wait()
-        set_showroom_configuration()
 
         """ Elimina los archivos creados
         """
 
         if path.exists(path.join(dirname, "output.wav")):
             os.remove(path.join(dirname, "output.wav"))
-        sleep(2)
 
 
 if __name__ == "__main__":

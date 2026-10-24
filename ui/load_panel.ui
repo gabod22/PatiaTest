@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0"><class>LoadPanel</class><widget class="QWidget" name="LoadPanel"><layout class="QVBoxLayout" name="layout">
+ <item><widget class="QLabel" name="Intro"><property name="wordWrap"><bool>true</bool></property><property name="text"><string>Objetivos de uso total del equipo. El motor adapta su carga y puede ampliar los núcleos iniciales. 0 % desactiva la carga generada de ese recurso.</string></property></widget></item>
+ <item><widget class="QWidget" name="ControlsHolder"><layout class="QVBoxLayout" name="ControlsLayout"/></widget></item>
+ <item><layout class="QHBoxLayout" name="buttons"><item><widget class="QPushButton" name="Start"><property name="text"><string>Iniciar carga</string></property></widget></item><item><widget class="QPushButton" name="Apply"><property name="text"><string>Aplicar cambios</string></property></widget></item><item><widget class="QPushButton" name="Stop"><property name="text"><string>Detener carga</string></property></widget></item><item><widget class="QPushButton" name="OpenLogs"><property name="text"><string>Abrir registros</string></property></widget></item></layout></item>
+ <item><widget class="QLabel" name="State"><property name="wordWrap"><bool>true</bool></property><property name="text"><string>Consultando capacidades…</string></property></widget></item>
+ <item><widget class="QLabel" name="Metrics"><property name="wordWrap"><bool>true</bool></property><property name="text"><string>Sin sesión activa.</string></property></widget></item>
+ <item><spacer name="space"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint"><size><width>10</width><height>40</height></size></property></spacer></item>
+ </layout></widget><resources/><connections/></ui>

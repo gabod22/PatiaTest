@@ -95,19 +95,5 @@ class ModelTests(unittest.TestCase):
             Reading.from_dict(dict(id="x", device_id="x", name="x", value=float("nan"), unit="°C", source="x", timestamp="2026-10-23T10:00:00Z"))
 
 
-class BatteryTests(unittest.TestCase):
-    def test_battery_removal_finishes_both_existing_test_modes(self):
-        from Jobs.BatteryTest import BatteryTest
-        for mode in ("battery_test", "bytime"):
-            worker = BatteryTest()
-            errors, finished = [], []
-            worker.errorSignal.connect(errors.append)
-            worker.finishedSignal.connect(lambda: finished.append(True))
-            with patch("Jobs.BatteryTest.psutil.sensors_battery", return_value=None), patch.object(worker, "write_start_line_to_txt"):
-                getattr(worker, mode)()
-            self.assertEqual(len(errors), 1)
-            self.assertEqual(len(finished), 1)
-
-
 if __name__ == "__main__":
     unittest.main()

@@ -33,12 +33,25 @@ def main():
           licenses / "LibreHardwareMonitor-NOTICES.txt")
     fetch("https://raw.githubusercontent.com/namazso/PawnIO/master/COPYING", licenses / "PawnIO-COPYING.txt")
     fetch("https://raw.githubusercontent.com/namazso/PawnIO/master/README.md", licenses / "PawnIO-README.md")
-    assets = json.loads((ROOT / "native/PatiaHardwareHost/obj/project.assets.json").read_text())
-    notes = ["PatiaTest hardware dependencies (unmodified upstream libraries)", "",
+    fetch("https://raw.githubusercontent.com/amerkoleci/Vortice.Windows/9e609cb9439c9872aa1b339f177e40ec96f77239/LICENSE",
+          licenses / "Vortice-LICENSE.txt")
+    libraries = {}
+    for project in ("PatiaHardwareHost", "PatiaLoadHost"):
+        assets_file = ROOT / "native" / project / "obj/project.assets.json"
+        if assets_file.exists():
+            assets = json.loads(assets_file.read_text())
+            libraries.update(assets["libraries"])
+            for framework in assets["project"]["frameworks"].values():
+                for package in framework.get("downloadDependencies", []):
+                    version = package["version"].strip("[]").split(",")[0].strip()
+                    path = package["name"].lower() + "/" + version
+                    if (ROOT / "build/nuget" / path).is_dir():
+                        libraries[package["name"] + "/" + version] = {"type": "package", "path": path}
+    notes = ["PatiaTest hardware/load dependencies and runtime packs (unmodified upstream libraries)", "",
              f"PawnIO {driver['version']}: {driver['url']}", "SHA-256: " + driver["sha256"],
              "Driver source and license exception: https://github.com/namazso/PawnIO",
              "Modules source: https://github.com/namazso/PawnIO.Modules", ""]
-    for identity, library in assets["libraries"].items():
+    for identity, library in sorted(libraries.items()):
         if library["type"] != "package" or identity.startswith("runtime."):
             continue
         package = ROOT / "build/nuget" / library["path"]
@@ -53,6 +66,9 @@ def main():
             if repository.get("commit"):
                 source += "/tree/" + repository.get("commit")
         notes.extend([identity, "Source: " + source, "License: " + ((license_node.text or "") if license_node is not None else license_url), ""])
+        copyright_text = metadata.findtext("{*}copyright", "")
+        if copyright_text:
+            notes.extend([copyright_text, ""])
         target = licenses / identity.replace("/", "-")
         target.mkdir(exist_ok=True)
         shutil.copy2(spec, target / spec.name)

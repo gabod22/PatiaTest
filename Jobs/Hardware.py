@@ -22,6 +22,12 @@ class HardwareWorker(QThread):
         self._refresh = threading.Event()
         self._restart = threading.Event()
         self._reset_history = threading.Event()
+        self._raw_lock = threading.Lock()
+        self._raw = Snapshot()
+
+    def latest_snapshot(self):
+        with self._raw_lock:
+            return self._raw
 
     def stop(self):
         self._stop.set()
@@ -96,7 +102,10 @@ class HardwareWorker(QThread):
                 if self._reset_history.is_set():
                     self._reset_history.clear()
                     self.builder.history.reset()
-                self.frames.publish(self.builder.build(Snapshot(tuple(devices), tuple(readings), current.errors)))
+                raw = Snapshot(tuple(devices), tuple(readings), current.errors)
+                with self._raw_lock:
+                    self._raw = raw
+                self.frames.publish(self.builder.build(raw))
                 self._stop.wait(max(0, self.interval - (time.monotonic() - iteration_start)))
         finally:
             self.client.close()

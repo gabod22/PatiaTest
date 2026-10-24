@@ -122,6 +122,7 @@ class Ui_Dialog(object):
 
         self.SpinDefaultTestTime = QSpinBox(self.groupBox)
         self.SpinDefaultTestTime.setObjectName(u"SpinDefaultTestTime")
+        self.SpinDefaultTestTime.setMinimum(1)
         self.SpinDefaultTestTime.setMaximum(999)
         self.SpinDefaultTestTime.setValue(0)
 
@@ -132,6 +133,31 @@ class Ui_Dialog(object):
         self.SpinMinimunLeftOver.setValue(0)
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.SpinMinimunLeftOver)
+
+        self.cutoffLabel = QLabel(self.groupBox)
+        self.cutoffLabel.setObjectName(u"cutoffLabel")
+
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.cutoffLabel)
+
+        self.SpinDischargeCutoff = QSpinBox(self.groupBox)
+        self.SpinDischargeCutoff.setObjectName(u"SpinDischargeCutoff")
+        self.SpinDischargeCutoff.setMinimum(1)
+        self.SpinDischargeCutoff.setMaximum(99)
+        self.SpinDischargeCutoff.setValue(10)
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.SpinDischargeCutoff)
+
+        self.brightnessLabel = QLabel(self.groupBox)
+        self.brightnessLabel.setObjectName(u"brightnessLabel")
+
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.brightnessLabel)
+
+        self.SpinTestBrightness = QSpinBox(self.groupBox)
+        self.SpinTestBrightness.setObjectName(u"SpinTestBrightness")
+        self.SpinTestBrightness.setMaximum(100)
+        self.SpinTestBrightness.setValue(100)
+
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.SpinTestBrightness)
 
 
         self.verticalLayout_2.addWidget(self.groupBox)
@@ -211,9 +237,10 @@ class Ui_Dialog(object):
         self.groupBox.setTitle(QCoreApplication.translate("Dialog", u"Pruebas de bater\u00eda", None))
         self.label.setText(QCoreApplication.translate("Dialog", u"Remanente minimo (%)", None))
         self.label_2.setText(QCoreApplication.translate("Dialog", u"Minutos por defecto", None))
+        self.cutoffLabel.setText(QCoreApplication.translate("Dialog", u"Corte de descarga (%)", None))
+        self.brightnessLabel.setText(QCoreApplication.translate("Dialog", u"Brillo durante prueba (%)", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QCoreApplication.translate("Dialog", u"General", None))
         self.BtnAddToSelectedPrograms.setText(QCoreApplication.translate("Dialog", u"Agregar", None))
         self.BtnDeleteFromSelectedPrograms.setText(QCoreApplication.translate("Dialog", u"Eliminar", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QCoreApplication.translate("Dialog", u"Programas", None))
     # retranslateUi
-

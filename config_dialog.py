@@ -1,7 +1,8 @@
 from PySide6.QtWidgets import QDialog, QLineEdit, QListWidget, QMessageBox, QComboBox
 from PySide6.QtGui import QCloseEvent
 from ui.config_dialog_ui import Ui_Dialog
-from modules.constants import config, config_file, dirname
+from modules.constants import config_file, dirname
+from copy import deepcopy
 from modules.files_managment import write_yaml
 from modules.helpers.system_accions import get_all_programs, is_replaced_program
 
@@ -16,7 +17,7 @@ class ConfigDialog(QDialog):
         self.ui.setupUi(self)
 
         self.info = dict()
-        self.config = config
+        self.config = deepcopy(parent.config)
 
         # SECTION - Programs
         self.ui.BtnAddToSelectedPrograms.clicked.connect(lambda: self.move_item_to_list(
@@ -33,6 +34,8 @@ class ConfigDialog(QDialog):
 
         self.config['BATTERY_TEST']['DEFAULT_TIME_TO_TEST'] = self.ui.SpinDefaultTestTime.value()
         self.config['BATTERY_TEST']['MINIMUM_LEFTOVER'] = self.ui.SpinMinimunLeftOver.value()
+        self.config['BATTERY_TEST']['DISCHARGE_CUTOFF'] = self.ui.SpinDischargeCutoff.value()
+        self.config['BATTERY_TEST']['BRIGHTNESS_PERCENT'] = self.ui.SpinTestBrightness.value()
 
         self.config['WIFI']['SSID5G'] = self.ui.TextSSID5G.text()
         self.config['WIFI']['PASS5G'] = self.ui.TextPass5G.text()
@@ -98,6 +101,8 @@ class ConfigDialog(QDialog):
 
         self.ui.SpinDefaultTestTime.setValue(self.config['BATTERY_TEST']['DEFAULT_TIME_TO_TEST'])
         self.ui.SpinMinimunLeftOver.setValue(self.config['BATTERY_TEST']['MINIMUM_LEFTOVER'])
+        self.ui.SpinDischargeCutoff.setValue(self.config['BATTERY_TEST'].get('DISCHARGE_CUTOFF', 10))
+        self.ui.SpinTestBrightness.setValue(self.config['BATTERY_TEST'].get('BRIGHTNESS_PERCENT', 100))
 
         self.ui.TextPass5G.setText(self.config['WIFI']['PASS5G'])
         self.ui.TextSSID5G.setText(self.config['WIFI']['SSID5G'])

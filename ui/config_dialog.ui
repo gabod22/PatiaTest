@@ -127,6 +127,7 @@
               </item>
               <item row="1" column="1">
                <widget class="QSpinBox" name="SpinDefaultTestTime">
+                <property name="minimum"><number>1</number></property>
                 <property name="maximum">
                  <number>999</number>
                 </property>
@@ -142,6 +143,10 @@
                 </property>
                </widget>
               </item>
+              <item row="2" column="0"><widget class="QLabel" name="cutoffLabel"><property name="text"><string>Corte de descarga (%)</string></property></widget></item>
+              <item row="2" column="1"><widget class="QSpinBox" name="SpinDischargeCutoff"><property name="minimum"><number>1</number></property><property name="maximum"><number>99</number></property><property name="value"><number>10</number></property></widget></item>
+              <item row="3" column="0"><widget class="QLabel" name="brightnessLabel"><property name="text"><string>Brillo durante prueba (%)</string></property></widget></item>
+              <item row="3" column="1"><widget class="QSpinBox" name="SpinTestBrightness"><property name="maximum"><number>100</number></property><property name="value"><number>100</number></property></widget></item>
              </layout>
             </widget>
            </item>

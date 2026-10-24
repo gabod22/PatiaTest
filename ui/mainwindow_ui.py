@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.2
+## Created by: Qt User Interface Compiler version 6.11.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,12 +16,13 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QFormLayout,
-    QFrame, QGroupBox, QHBoxLayout, QHeaderView,
-    QLabel, QLineEdit, QMainWindow, QMenu,
-    QMenuBar, QProgressBar, QPushButton, QSizePolicy,
-    QSpacerItem, QSpinBox, QStatusBar, QTabWidget,
-    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QComboBox,
+    QFormLayout, QFrame, QGroupBox, QHBoxLayout,
+    QHeaderView, QLabel, QLineEdit, QMainWindow,
+    QMenu, QMenuBar, QProgressBar, QPushButton,
+    QScrollArea, QSizePolicy, QSpacerItem, QSpinBox,
+    QStatusBar, QTabWidget, QTableWidget, QTableWidgetItem,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -65,12 +66,12 @@ class Ui_MainWindow(object):
 "color:rgb(0,0,0)")
         self.TextWinver.setReadOnly(True)
 
-        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.TextWinver)
+        self.formLayout_2.setWidget(0, QFormLayout.ItemRole.FieldRole, self.TextWinver)
 
         self.label_2 = QLabel(self.groupBox_2)
         self.label_2.setObjectName(u"label_2")
 
-        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.label_2)
+        self.formLayout_2.setWidget(1, QFormLayout.ItemRole.LabelRole, self.label_2)
 
         self.TextModel = QLineEdit(self.groupBox_2)
         self.TextModel.setObjectName(u"TextModel")
@@ -78,12 +79,12 @@ class Ui_MainWindow(object):
 "color:rgb(0,0,0)")
         self.TextModel.setReadOnly(True)
 
-        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.TextModel)
+        self.formLayout_2.setWidget(1, QFormLayout.ItemRole.FieldRole, self.TextModel)
 
         self.label_3 = QLabel(self.groupBox_2)
         self.label_3.setObjectName(u"label_3")
 
-        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_3)
+        self.formLayout_2.setWidget(2, QFormLayout.ItemRole.LabelRole, self.label_3)
 
         self.TextServiceNumber = QLineEdit(self.groupBox_2)
         self.TextServiceNumber.setObjectName(u"TextServiceNumber")
@@ -92,12 +93,12 @@ class Ui_MainWindow(object):
 "")
         self.TextServiceNumber.setReadOnly(True)
 
-        self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.TextServiceNumber)
+        self.formLayout_2.setWidget(2, QFormLayout.ItemRole.FieldRole, self.TextServiceNumber)
 
         self.label_6 = QLabel(self.groupBox_2)
         self.label_6.setObjectName(u"label_6")
 
-        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_6)
+        self.formLayout_2.setWidget(3, QFormLayout.ItemRole.LabelRole, self.label_6)
 
         self.TextBatteryHealth = QLineEdit(self.groupBox_2)
         self.TextBatteryHealth.setObjectName(u"TextBatteryHealth")
@@ -106,17 +107,17 @@ class Ui_MainWindow(object):
 "")
         self.TextBatteryHealth.setReadOnly(True)
 
-        self.formLayout_2.setWidget(3, QFormLayout.FieldRole, self.TextBatteryHealth)
+        self.formLayout_2.setWidget(3, QFormLayout.ItemRole.FieldRole, self.TextBatteryHealth)
 
         self.label_7 = QLabel(self.groupBox_2)
         self.label_7.setObjectName(u"label_7")
 
-        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.label_7)
+        self.formLayout_2.setWidget(4, QFormLayout.ItemRole.LabelRole, self.label_7)
 
         self.label_34 = QLabel(self.groupBox_2)
         self.label_34.setObjectName(u"label_34")
 
-        self.formLayout_2.setWidget(5, QFormLayout.LabelRole, self.label_34)
+        self.formLayout_2.setWidget(5, QFormLayout.ItemRole.LabelRole, self.label_34)
 
         self.TextTotalRAM = QLineEdit(self.groupBox_2)
         self.TextTotalRAM.setObjectName(u"TextTotalRAM")
@@ -126,12 +127,12 @@ class Ui_MainWindow(object):
 "")
         self.TextTotalRAM.setReadOnly(True)
 
-        self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.TextTotalRAM)
+        self.formLayout_2.setWidget(5, QFormLayout.ItemRole.FieldRole, self.TextTotalRAM)
 
         self.label_4 = QLabel(self.groupBox_2)
         self.label_4.setObjectName(u"label_4")
 
-        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.label_4)
+        self.formLayout_2.setWidget(6, QFormLayout.ItemRole.LabelRole, self.label_4)
 
         self.TextBiosVersion = QLineEdit(self.groupBox_2)
         self.TextBiosVersion.setObjectName(u"TextBiosVersion")
@@ -141,12 +142,12 @@ class Ui_MainWindow(object):
 "")
         self.TextBiosVersion.setReadOnly(True)
 
-        self.formLayout_2.setWidget(6, QFormLayout.FieldRole, self.TextBiosVersion)
+        self.formLayout_2.setWidget(6, QFormLayout.ItemRole.FieldRole, self.TextBiosVersion)
 
         self.label_5 = QLabel(self.groupBox_2)
         self.label_5.setObjectName(u"label_5")
 
-        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_5)
+        self.formLayout_2.setWidget(0, QFormLayout.ItemRole.LabelRole, self.label_5)
 
         self.TextProcessorName = QLineEdit(self.groupBox_2)
         self.TextProcessorName.setObjectName(u"TextProcessorName")
@@ -156,7 +157,7 @@ class Ui_MainWindow(object):
 "")
         self.TextProcessorName.setReadOnly(True)
 
-        self.formLayout_2.setWidget(4, QFormLayout.FieldRole, self.TextProcessorName)
+        self.formLayout_2.setWidget(4, QFormLayout.ItemRole.FieldRole, self.TextProcessorName)
 
 
         self.verticalLayout.addLayout(self.formLayout_2)
@@ -291,10 +292,20 @@ class Ui_MainWindow(object):
         self.tabBatteryTest.setObjectName(u"tabBatteryTest")
         self.horizontalLayout_2 = QHBoxLayout(self.tabBatteryTest)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.groupBox_3 = QGroupBox(self.tabBatteryTest)
+        self.BatterySidebar = QWidget(self.tabBatteryTest)
+        self.BatterySidebar.setObjectName(u"BatterySidebar")
+        self.BatterySidebar.setMinimumSize(QSize(410, 0))
+        self.BatterySidebar.setMaximumSize(QSize(430, 16777215))
+        self.BatterySidebarLayout = QVBoxLayout(self.BatterySidebar)
+        self.BatterySidebarLayout.setObjectName(u"BatterySidebarLayout")
+        self.BatterySidebarLayout.setContentsMargins(0, 0, 0, 0)
+        self.BatteryScroll = QScrollArea(self.BatterySidebar)
+        self.BatteryScroll.setObjectName(u"BatteryScroll")
+        self.BatteryScroll.setWidgetResizable(True)
+        self.groupBox_3 = QGroupBox()
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.groupBox_3.setMinimumSize(QSize(0, 0))
-        self.groupBox_3.setMaximumSize(QSize(200, 16777215))
+        self.groupBox_3.setMaximumSize(QSize(16777215, 16777215))
         self.verticalLayout_7 = QVBoxLayout(self.groupBox_3)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.label_23 = QLabel(self.groupBox_3)
@@ -344,7 +355,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.LbBatteryRemain)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_2)
 
@@ -365,6 +376,50 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.CbxBetteryTestType)
 
+        self.BatteryLoadOptions = QGroupBox(self.groupBox_3)
+        self.BatteryLoadOptions.setObjectName(u"BatteryLoadOptions")
+        self.BatteryLoadLayout = QVBoxLayout(self.BatteryLoadOptions)
+        self.BatteryLoadLayout.setObjectName(u"BatteryLoadLayout")
+        self.EnableBatteryLoad = QCheckBox(self.BatteryLoadOptions)
+        self.EnableBatteryLoad.setObjectName(u"EnableBatteryLoad")
+
+        self.BatteryLoadLayout.addWidget(self.EnableBatteryLoad)
+
+        self.BatteryLoadHolder = QWidget(self.BatteryLoadOptions)
+        self.BatteryLoadHolder.setObjectName(u"BatteryLoadHolder")
+        self.BatteryLoadControlsLayout = QVBoxLayout(self.BatteryLoadHolder)
+        self.BatteryLoadControlsLayout.setObjectName(u"BatteryLoadControlsLayout")
+        self.BatteryLoadControlsLayout.setContentsMargins(0, 0, 0, 0)
+
+        self.BatteryLoadLayout.addWidget(self.BatteryLoadHolder)
+
+        self.cutoffLayout = QHBoxLayout()
+        self.cutoffLayout.setObjectName(u"cutoffLayout")
+        self.cutoffLabel = QLabel(self.BatteryLoadOptions)
+        self.cutoffLabel.setObjectName(u"cutoffLabel")
+
+        self.cutoffLayout.addWidget(self.cutoffLabel)
+
+        self.BatteryCutoff = QSpinBox(self.BatteryLoadOptions)
+        self.BatteryCutoff.setObjectName(u"BatteryCutoff")
+        self.BatteryCutoff.setMinimum(1)
+        self.BatteryCutoff.setMaximum(99)
+        self.BatteryCutoff.setValue(10)
+
+        self.cutoffLayout.addWidget(self.BatteryCutoff)
+
+
+        self.BatteryLoadLayout.addLayout(self.cutoffLayout)
+
+        self.BatteryLoadStatus = QLabel(self.BatteryLoadOptions)
+        self.BatteryLoadStatus.setObjectName(u"BatteryLoadStatus")
+        self.BatteryLoadStatus.setWordWrap(True)
+
+        self.BatteryLoadLayout.addWidget(self.BatteryLoadStatus)
+
+
+        self.verticalLayout_7.addWidget(self.BatteryLoadOptions)
+
         self.lbMinutestime = QLabel(self.groupBox_3)
         self.lbMinutestime.setObjectName(u"lbMinutestime")
 
@@ -379,23 +434,27 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.SpinTimeToTest)
 
-        self.BtnStopBatteryTest = QPushButton(self.groupBox_3)
-        self.BtnStopBatteryTest.setObjectName(u"BtnStopBatteryTest")
-        self.BtnStopBatteryTest.setEnabled(False)
-
-        self.verticalLayout_7.addWidget(self.BtnStopBatteryTest)
-
-        self.BtnStartBatteryTest = QPushButton(self.groupBox_3)
-        self.BtnStartBatteryTest.setObjectName(u"BtnStartBatteryTest")
-
-        self.verticalLayout_7.addWidget(self.BtnStartBatteryTest)
-
-        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer_6 = QSpacerItem(20, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_6)
 
+        self.BatteryScroll.setWidget(self.groupBox_3)
 
-        self.horizontalLayout_2.addWidget(self.groupBox_3)
+        self.BatterySidebarLayout.addWidget(self.BatteryScroll)
+
+        self.BtnStartBatteryTest = QPushButton(self.BatterySidebar)
+        self.BtnStartBatteryTest.setObjectName(u"BtnStartBatteryTest")
+
+        self.BatterySidebarLayout.addWidget(self.BtnStartBatteryTest)
+
+        self.BtnStopBatteryTest = QPushButton(self.BatterySidebar)
+        self.BtnStopBatteryTest.setObjectName(u"BtnStopBatteryTest")
+        self.BtnStopBatteryTest.setEnabled(False)
+
+        self.BatterySidebarLayout.addWidget(self.BtnStopBatteryTest)
+
+
+        self.horizontalLayout_2.addWidget(self.BatterySidebar)
 
         self.verticalLayout_13 = QVBoxLayout()
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
@@ -578,6 +637,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.addWidget(self.groupBox_8)
 
         self.tabWidget.addTab(self.tab_4, "")
+        self.tabLoad = QWidget()
+        self.tabLoad.setObjectName(u"tabLoad")
+        self.loadContainer = QVBoxLayout(self.tabLoad)
+        self.loadContainer.setObjectName(u"loadContainer")
+        self.tabWidget.addTab(self.tabLoad, "")
         self.tabHardware = QWidget()
         self.tabHardware.setObjectName(u"tabHardware")
         self.hardwareContainer = QVBoxLayout(self.tabHardware)
@@ -643,30 +707,30 @@ class Ui_MainWindow(object):
         self.PixelLapLogo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label_27.setText(QCoreApplication.translate("MainWindow", u"Unidades de almacenamiento", None))
         ___qtablewidgetitem = self.TableStorage.verticalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Modelo", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Modelo", None))
         ___qtablewidgetitem1 = self.TableStorage.verticalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Capacidad", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Capacidad", None))
         ___qtablewidgetitem2 = self.TableStorage.verticalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Salud", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Salud", None))
         ___qtablewidgetitem3 = self.TableStorage.verticalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Interfaz", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Interfaz", None))
         ___qtablewidgetitem4 = self.TableStorage.verticalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"N\u00b0 de lecturas", None));
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"N\u00b0 de lecturas", None))
         ___qtablewidgetitem5 = self.TableStorage.verticalHeaderItem(5)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"N\u00b0 de escrituras", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"N\u00b0 de escrituras", None))
         ___qtablewidgetitem6 = self.TableStorage.verticalHeaderItem(6)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"N\u00b0 de encendidos", None));
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"N\u00b0 de encendidos", None))
         ___qtablewidgetitem7 = self.TableStorage.verticalHeaderItem(7)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"Horas de encendido", None));
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"Horas de encendido", None))
         self.label_41.setText(QCoreApplication.translate("MainWindow", u"GPUs", None))
         ___qtablewidgetitem8 = self.TableGPUs.horizontalHeaderItem(0)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u"Nombre", None));
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u"Nombre", None))
         ___qtablewidgetitem9 = self.TableGPUs.horizontalHeaderItem(1)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Fabricante", None));
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Fabricante", None))
         ___qtablewidgetitem10 = self.TableGPUs.horizontalHeaderItem(2)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"Capacidad", None));
+        ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"Capacidad", None))
         ___qtablewidgetitem11 = self.TableGPUs.horizontalHeaderItem(3)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"Tipo memoria", None));
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"Tipo memoria", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Informaci\u00f3n del equipo", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Estado general", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"CPU", None))
@@ -678,39 +742,43 @@ class Ui_MainWindow(object):
         self.LBTimeElapsed.setText(QCoreApplication.translate("MainWindow", u"No iniciado", None))
         self.CbxBetteryTestType.setItemText(0, QCoreApplication.translate("MainWindow", u"Por tiempo", None))
         self.CbxBetteryTestType.setItemText(1, QCoreApplication.translate("MainWindow", u"Intensiva", None))
-        self.CbxBetteryTestType.setItemText(2, QCoreApplication.translate("MainWindow", u"Exaustiva", None))
+        self.CbxBetteryTestType.setItemText(2, QCoreApplication.translate("MainWindow", u"Exhaustiva", None))
 
+        self.BatteryLoadOptions.setTitle(QCoreApplication.translate("MainWindow", u"Carga y corte de bater\u00eda", None))
+        self.EnableBatteryLoad.setText(QCoreApplication.translate("MainWindow", u"Usar carga CPU/GPU regulada", None))
+        self.cutoffLabel.setText(QCoreApplication.translate("MainWindow", u"Corte de descarga (%)", None))
+        self.BatteryLoadStatus.setText(QCoreApplication.translate("MainWindow", u"Carga desactivada.", None))
         self.lbMinutestime.setText(QCoreApplication.translate("MainWindow", u"Minutos de duraci\u00f3n", None))
-        self.BtnStopBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Detener prueba de bater\u00eda", None))
         self.BtnStartBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Iniciar prueba de bater\u00eda", None))
+        self.BtnStopBatteryTest.setText(QCoreApplication.translate("MainWindow", u"Detener prueba de bater\u00eda", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Bater\u00edas", None))
         ___qtablewidgetitem12 = self.TableBatteryInfo.horizontalHeaderItem(0)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"1", None));
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"1", None))
         ___qtablewidgetitem13 = self.TableBatteryInfo.verticalHeaderItem(0)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Battery name", None));
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Battery name", None))
         ___qtablewidgetitem14 = self.TableBatteryInfo.verticalHeaderItem(1)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Manufacture Name", None));
+        ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Manufacture Name", None))
         ___qtablewidgetitem15 = self.TableBatteryInfo.verticalHeaderItem(2)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Manufacture Date", None));
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Manufacture Date", None))
         ___qtablewidgetitem16 = self.TableBatteryInfo.verticalHeaderItem(3)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"Serial Number", None));
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("MainWindow", u"Serial Number", None))
         ___qtablewidgetitem17 = self.TableBatteryInfo.verticalHeaderItem(4)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Full Charged Capacity", None));
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Full Charged Capacity", None))
         ___qtablewidgetitem18 = self.TableBatteryInfo.verticalHeaderItem(5)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Designed Capacity", None));
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Designed Capacity", None))
         ___qtablewidgetitem19 = self.TableBatteryInfo.verticalHeaderItem(6)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("MainWindow", u"Battery Health", None));
+        ___qtablewidgetitem19.setText(QCoreApplication.translate("MainWindow", u"Battery Health", None))
         ___qtablewidgetitem20 = self.TableBatteryInfo.verticalHeaderItem(7)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("MainWindow", u"Cycles", None));
+        ___qtablewidgetitem20.setText(QCoreApplication.translate("MainWindow", u"Cycles", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Historial", None))
         ___qtablewidgetitem21 = self.TableBatteryLog.horizontalHeaderItem(0)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("MainWindow", u"Fecha", None));
+        ___qtablewidgetitem21.setText(QCoreApplication.translate("MainWindow", u"Fecha", None))
         ___qtablewidgetitem22 = self.TableBatteryLog.horizontalHeaderItem(1)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("MainWindow", u"Porcentaje", None));
+        ___qtablewidgetitem22.setText(QCoreApplication.translate("MainWindow", u"Porcentaje", None))
         ___qtablewidgetitem23 = self.TableBatteryLog.horizontalHeaderItem(2)
-        ___qtablewidgetitem23.setText(QCoreApplication.translate("MainWindow", u"Cargador", None));
+        ___qtablewidgetitem23.setText(QCoreApplication.translate("MainWindow", u"Cargador", None))
         ___qtablewidgetitem24 = self.TableBatteryLog.horizontalHeaderItem(3)
-        ___qtablewidgetitem24.setText(QCoreApplication.translate("MainWindow", u"CPU(%)", None));
+        ___qtablewidgetitem24.setText(QCoreApplication.translate("MainWindow", u"CPU(%)", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabBatteryTest), QCoreApplication.translate("MainWindow", u"Revisi\u00f3n de bater\u00eda", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("MainWindow", u"Probar el equipo", None))
         self.BtnOpenPrograms.setText(QCoreApplication.translate("MainWindow", u"Abrir programas", None))
@@ -732,6 +800,7 @@ class Ui_MainWindow(object):
         self.BtnPlayAudio.setText(QCoreApplication.translate("MainWindow", u"Reproducir grabaci\u00f3n", None))
         self.BtnStopAudio.setText(QCoreApplication.translate("MainWindow", u"Detener audio", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Herramientas", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabLoad), QCoreApplication.translate("MainWindow", u"Carga CPU/GPU", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabHardware), QCoreApplication.translate("MainWindow", u"Hardware", None))
         self.LBQrCode.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"C\u00f3digo QR", None))

@@ -6,10 +6,12 @@ from pathlib import Path
 root = Path(SPECPATH)
 if not (root / 'runtime/hardware/PatiaHardwareHost.exe').is_file():
     raise RuntimeError('Ejecute scripts/build-hardware.ps1 antes de empaquetar.')
+if not (root / 'runtime/load/PatiaLoadHost.exe').is_file():
+    raise RuntimeError('Ejecute scripts/build-load.ps1 antes de empaquetar.')
 
 replaced = {'battery_info.exe', 'batteryinfoview.exe', 'cpuz.exe', 'cpu-z.exe',
             'gpuz.exe', 'gpu-z.exe', 'diskinfo.exe', 'diskinfo32.exe', 'diskinfo64.exe',
-            'hwinfo.exe', 'hwinfo64.exe', 'gpuz.xml', 'battery_info.cfg'}
+            'hwinfo.exe', 'hwinfo64.exe', 'gpuz.xml', 'battery_info.cfg', 'power_max.exe', 'powermax.exe'}
 program_data = [(str(file), str(file.parent.relative_to(root)))
                 for file in (root / 'programs').rglob('*')
                 if file.is_file() and file.name.lower() not in replaced
@@ -20,7 +22,7 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[('config_files/*', 'config_files'), ('assets/*', 'assets'),
-           ('runtime/hardware', 'runtime/hardware'), ('runtime/licenses', 'runtime/licenses'),
+           ('runtime/hardware', 'runtime/hardware'), ('runtime/load', 'runtime/load'), ('runtime/licenses', 'runtime/licenses'),
            ('runtime/setup', 'runtime/setup'), ('scripts/prepare-sensors.ps1', 'scripts'),
            ('scripts/hardware-dependencies.json', 'scripts')] + program_data,
     hiddenimports=['pywintypes'],
