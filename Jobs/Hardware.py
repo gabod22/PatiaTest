@@ -3,20 +3,25 @@ import time
 from dataclasses import replace
 from datetime import datetime, timezone
 
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QThread
 import psutil
 from modules.hardware import client, HardwareError, Field, ProviderError, Snapshot, Reading
+from modules.hardware.presentation import FrameBuilder, LatestFrame
 
 
-class HardwareWorker(QObject):
-    snapshot = Signal(object)
-    finished = Signal()
-
-    def __init__(self):
-        super().__init__()
+class HardwareWorker(QThread):
+    """Dedicated polling/formatting thread. It never accesses a Qt widget."""
+    def __init__(self, parent=None, hardware_client=None, interval=1):
+        super().__init__(parent)
+        self.setObjectName("PatiaHardwareMonitor")
+        self.client = hardware_client if hardware_client is not None else client
+        self.interval = interval
+        self.frames = LatestFrame()
+        self.builder = FrameBuilder()
         self._stop = threading.Event()
         self._refresh = threading.Event()
         self._restart = threading.Event()
+        self._reset_history = threading.Event()
 
     def stop(self):
         self._stop.set()
@@ -27,36 +32,33 @@ class HardwareWorker(QObject):
     def restart(self):
         self._restart.set()
 
+    def reset_history(self):
+        self._reset_history.set()
+
     def run(self):
         previous_io = {}
         previous_time = time.monotonic()
         operation = "inventory"
         failures = {}
         last = Snapshot()
-        cpu_details = None
-        try:
-            import cpuinfo
-            cpu_details = cpuinfo.get_cpu_info()
-        except Exception:
-            pass
         try:
             while not self._stop.is_set():
                 iteration_start = time.monotonic()
                 if self._restart.is_set():
                     self._restart.clear()
-                    client.restart()
+                    self.client.restart()
                     operation = "inventory"
                 if self._refresh.is_set():
                     self._refresh.clear()
                     operation = "refresh_devices"
                 try:
-                    current = client.request(operation)
+                    current = self.client.request(operation)
                     operation = "sample"
                     for provider in ("battery", "storage", "sensors", "gpu", "inventory", "disk_inventory"):
                         timed_out = any(e.provider == provider and e.code == "timeout" for e in current.errors)
                         failures[provider] = failures.get(provider, 0) + 1 if timed_out else 0
                     if any(count >= 10 for count in failures.values()):
-                        client.restart()
+                        self.client.restart()
                         failures.clear()
                     last = current
                 except HardwareError as ex:
@@ -65,14 +67,6 @@ class HardwareWorker(QObject):
                                                        for k, f in d.fields.items()}) for d in last.devices)
                     current = replace(last, devices=expired, errors=last.errors + (ProviderError("host", "unavailable", str(ex)),))
                 devices = list(current.devices)
-                if cpu_details:
-                    for index, device in enumerate(devices):
-                        if device.kind == "cpu":
-                            fields = dict(device.fields)
-                            for key in ("brand_raw", "vendor_id_raw", "arch", "bits", "family", "model", "stepping", "flags", "l1_data_cache_size", "l1_instruction_cache_size", "l2_cache_size", "l3_cache_size"):
-                                if key in cpu_details:
-                                    fields["cpuid_" + key] = Field(cpu_details[key], source="py-cpuinfo", availability="available")
-                            devices[index] = replace(device, fields=fields)
                 now = datetime.now(timezone.utc)
                 readings = list(current.readings)
                 try:
@@ -99,8 +93,10 @@ class HardwareWorker(QObject):
                     previous_time = tick
                 except (OSError, RuntimeError):
                     pass
-                self.snapshot.emit(Snapshot(tuple(devices), tuple(readings), current.errors))
-                self._stop.wait(max(0, 1 - (time.monotonic() - iteration_start)))
+                if self._reset_history.is_set():
+                    self._reset_history.clear()
+                    self.builder.history.reset()
+                self.frames.publish(self.builder.build(Snapshot(tuple(devices), tuple(readings), current.errors)))
+                self._stop.wait(max(0, self.interval - (time.monotonic() - iteration_start)))
         finally:
-            client.close()
-            self.finished.emit()
+            self.client.close()

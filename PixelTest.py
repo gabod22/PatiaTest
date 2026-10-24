@@ -120,6 +120,7 @@ class MainWindow(QMainWindow):
         self.pix = QPixmap.fromImage(qim)
         self.ui.CameraLabel.setPixmap(self.pix)
         self.hardware_panel = HardwarePanel(self)
+        self.hardware_panel.stopped.connect(self.close)
         self.start_loading_dialog()
         self.start_monitor_thread()
         set_showroom_configuration()
@@ -464,8 +465,11 @@ class MainWindow(QMainWindow):
             self.__thread_monitor.wait()
 
     def closeEvent(self, event: QCloseEvent) -> None:
+        if not self.hardware_panel.close_module(wait=False):
+            self.statusBar().showMessage("Cerrando el monitoreo de hardware…")
+            event.ignore()
+            return
         self.hide()
-        self.hardware_panel.close_module()
         if self.loading_dialog is not None:
             self.loading_dialog.stop()
         if self.__thread_battery.isRunning():

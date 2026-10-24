@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHBoxLayout, QHeaderView,
     QLabel, QPushButton, QSizePolicy, QTabWidget,
-    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
+    QTableView, QVBoxLayout, QWidget)
 
 class Ui_HardwarePanel(object):
     def setupUi(self, HardwarePanel):
@@ -57,7 +57,7 @@ class Ui_HardwarePanel(object):
         self.BatteryDetailsTab.setObjectName(u"BatteryDetailsTab")
         self.batteryLayout = QVBoxLayout(self.BatteryDetailsTab)
         self.batteryLayout.setObjectName(u"batteryLayout")
-        self.BatteryDetails = QTableWidget(self.BatteryDetailsTab)
+        self.BatteryDetails = QTableView(self.BatteryDetailsTab)
         self.BatteryDetails.setObjectName(u"BatteryDetails")
         self.BatteryDetails.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
@@ -68,7 +68,7 @@ class Ui_HardwarePanel(object):
         self.DiskDetailsTab.setObjectName(u"DiskDetailsTab")
         self.diskLayout = QVBoxLayout(self.DiskDetailsTab)
         self.diskLayout.setObjectName(u"diskLayout")
-        self.DiskDetails = QTableWidget(self.DiskDetailsTab)
+        self.DiskDetails = QTableView(self.DiskDetailsTab)
         self.DiskDetails.setObjectName(u"DiskDetails")
         self.DiskDetails.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
@@ -79,7 +79,7 @@ class Ui_HardwarePanel(object):
         self.CpuDetailsTab.setObjectName(u"CpuDetailsTab")
         self.cpuLayout = QVBoxLayout(self.CpuDetailsTab)
         self.cpuLayout.setObjectName(u"cpuLayout")
-        self.CpuDetails = QTableWidget(self.CpuDetailsTab)
+        self.CpuDetails = QTableView(self.CpuDetailsTab)
         self.CpuDetails.setObjectName(u"CpuDetails")
         self.CpuDetails.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
@@ -90,7 +90,7 @@ class Ui_HardwarePanel(object):
         self.GpuDetailsTab.setObjectName(u"GpuDetailsTab")
         self.gpuLayout = QVBoxLayout(self.GpuDetailsTab)
         self.gpuLayout.setObjectName(u"gpuLayout")
-        self.GpuDetails = QTableWidget(self.GpuDetailsTab)
+        self.GpuDetails = QTableView(self.GpuDetailsTab)
         self.GpuDetails.setObjectName(u"GpuDetails")
         self.GpuDetails.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
@@ -101,7 +101,7 @@ class Ui_HardwarePanel(object):
         self.SensorsTab.setObjectName(u"SensorsTab")
         self.sensorsLayout = QVBoxLayout(self.SensorsTab)
         self.sensorsLayout.setObjectName(u"sensorsLayout")
-        self.SensorReadings = QTableWidget(self.SensorsTab)
+        self.SensorReadings = QTableView(self.SensorsTab)
         self.SensorReadings.setObjectName(u"SensorReadings")
         self.SensorReadings.setEditTriggers(QAbstractItemView.NoEditTriggers)
 

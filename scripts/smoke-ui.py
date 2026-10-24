@@ -26,7 +26,7 @@ def main():
             output = Path("build/hardware-ui.png")
             output.parent.mkdir(exist_ok=True)
             window.grab().save(str(output))
-            print("Sensor rows:", window.hardware_panel.ui.SensorReadings.rowCount())
+            print("Sensor rows:", window.hardware_panel.ui.SensorReadings.model().rowCount())
             print("UI snapshot:", output)
             window.close()
         QTimer.singleShot(6000, finish)
